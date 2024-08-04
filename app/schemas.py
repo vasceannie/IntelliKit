@@ -3,6 +3,8 @@ from typing import Optional, List
 from datetime import datetime
 import uuid
 
+from app.models import ValidationResult
+
 
 class UserBase(BaseModel):
     email: EmailStr
@@ -47,13 +49,15 @@ class ImportedDataBase(BaseModel):
 
 
 class ImportedDataCreate(ImportedDataBase):
-    pass
+    uploaded_at: datetime
+    data_content: Optional[dict] = None
 
 
 class ImportedData(ImportedDataBase):
     id: uuid.UUID
     uploaded_at: datetime
     data_content: Optional[dict]
+    validation_results: Optional[List[ValidationResult]] = None
 
     class Config:
         orm_mode = True
@@ -68,6 +72,7 @@ class ValidationResultBase(BaseModel):
 class ValidationResult(ValidationResultBase):
     id: uuid.UUID
     imported_data_id: uuid.UUID
+    imported_data: Optional[ImportedData] = None
 
     class Config:
         orm_mode = True
