@@ -1,0 +1,29 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/itsmechlark/features/1password:1": {},
+    "ghcr.io/wxw-matt/devcontainer-features/command_runner:0": {},
+    "ghcr.io/devcontainers-contrib/features/black:2": {},
+    "ghcr.io/devcontainers/features/anaconda:1": {},
+    "ghcr.io/devcontainers/features/python:1": {},
+    "ghcr.io/itsmechlark/features/postgresql:1": {},
+    "ghcr.io/devcontainers/features/conda:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/akhildevelops/devcontainer-features/pip:0": {},
+    "ghcr.io/devcontainers-contrib/features/typescript:2": {},
+    "ghcr.io/devcontainers-contrib/features/poetry:2": {},
+    "ghcr.io/hspaans/devcontainer-features/django-upgrade:1": {},
+    "ghcr.io/devcontainers-contrib/features/pipenv:2": {},
+    "ghcr.io/hspaans/devcontainer-features/pytest:1": {},
+    "ghcr.io/gvatsal60/dev-container-features/sonarlint:1": {},
+    "ghcr.io/devcontainers/features/git-lfs:1": {},
+    "ghcr.io/devcontainers/features/sshd:1": {},
+    "ghcr.io/itsmechlark/features/rabbitmq-server:1": {},
+    "ghcr.io/warrenbuckley/codespace-features/sqlite:1": {},
+    "ghcr.io/devcontainers-contrib/features/pylint:2": {},
+    "ghcr.io/devcontainers/features/powershell:1": {}
+  }
+}
