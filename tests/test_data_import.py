@@ -10,7 +10,7 @@ def client():
 
 
 def test_import_data(client):
-    csv_content = "name,age\nJohn,30\nJane,25"
+    csv_content = "name,email\nJohn,john@email.com\nJane,jane@email.com"
     files = {"file": ("test.csv", csv_content, "text/csv")}
     response = client.post("/api/v1/import/", files=files)
 

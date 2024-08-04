@@ -1,6 +1,8 @@
 fastapi~=0.112.0
 sqlalchemy~=2.0.31
-pytest==6.2.5
+pytest~=6.2.5
 pydantic~=2.8.2
 alembic~=1.13.2
 sqlmodel~=0.0.21
+uvicorn~=0.15.0
+pytest-asyncio==0.16.0
