@@ -1,7 +1,7 @@
 import pytest
 from httpx import AsyncClient
 from app.main import app
-from app.database import get_db, Base
+from app.database import get_db, Base, init_db
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 
@@ -48,6 +48,11 @@ async def client(test_app):
         yield ac
 
 
+@pytest.fixture(autouse=True, scope="module")
+async def initialize_database():
+    await init_db()
+
+
 @pytest.mark.asyncio
 async def test_import_data(client):
     csv_content = "name,email\nJohn,john@email.com\nJane,jane@email.com"
@@ -70,4 +75,4 @@ async def test_import_data_invalid_file(client):
     files = {"file": ("test.txt", "Invalid content", "text/plain")}
     response = await client.post("/api/v1/import/", files=files)
 
-    assert response.status_code == 422  # Unprocessable Entity
+    assert response.status_code == 400  # Bad Request

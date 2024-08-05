@@ -9,11 +9,11 @@ app.include_router(data_import_router, prefix="/api/v1")
 
 
 @app.on_event("startup")
-async def start_app():
+async def startup_event():
     await init_db()
 
 
 if __name__ == "__main__":
     import asyncio
 
-    asyncio.run(start_app())
+    asyncio.run(startup_event())

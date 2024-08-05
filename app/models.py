@@ -5,8 +5,6 @@ import uuid
 
 Base = declarative_base()
 
-
-
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -16,17 +14,15 @@ class User(Base):
     is_superuser = Column(Boolean, default=False)
     full_name = Column(String, nullable=True)
 
-
 class ImportedData(Base):
     __tablename__ = "imported_data"
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     file_name = Column(String, nullable=False)
     uploaded_at = Column(DateTime, nullable=False)
-    data_content = Column(JSON)
+    data_content = Column(JSON, nullable=False)
     validation_results = relationship(
         "ValidationResult", back_populates="imported_data"
     )
-
 
 class ValidationResult(Base):
     __tablename__ = "validation_results"
