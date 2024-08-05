@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routers.data_import import data_import_router
+from app.routers.data_import import router as data_import_router
 from app.database import engine, init_db
 from app.models import User, ImportedData, ValidationResult
 
