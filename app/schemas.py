@@ -1,9 +1,7 @@
 from pydantic import BaseModel, EmailStr
-from typing import Optional, List
+from typing import Optional, List, Union, Dict, Any
 from datetime import datetime
 import uuid
-
-from app.models import ValidationResult
 
 
 class UserBase(BaseModel):
@@ -27,8 +25,8 @@ class UserInDB(UserBase):
     id: int
     hashed_password: str
 
-    class Config:
-        orm_mode = True
+    class ConfigDict:
+        from_attributes = True
 
 
 class User(UserInDB):
@@ -49,18 +47,16 @@ class ImportedDataBase(BaseModel):
 
 
 class ImportedDataCreate(ImportedDataBase):
-    uploaded_at: datetime
-    data_content: Optional[dict] = None
+    pass
 
 
 class ImportedData(ImportedDataBase):
     id: uuid.UUID
     uploaded_at: datetime
-    data_content: Optional[dict]
-    validation_results: Optional[List[ValidationResult]] = None
+    data_content: Optional[Union[List[Dict[str, Any]], Dict[str, Any]]]
 
-    class Config:
-        orm_mode = True
+    class ConfigDict:
+        from_attributes = True
 
 
 class ValidationResultBase(BaseModel):
@@ -72,7 +68,6 @@ class ValidationResultBase(BaseModel):
 class ValidationResult(ValidationResultBase):
     id: uuid.UUID
     imported_data_id: uuid.UUID
-    imported_data: Optional[ImportedData] = None
 
-    class Config:
-        orm_mode = True
+    class ConfigDict:
+        from_attributes = True

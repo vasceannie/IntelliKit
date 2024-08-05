@@ -1,36 +1,30 @@
+import os
 import pytest
-from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
-from app.database import Base, get_db
-from app.main import app
+from app.database import Base
 
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:password@localhost:32771/postgres"
+DATABASE_URL = os.getenv(
+    "DATABASE_URL", "postgresql+asyncpg://trav:pass@localhost:60543/postgres"
+)
 
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+test_engine = create_async_engine(DATABASE_URL, echo=True)
+TestingSessionLocal = sessionmaker(
+    test_engine, class_=AsyncSession, expire_on_commit=False
+)
 
 
 @pytest.fixture(scope="function")
-def db():
-    Base.metadata.create_all(bind=engine)
-    db = TestingSessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-        Base.metadata.drop_all(bind=engine)
+async def test_db():
+    async with test_engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
+        await conn.run_sync(Base.metadata.create_all)
+    yield
+    async with test_engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
 
 
-@pytest.fixture(scope="module")
-def client():
-    def override_get_db():
-        try:
-            db = TestingSessionLocal()
-            yield db
-        finally:
-            db.close()
-
-    app.dependency_overrides[get_db] = override_get_db
-    with TestClient(app) as c:
-        yield c
+@pytest.fixture(scope="function")
+async def test_session(test_db):
+    async with TestingSessionLocal() as session:
+        yield session
