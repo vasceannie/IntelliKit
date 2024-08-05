@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 @router.post("/import/", response_model=schemas.ImportedData)
-async def import_data(file: UploadFile = File(...), db: AsyncSession = Depends(get_db)):
+async def data_import_router(file: UploadFile = File(...), db: AsyncSession = Depends(get_db)):
     content = await file.read()
     csv_content = content.decode("utf-8")
     csv_reader = csv.DictReader(io.StringIO(csv_content))
