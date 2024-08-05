@@ -9,7 +9,7 @@ from sqlalchemy.orm import sessionmaker
 from app.database import Base
 
 DATABASE_URL = os.getenv(
-    "DATABASE_URL", "postgresql+asyncpg://trav:pass@localhost:60543/postgres"
+    "DATABASE_URL", "postgresql+asyncpg://trav:pass@localhost:5432/postgres"
 )
 
 test_engine = create_async_engine(DATABASE_URL, echo=True)
