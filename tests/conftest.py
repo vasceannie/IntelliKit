@@ -1,5 +1,9 @@
 import os
 import pytest
+# The line `from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession` is importing the
+# `create_async_engine` function and the `AsyncSession` class from the `sqlalchemy.ext.asyncio`
+# module. These are used for working with asynchronous database operations in SQLAlchemy with asyncio
+# in Python.
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 from app.database import Base

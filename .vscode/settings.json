@@ -16,6 +16,10 @@
         }
     ],
     "cSpell.words": [
-        "sqlalchemy"
-    ]
+        "asyncpg",
+        "sessionmaker",
+        "sqlalchemy",
+        "trav"
+    ],
+    "wolf.disableHotModeWarning": true
 }

@@ -1,8 +1,10 @@
 from sqlalchemy import Column, Integer, String, DateTime, JSON, Boolean, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, declarative_base
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
-from .database import Base
+
+Base = declarative_base()
+
 
 
 class User(Base):
