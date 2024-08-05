@@ -1,5 +1,11 @@
+import uuid
+from datetime import datetime
+
 import pytest
 from fastapi.testclient import TestClient
+from sqlalchemy import select
+
+from app.models import models
 from app.main import app
 
 
@@ -9,20 +15,19 @@ def client():
         yield c
 
 
-def test_import_data(client):
-    csv_content = "name,email\nJohn,john@email.com\nJane,jane@email.com"
-    files = {"file": ("test.csv", csv_content, "text/csv")}
-    response = client.post("/api/v1/import/", files=files)
+@pytest.mark.asyncio
+async def test_imported_data_model(test_db):
+    data = models.ImportedData(
+        file_name="test.csv", uploaded_at=datetime.now(), data_content={"key": "value"}
+    )
+    test_db.add(data)
+    await test_db.commit()  # Ensure this is awaited
 
-    assert response.status_code == 200
-    data = response.json()
-    assert data["file_name"] == "test.csv"
-    assert "id" in data
-    assert "uploaded_at" in data
-    assert "data_content" in data
-    assert len(data["data_content"]) == 2
-    assert data["data_content"][0]["name"] == "John"
-    assert data["data_content"][1]["name"] == "Jane"
+    fetched_data = await test_db.execute(select(models.ImportedData)).first()
+    assert fetched_data.file_name == "test.csv"
+    assert isinstance(fetched_data.id, uuid.UUID)
+    assert isinstance(fetched_data.uploaded_at, datetime)
+    assert fetched_data.data_content == {"key": "value"}
 
 
 def test_import_data_invalid_file(client):

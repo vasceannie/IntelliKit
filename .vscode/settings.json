@@ -1,0 +1,21 @@
+{
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 62180,
+            "driver": "PostgreSQL",
+            "name": "Radiance",
+            "database": "postgres",
+            "username": "trav"
+        }
+    ],
+    "cSpell.words": [
+        "sqlalchemy"
+    ]
+}
