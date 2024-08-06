@@ -1,0 +1,3 @@
+!/app/alembic/versions/
+!/app/alembic/env.py
+!/app/alembic/versions/*
