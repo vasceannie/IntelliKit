@@ -1,3 +1,26 @@
+"""
+Schemas Module
+
+This module defines Pydantic models for data validation and serialization in the application.
+
+Classes:
+    UserBase: Base schema for user data.
+    UserCreate: Schema for creating a new user.
+    UserUpdate: Schema for updating user information.
+    UserInDB: Schema for user data as stored in the database.
+    User: Schema for user data returned to clients.
+    Token: Schema for authentication tokens.
+    TokenPayload: Schema for token payload data.
+    ImportedDataBase: Base schema for imported data.
+    ImportedDataCreate: Schema for creating a new imported data entry.
+    ImportedData: Schema for imported data as stored in the database.
+    ValidationResultBase: Base schema for validation results.
+    ValidationResult: Schema for validation results as stored in the database.
+
+These schemas are used throughout the application to ensure data consistency,
+validate input data, and serialize output data.
+"""
+
 from pydantic import BaseModel, EmailStr
 from typing import Optional, List, Union, Dict, Any
 from datetime import datetime
