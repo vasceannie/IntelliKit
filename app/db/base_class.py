@@ -1,9 +1,8 @@
 import os
 import logging
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import declarative_base
-from app.models import ImportedData
+from sqlalchemy.orm import DeclarativeBase, sessionmaker
+
 """
 Database Module
 
@@ -39,7 +38,8 @@ engine = create_async_engine(DATABASE_URL, echo=True)
 AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 # Declarative base class for SQLAlchemy models
-Base = declarative_base()
+class Base(DeclarativeBase):
+    pass
 
 
 async def get_db():

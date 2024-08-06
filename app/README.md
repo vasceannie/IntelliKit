@@ -90,7 +90,8 @@ The objective is to design a web application that acts as an intermediary for im
     - `id`: UUID
     - `file_name`: String
     - `uploaded_at`: Timestamp
-    - `data_content`: JSONB
+    - `data_content`: LargeBinary
+        -`description`: "Stores the imported data in binary format. Note that this change will impact the ability to perform efficient queries and validations directly on the data. Ensure that the application logic is updated to handle binary data appropriately."
 4. **Validation Results**
     - `id`: UUID
     - `imported_data_id`: UUID (Foreign Key)

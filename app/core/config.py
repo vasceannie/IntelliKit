@@ -34,9 +34,9 @@ class Settings(BaseSettings):
 
     # Add any other configuration variables your application needs
     # For example:
-    # SECRET_KEY: str = "your-secret-key"
+    SECRET_KEY: str = "nDx8iGp4vpxXrZ8jl-UjHmf8NxCHQjUqKokV9gb4Jr6WqjCNo2cA"
     # ALGORITHM: str = "HS256"
-    # ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
     class Config:
         env_file = ".env"
