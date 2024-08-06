@@ -1,10 +1,12 @@
 import os
+import logging
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import declarative_base
+from app.models import ImportedData
 
 DATABASE_URL = os.environ.get(
-    "DATABASE_URL", "postgresql+asyncpg://trav:pass@localhost:60543/postgres"
+    "DATABASE_URL", "postgresql+asyncpg://trav:pass@localhost:5432/postgres"
 )
 
 engine = create_async_engine(DATABASE_URL, echo=True)
@@ -19,5 +21,7 @@ async def get_db():
 
 
 async def init_db():
+    logging.info("Initializing database...")
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+    logging.info("Database initialized successfully.")
