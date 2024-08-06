@@ -1,5 +1,5 @@
 import pytest
-from httpx import AsyncClient
+from httpx import ASGITransport, AsyncClient
 import pytest
 from fastapi import FastAPI
 from app.routers.data_import import router as data_import_router
@@ -45,9 +45,9 @@ async def test_app():
         await conn.run_sync(Base.metadata.drop_all)
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="function")
 async def client(test_app):
-    async with AsyncClient(app=test_app, base_url="http://test") as ac:
+    async with AsyncClient(transport=ASGITransport(app=test_app), base_url="http://test") as ac:
         yield ac
 
 
@@ -60,8 +60,7 @@ async def initialize_database():
 async def test_import_data(client):
     csv_content = "name,email\nJohn,john@email.com\nJane,jane@email.com"
     files = {"file": ("test.csv", csv_content, "text/csv")}
-    async with client as ac:
-        response = await ac.post("/api/v1/import/", files=files)
+    response = await client.post("/api/v1/import/", files=files)
     
     print(f"Response status: {response.status_code}")
     print(f"Response content: {response.content}")
