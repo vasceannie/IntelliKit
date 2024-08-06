@@ -7,6 +7,7 @@ import io
 from datetime import datetime
 import chardet
 import pandas as pd
+import json
 
 router = APIRouter()
 
@@ -37,8 +38,13 @@ async def data_import_router(file: UploadFile = File(...), db: AsyncSession = De
         except Exception as e:
             raise HTTPException(status_code=400, detail=f"Error reading XLSX file: {str(e)}")
 
+    # Convert the data to JSON string, then to bytes
+    json_data = json.dumps(data).encode('utf-8')
+
     db_imported_data = models.ImportedData(
-        file_name=file.filename, uploaded_at=datetime.now(), data_content=data
+        file_name=file.filename,
+        uploaded_at=datetime.now(),
+        data_content=json_data  # Store as bytes
     )
     db.add(db_imported_data)
     await db.commit()

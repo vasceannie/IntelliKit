@@ -3,7 +3,7 @@ import logging
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import declarative_base
-from app.models import ImportedData  # Add this line
+from app.models import ImportedData
 
 DATABASE_URL = os.environ.get(
     "DATABASE_URL", "postgresql+asyncpg://trav:pass@localhost:5432/postgres"

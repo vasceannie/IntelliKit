@@ -1,23 +1,37 @@
-from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from sqlalchemy import create_engine
-from app.routers.data_import import router as data_import_router
-from app.database import DATABASE_URL, engine, init_db
-from app.models import User, ImportedData, ValidationResult, Base
+from fastapi import FastAPI
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.orm import sessionmaker
+
+from app.database import Base
+from app.config import settings
+from app.routers import data_import
+
+# Create async engine
+engine = create_async_engine(str(settings.DATABASE_URL), echo=True)
+
+# Create async sessionmaker
+AsyncSessionLocal = sessionmaker(
+    engine, class_=AsyncSession, expire_on_commit=False
+)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup
-    await init_db()
-    Base.metadata.create_all(bind=engine)
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+    
     yield
+    
     # Shutdown
-    # Add any cleanup code here if needed
+    await engine.dispose()
 
 app = FastAPI(lifespan=lifespan)
 
-app.include_router(data_import_router, prefix="/api/v1")
+# Include routers
+app.include_router(data_import.router, prefix="/api/v1")
 
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+    
