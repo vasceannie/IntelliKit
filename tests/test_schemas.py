@@ -3,8 +3,16 @@ from app import schemas
 from datetime import datetime
 import uuid
 
+pytestmark = pytest.mark.asyncio
 
-def test_imported_data_schema():
+@pytest.fixture(scope="module")
+def event_loop():
+    import asyncio
+    loop = asyncio.get_event_loop_policy().new_event_loop()
+    yield loop
+    loop.close()
+
+async def test_imported_data_schema():
     data = {
         "id": uuid.uuid4(),
         "file_name": "test.csv",

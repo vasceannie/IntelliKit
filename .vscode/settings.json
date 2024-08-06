@@ -8,7 +8,7 @@
         {
             "previewLimit": 50,
             "server": "localhost",
-            "port": 62180,
+            "port": 5432,
             "driver": "PostgreSQL",
             "name": "Radiance",
             "database": "postgres",
@@ -16,6 +16,10 @@
         }
     ],
     "cSpell.words": [
-        "sqlalchemy"
-    ]
+        "asyncpg",
+        "sessionmaker",
+        "sqlalchemy",
+        "trav"
+    ],
+    "wolf.disableHotModeWarning": true
 }

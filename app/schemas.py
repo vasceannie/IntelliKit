@@ -53,7 +53,7 @@ class ImportedDataCreate(ImportedDataBase):
 class ImportedData(ImportedDataBase):
     id: uuid.UUID
     uploaded_at: datetime
-    data_content: Optional[Union[List[Dict[str, Any]], Dict[str, Any]]]
+    data_content: Optional[bytes]
 
     class ConfigDict:
         from_attributes = True
