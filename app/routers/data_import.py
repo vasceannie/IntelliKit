@@ -14,6 +14,19 @@ router = APIRouter()
 
 @router.post("/import/", response_model=schemas.ImportedData)
 async def data_import_router(file: UploadFile = File(...), db: AsyncSession = Depends(get_db)):
+    """
+    Import data from a CSV or XLSX file and store it in the database.
+
+    Args:
+        file (UploadFile): The uploaded file (CSV or XLSX).
+        db (AsyncSession): The database session.
+
+    Returns:
+        schemas.ImportedData: The imported data object.
+
+    Raises:
+        HTTPException: If the file format is unsupported or there's an error in reading the file.
+    """
     # Check file extension
     file_extension = file.filename.split('.')[-1].lower()
     
