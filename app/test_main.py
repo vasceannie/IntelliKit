@@ -8,11 +8,6 @@ from app.core.config import settings
 from app.api.endpoints import data as data_import
 from app.api.endpoints import api_router
 
-import sys
-import os
-
-sys.path.append(os.path.abspath('app'))
-
 # Create async engine
 engine = create_async_engine(str(settings.DATABASE_URL), echo=True)
 
@@ -34,7 +29,6 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-# Include routers
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
 @app.get("/")
