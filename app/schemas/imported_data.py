@@ -15,7 +15,7 @@ class ImportedData(ImportedDataBase):
     data_content: Optional[bytes]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class ImportedDataUpdate(ImportedDataBase):
     data_content: Optional[bytes] = None

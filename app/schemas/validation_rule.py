@@ -17,7 +17,7 @@ class ValidationRuleInDBBase(ValidationRuleBase):
     id: UUID
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class ValidationRule(ValidationRuleInDBBase):
     pass

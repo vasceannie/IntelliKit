@@ -7,9 +7,15 @@ class ValidationResultBase(BaseModel):
     validation_status: str
     error_message: Optional[str]
 
+class ValidationResultCreate(ValidationResultBase):
+    imported_data_id: uuid.UUID
+
+class ValidationResultUpdate(ValidationResultBase):
+    pass
+
 class ValidationResult(ValidationResultBase):
     id: uuid.UUID
     imported_data_id: uuid.UUID
 
     class Config:
-        orm_mode = True
+        from_attributes = True
