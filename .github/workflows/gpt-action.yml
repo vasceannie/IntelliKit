@@ -10,9 +10,13 @@ on:
   schedule:
     - cron: '0 0 * * *'
 
+
 jobs:
   gpt_job:
     runs-on: ubuntu-latest
+    
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
     steps:
     - name: Checkout repository
@@ -20,7 +24,10 @@ jobs:
       
     - name: Install dependencies
       run: pip install -r requirements.txt
-
+      
+    - name: Set up OpenAI API Key
+      run: echo "OPENAI_API_KEY=$YOUR_API_KEY" >> $GITHUB_ENV
+      
     - name: Run GPT Task
       run: |
         echo "Running GPT Task"
