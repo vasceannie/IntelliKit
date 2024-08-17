@@ -1,7 +1,7 @@
-import openai
 import os
 import time
 from dotenv import load_dotenv
+from openai import OpenAI
 
 # Load environment variables from .env file
 load_dotenv()
@@ -10,7 +10,7 @@ load_dotenv()
 def create_completion_with_retry(client, model, messages, retries=3):
     for i in range(retries):
         try:
-            return client.ChatCompletion.create(model=model, messages=messages)
+            return client.chat.completions.create(model=model, messages=messages)
         except Exception as e:  # Generic exception handling
             if "Rate limit" in str(e):
                 if i < retries - 1:
@@ -56,7 +56,7 @@ if not code_content.strip():
     exit(1)
 
 # Create a client instance
-client = openai
+client = OpenAI()
 
 # Step 1: Identify Bugs
 try:
@@ -69,7 +69,7 @@ try:
         ]
     )
     print("Bugs and Issues:")
-    print(bug_review.choices[0].message['content'])
+    print(bug_review.choices[0].message.content)
 except Exception as e:
     print(f"An error occurred during bug review: {e}")
     exit(1)  # Exit the script if an error occurs during bug review
@@ -85,7 +85,7 @@ try:
         ]
     )
     print("Optimizations:")
-    print(optimization_review.choices[0].message['content'])
+    print(optimization_review.choices[0].message.content)
 except Exception as e:
     print(f"An error occurred during optimization review: {e}")
     exit(1)  # Exit the script if an error occurs during optimization review
@@ -101,7 +101,7 @@ try:
         ]
     )
     print("Docstrings and Comments:")
-    print(docstring_review.choices[0].message['content'])
+    print(docstring_review.choices[0].message.content)
 except Exception as e:
     print(f"An error occurred during docstring and comment generation: {e}")
     exit(1)  # Exit the script if an error occurs during docstring generation
