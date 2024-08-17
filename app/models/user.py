@@ -11,7 +11,9 @@ class User(Base):
         hashed_password (str): Hashed password for user authentication.
         is_active (bool): Flag indicating if the user account is active.
         is_superuser (bool): Flag indicating if the user has superuser privileges.
-        full_name (str): User's full name (optional).
+        first_name (str): User's first name (optional).
+        last_name (str): User's last name (optional).
+        full_name (str): User's full name (computed property).
     """
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -19,4 +21,8 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     is_active = Column(Boolean, default=True)
     is_superuser = Column(Boolean, default=False)
-    full_name = Column(String, nullable=True)
+    first_name = Column(String, nullable=True)
+    last_name = Column(String, nullable=True)
+    @property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}".strip()

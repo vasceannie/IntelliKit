@@ -23,23 +23,33 @@ Note:
 """
 
 from pydantic_settings import BaseSettings
-from pydantic import PostgresDsn
 
 class Settings(BaseSettings):
     # Database configuration
-    DATABASE_URL: PostgresDsn
-
-    # Application-specific settings
-    API_V1_STR: str = "/api/v1"
-
-    # Add any other configuration variables your application needs
-    # For example:
-    SECRET_KEY: str = "nDx8iGp4vpxXrZ8jl-UjHmf8NxCHQjUqKokV9gb4Jr6WqjCNo2cA"
-    # ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    DATABASE_URL: str
+    SECRET_KEY: str
+    DOMAIN: str
+    ENVIRONMENT: str
+    PROJECT_NAME: str
+    STACK_NAME: str
+    BACKEND_CORS_ORIGINS: str
+    FIRST_SUPERUSER: str
+    FIRST_SUPERUSER_PASSWORD: str
+    EMAILS_FROM_EMAIL: str
+    SMTP_TLS: bool
+    SMTP_SSL: bool
+    SMTP_PORT: int
+    POSTGRES_SERVER: str
+    POSTGRES_PORT: int
+    POSTGRES_DB: str
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: str
+    SENTRY_DSN: str
+    DOCKER_IMAGE_BACKEND: str
+    DOCKER_IMAGE_FRONTEND: str
 
     class Config:
         env_file = ".env"
-        env_file_encoding = "utf-8"
+        case_sensitive = False
 
 settings = Settings()
