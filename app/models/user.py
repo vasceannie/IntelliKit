@@ -23,6 +23,7 @@ class User(Base):
     is_superuser = Column(Boolean, default=False)
     first_name = Column(String, nullable=True)
     last_name = Column(String, nullable=True)
+
     @property
     def full_name(self):
-        return f"{self.first_name} {self.last_name}".strip()
+        return f"{self.first_name or ''} {self.last_name or ''}".strip()
