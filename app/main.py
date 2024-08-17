@@ -5,7 +5,6 @@ from sqlalchemy.orm import sessionmaker
 
 from app.db import Base
 from app.core.config import settings
-from app.api.endpoints import data as data_import
 from app.api.endpoints import api_router
 from app.db.session import engine
 import sys

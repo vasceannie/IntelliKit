@@ -9,14 +9,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app import crud, models, schemas
 from app.core import security
 from app.core.config import settings
-from app.db.session import AsyncSessionLocal
+from app.db.session import get_db
 
 reusable_oauth2 = OAuth2PasswordBearer(
     tokenUrl=f"{settings.API_V1_STR}/login/access-token"
 )
 
 async def get_db() -> AsyncSession:
-    async with AsyncSessionLocal() as session:
+    async with get_db() as session:
         yield session
 
 async def get_current_user(

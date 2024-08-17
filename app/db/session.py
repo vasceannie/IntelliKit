@@ -20,7 +20,11 @@ if DATABASE_URL and DATABASE_URL.startswith("postgresql://"):
 
 # The line `engine = create_async_engine(DATABASE_URL, echo=True)` is creating an asynchronous
 # database engine using SQLAlchemy.
-engine = create_async_engine(DATABASE_URL, echo=True)
+engine = create_async_engine(DATABASE_URL, echo=True, future=True)
 # `AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)` is creating
 # a session factory that will produce asynchronous database sessions.
 AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+
+async def get_db() -> AsyncSession:
+    async with AsyncSessionLocal() as session:
+        yield session
