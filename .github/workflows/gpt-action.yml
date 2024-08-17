@@ -1,37 +1,23 @@
-name: GPT Task
+name: Run GPT Task
 
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
-  schedule:
-    - cron: '0 0 * * *'
-
+on: [push]
 
 jobs:
-  gpt_job:
+  run-gpt-task:
     runs-on: ubuntu-latest
-    
-    env:
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-      
-    - name: Install dependencies
-      run: pip install -r requirements.txt
-      
-    - name: Set up OpenAI API Key
-      run: echo "OPENAI_API_KEY=$YOUR_API_KEY" >> $GITHUB_ENV
-      
-    - name: Run GPT Task
-      run: |
-        echo "Running GPT Task"
-        # Here, you can invoke a script or a command that interacts with GPT
-        # For example, you can trigger a Python script that connects to the OpenAI API
-        
-        python run_gpt_task.py
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Run GPT Task
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}  # Use the secret
+        run: poetry run python run_gpt_task.py
