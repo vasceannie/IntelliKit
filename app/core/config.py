@@ -49,6 +49,7 @@ class Settings(BaseSettings):
     DOCKER_IMAGE_FRONTEND: str
     API_V1_STR: str = "/api/v1"
     SONAR_TOKEN: str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int
 
     class Config:
         env_file = ".env"

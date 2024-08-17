@@ -1,4 +1,4 @@
-from typing import Generator
+from typing import AsyncGenerator
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
@@ -9,14 +9,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app import crud, models, schemas
 from app.core import security
 from app.core.config import settings
-from app.db.session import get_db
+from app.db.session import AsyncSessionLocal
 
 reusable_oauth2 = OAuth2PasswordBearer(
     tokenUrl=f"{settings.API_V1_STR}/login/access-token"
 )
 
-async def get_db() -> AsyncSession:
-    async with get_db() as session:
+async def get_db() -> AsyncGenerator[AsyncSession, None]:
+    async with AsyncSessionLocal() as session:
         yield session
 
 async def get_current_user(
