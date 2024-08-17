@@ -6,6 +6,7 @@ from app import crud, models, schemas
 from app.api import deps
 
 router = APIRouter()
+VALIDATION_RULE_NOT_FOUND = "Validation rule not found"
 
 @router.post("/", response_model=schemas.ValidationRule)
 def create_validation_rule(
@@ -33,7 +34,8 @@ def read_validation_rule(
 ):
     rule = crud.validation_rule.get(db=db, id=rule_id)
     if not rule:
-        raise HTTPException(status_code=404, detail="Validation rule not found")
+
+        raise HTTPException(status_code=404, detail=VALIDATION_RULE_NOT_FOUND)
     return rule
 
 @router.put("/{rule_id}", response_model=schemas.ValidationRule)
@@ -45,7 +47,7 @@ def update_validation_rule(
 ):
     rule = crud.validation_rule.get(db=db, id=rule_id)
     if not rule:
-        raise HTTPException(status_code=404, detail="Validation rule not found")
+        raise HTTPException(status_code=404, detail=VALIDATION_RULE_NOT_FOUND)
     rule = crud.validation_rule.update(db=db, db_obj=rule, obj_in=rule_in)
     return rule
 
@@ -57,6 +59,6 @@ def delete_validation_rule(
 ):
     rule = crud.validation_rule.get(db=db, id=rule_id)
     if not rule:
-        raise HTTPException(status_code=404, detail="Validation rule not found")
+        raise HTTPException(status_code=404, detail=VALIDATION_RULE_NOT_FOUND)
     rule = crud.validation_rule.remove(db=db, id=rule_id)
     return rule

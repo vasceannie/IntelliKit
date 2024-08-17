@@ -24,12 +24,12 @@ def event_loop():
 @pytest.fixture(scope="module")
 async def test_app():
     test_engine = create_async_engine(TEST_DATABASE_URL, echo=True)
-    TestingSessionLocal = sessionmaker(
+    testing_session_local = sessionmaker(
         test_engine, class_=AsyncSession, expire_on_commit=False
     )
 
     async def override_get_db():
-        async with TestingSessionLocal() as session:
+        async with testing_session_local() as session:
             yield session
 
     app.dependency_overrides[get_db] = override_get_db
