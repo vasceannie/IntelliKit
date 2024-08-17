@@ -18,7 +18,7 @@ if not DATABASE_URL:
 if DATABASE_URL.startswith("postgresql://"):
     DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://", 1)
 
-# The line `engine = create_async_engine(DATABASE_URL, echo=True)` is creating an asynchronous
+# The line `engine = create_async_engine(DATABASE_URL, echo=True, future=True)` is creating an asynchronous
 # database engine using SQLAlchemy.
 engine = create_async_engine(DATABASE_URL, echo=True, future=True)
 # `AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)` is creating

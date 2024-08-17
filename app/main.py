@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
-
+from fastapi.middleware.cors import CORSMiddleware
 from app.db import Base
 from app.core.config import settings
 from app.api.endpoints import api_router
@@ -31,6 +31,13 @@ app.include_router(api_router, prefix=settings.API_V1_STR)
 
 @app.get("/")
 async def root():
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
     return {"message": "Hello World"}
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Adjust this to your frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)

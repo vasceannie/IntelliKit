@@ -1,7 +1,7 @@
 from typing import Any, Dict, Optional, Union
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, update
+from sqlalchemy.future import select
 
 from app.core.security import get_password_hash, verify_password
 from app.crud.base import CRUDBase
@@ -10,9 +10,9 @@ from app.schemas.user import UserCreate, UserUpdate
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
     async def get_by_email(self, db: AsyncSession, *, email: str) -> Optional[User]:
-        stmt = select(User).where(User.email == email)
-        result = await db.execute(stmt)
-        return result.scalar_one_or_none()
+        query = select(User).filter(User.email == email)
+        result = await db.execute(query)
+        return result.scalars().first()
 
     async def create(self, db: AsyncSession, *, obj_in: UserCreate) -> User:
         db_obj = User(
@@ -37,16 +37,13 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             hashed_password = get_password_hash(update_data["password"])
             del update_data["password"]
             update_data["hashed_password"] = hashed_password
-        
-        stmt = update(User).where(User.id == db_obj.id).values(**update_data)
-        await db.execute(stmt)
-        await db.commit()
-        await db.refresh(db_obj)
-        return db_obj
+        return await super().update(db, db_obj=db_obj, obj_in=update_data)
 
     async def authenticate(self, db: AsyncSession, *, email: str, password: str) -> Optional[User]:
         user = await self.get_by_email(db, email=email)
-        if not user or not verify_password(password, user.hashed_password):
+        if not user:
+            return None
+        if not verify_password(password, user.hashed_password):
             return None
         return user
 
@@ -56,4 +53,5 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
     def is_superuser(self, user: User) -> bool:
         return user.is_superuser
 
-user = CRUDUser(User)
+# Move this line to the bottom of the file
+crud_user = CRUDUser(User)

@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Any, Union
 
 import jwt
@@ -16,12 +16,13 @@ def create_access_token(
 ) -> str:
     try:
         if expires_delta:
-            expire = datetime.now() + expires_delta
+            expire = datetime.now(timezone.utc) + expires_delta
         else:
-            expire = datetime.now() + timedelta(
+            expire = datetime.now(timezone.utc) + timedelta(
                 minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES
             )
-        to_encode = {"exp": expire, "sub": str(subject)}
+        to_encode = {"exp": expire, "sub": str(subject), "iat": datetime.now(timezone.utc)}
+        print(f"Creating token with expiration: {expire}")
         encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=ALGORITHM)
         return encoded_jwt
     except Exception as e:
