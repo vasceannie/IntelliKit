@@ -48,6 +48,7 @@ class Settings(BaseSettings):
     DOCKER_IMAGE_BACKEND: str
     DOCKER_IMAGE_FRONTEND: str
     API_V1_STR: str = "/api/v1"
+    SONAR_TOKEN: str
 
     class Config:
         env_file = ".env"
