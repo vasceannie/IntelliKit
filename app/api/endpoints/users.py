@@ -1,10 +1,10 @@
 from typing import Any, List
 
-from fastapi import APIRouter, Body, Depends, HTTPException
+from fastapi import APIRouter, Body, Depends, HTTPException, Header
 from fastapi.encoders import jsonable_encoder
 from pydantic import EmailStr
 from sqlalchemy.orm import Session
-
+from app.api.deps import get_current_user
 from app import crud, models, schemas
 from app.api import deps
 from app.core.config import settings
@@ -16,7 +16,7 @@ def read_users(
     db: Session = Depends(deps.get_db),
     skip: int = 0,
     limit: int = 100,
-    current_user: models.User = Depends(deps.get_current_active_superuser),
+    current_user: models.User = Depends(get_current_user),
 ) -> Any:
     """
     Retrieve users.
@@ -70,8 +70,10 @@ def update_user_me(
 def read_user_me(
     db: Session = Depends(deps.get_db),
     current_user: models.User = Depends(deps.get_current_active_user),
+    authorization: str = Header(None)
 ) -> Any:
     """
-    Get current user.
+    Get current user and print the authorization header.
     """
+    print(f"Authorization header: {authorization}")
     return current_user
