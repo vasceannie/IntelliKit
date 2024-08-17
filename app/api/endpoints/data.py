@@ -1,7 +1,7 @@
 from fastapi import APIRouter, File, UploadFile, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
-from .. import models, schemas
-from ..database import get_db
+from app import models, schemas
+from app.api import deps
 import csv
 import io
 from datetime import datetime
@@ -13,7 +13,7 @@ router = APIRouter()
 
 
 @router.post("/import/", response_model=schemas.ImportedData)
-async def data_import_router(file: UploadFile = File(...), db: AsyncSession = Depends(get_db)):
+async def data_import_router(file: UploadFile = File(...), db: AsyncSession = Depends(deps.get_db)):
     """
     Import data from a CSV or XLSX file and store it in the database.
 

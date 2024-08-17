@@ -28,7 +28,7 @@ Note:
 """
 
 DATABASE_URL = os.environ.get(
-    "DATABASE_URL", "postgresql+asyncpg://trav:pass@localhost:5432/postgres"
+    "DATABASE_URL", "postgresql+asyncpg://overlord:password@localhost:5432/diqs"
 )
 
 # Create the async SQLAlchemy engine

@@ -6,12 +6,15 @@ import pytest
 # in Python.
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
-from app.database import Base
+from app.db import Base
 import logging
+from dotenv import load_dotenv
 
-DATABASE_URL = os.getenv(
-    "DATABASE_URL", "postgresql+asyncpg://trav:pass@localhost:5432/postgres"
-)
+load_dotenv()
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL environment variable is not set")
 
 test_engine = create_async_engine(DATABASE_URL, echo=True)
 TestingSessionLocal = sessionmaker(

@@ -7,19 +7,12 @@ from app.db import Base
 from app.core.config import settings
 from app.api.endpoints import data as data_import
 from app.api.endpoints import api_router
-
+from app.db.session import engine
 import sys
 import os
 
 sys.path.append(os.path.abspath('app'))
 
-# Create async engine
-engine = create_async_engine(str(settings.DATABASE_URL), echo=True)
-
-# Create async sessionmaker
-AsyncSessionLocal = sessionmaker(
-    engine, class_=AsyncSession, expire_on_commit=False, autoflush=False,
-)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -32,7 +25,7 @@ async def lifespan(app: FastAPI):
     # Shutdown
     await engine.dispose()
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(title=settings.PROJECT_NAME)
 
 # Include routers
 app.include_router(api_router, prefix=settings.API_V1_STR)

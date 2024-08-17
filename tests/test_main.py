@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 from app.main import app
 
-TEST_DATABASE_URL = "postgresql+asyncpg://trav:pass@localhost:5432/postgres"
+TEST_DATABASE_URL = TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL", "postgresql+asyncpg://overlord:password@localhost:5432/diqs")
 
 
 @pytest.fixture(scope="module")

@@ -47,6 +47,7 @@ class Settings(BaseSettings):
     SENTRY_DSN: str
     DOCKER_IMAGE_BACKEND: str
     DOCKER_IMAGE_FRONTEND: str
+    API_V1_STR: str = "/api/v1"
 
     class Config:
         env_file = ".env"
