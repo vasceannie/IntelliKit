@@ -2,11 +2,12 @@ import pytest
 from httpx import ASGITransport, AsyncClient
 import pytest
 from fastapi import FastAPI
-from app.routers.data_import import router as data_import_router
-from app.database import get_db, Base, init_db
+from app.routers import router as data_import_router
+from app.db import get_db, Base, init_db
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 from app.main import app
+import os
 
 TEST_DATABASE_URL = TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL", "postgresql+asyncpg://overlord:password@localhost:5432/diqs")
 
