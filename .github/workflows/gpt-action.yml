@@ -1,0 +1,27 @@
+name: GPT Task
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  gpt_job:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Run GPT Task
+      run: |
+        echo "Running GPT Task"
+        # Here, you can invoke a script or a command that interacts with GPT
+        # For example, you can trigger a Python script that connects to the OpenAI API
+        
+        python run_gpt_task.py
