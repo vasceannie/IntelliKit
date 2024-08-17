@@ -1,4 +1,4 @@
-fastapi[all]~=0.113.0
+fastapi[all]~=0.112.1
 sqlalchemy~=2.0.36
 alembic~=1.13.5
 asyncpg~=0.29.0
