@@ -18,7 +18,17 @@ async def login_access_token(
     form_data: OAuth2PasswordRequestForm = Depends()
 ) -> Any:
     """
-    OAuth2 compatible token login, get a JWT for future requests
+    Authenticate a user and return an access token using OAuth2 password flow.
+
+    Args:
+        db (AsyncSession): The database session.
+        form_data (OAuth2PasswordRequestForm): The form containing user credentials.
+
+    Raises:
+        HTTPException: If the login fails due to incorrect credentials.
+    
+    Returns:
+        dict: A dictionary containing the access token and its type.
     """
     try:
         user = await crud.user.authenticate(

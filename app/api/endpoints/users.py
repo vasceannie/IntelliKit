@@ -4,6 +4,7 @@ from fastapi import APIRouter, Body, Depends, HTTPException, Header
 from fastapi.encoders import jsonable_encoder
 from pydantic import EmailStr
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.exc import IntegrityError
 from app import crud, models, schemas
 from app.api import deps
 from app.core.config import settings
@@ -18,7 +19,15 @@ async def read_users(
     current_user: models.User = Depends(deps.get_current_active_superuser),
 ) -> Any:
     """
-    Retrieve users.
+    Retrieve a list of users.
+
+    Args:
+        db (AsyncSession): The database session.
+        skip (int): Number of records to skip (for pagination).
+        limit (int): Maximum number of records to return.
+
+    Returns:
+        List[schemas.User]: A list of users.
     """
     users = await crud.user.get_multi(db, skip=skip, limit=limit)
     return users
@@ -31,10 +40,20 @@ async def create_user(
     current_user: models.User = Depends(deps.get_current_active_superuser),
 ) -> Any:
     """
-    Create new user.
+    Create a new user.
+
+    Args:
+        db (AsyncSession): The database session.
+        user_in (schemas.UserCreate): User data to create.
+        current_user (models.User): The currently authenticated superuser.
+
+    Raises:
+        HTTPException: If the user already exists or if there's a creation error.
+
+    Returns:
+        schemas.User: The created user.
     """
     try:
-        # First, check if the user already exists
         existing_user = await crud.user.get_by_email(db, email=user_in.email)
         if existing_user:
             raise HTTPException(
@@ -42,12 +61,9 @@ async def create_user(
                 detail="User with this email already exists",
             )
         
-        # If the user doesn't exist, create a new one
         user = await crud.user.create(db, obj_in=user_in)
         return user
     except IntegrityError:
-        # If an IntegrityError is raised, it means the user was created by another request
-        # between our check and creation attempt
         await db.rollback()
         raise HTTPException(
             status_code=400,
@@ -70,7 +86,17 @@ async def update_user_me(
     current_user: models.User = Depends(deps.get_current_active_user),
 ) -> Any:
     """
-    Update own user.
+    Update the current user's profile.
+
+    Args:
+        db (AsyncSession): The database session.
+        password (str): New password for the user.
+        full_name (str): New full name for the user.
+        email (EmailStr): New email for the user.
+        current_user (models.User): The currently authenticated user.
+
+    Returns:
+        schemas.User: The updated user.
     """
     current_user_data = jsonable_encoder(current_user)
     user_in = schemas.UserUpdate(**current_user_data)
@@ -90,7 +116,15 @@ async def read_user_me(
     authorization: str = Header(None)
 ) -> Any:
     """
-    Get current user and print the authorization header.
+    Retrieve the currently authenticated user's details.
+
+    Args:
+        db (AsyncSession): The database session.
+        current_user (models.User): The currently authenticated user.
+        authorization (str): The authorization header value.
+
+    Returns:
+        models.User: The currently authenticated user.
     """
     print(f"Authorization header: {authorization}")
     return current_user

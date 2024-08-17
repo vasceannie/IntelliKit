@@ -11,7 +11,6 @@ import json
 
 router = APIRouter()
 
-
 @router.post("/import/", response_model=schemas.ImportedData)
 async def data_import_router(file: UploadFile = File(...), db: AsyncSession = Depends(deps.get_db)):
     """
@@ -27,7 +26,7 @@ async def data_import_router(file: UploadFile = File(...), db: AsyncSession = De
     Raises:
         HTTPException: If the file format is unsupported or there's an error in reading the file.
     """
-    # Check file extension
+    # Validate file extension
     file_extension = file.filename.split('.')[-1].lower()
     
     if file_extension not in ['csv', 'xlsx']:
@@ -36,6 +35,7 @@ async def data_import_router(file: UploadFile = File(...), db: AsyncSession = De
     content = await file.read()
     
     if file_extension == 'csv':
+        # Detect file encoding and read CSV file
         detected = chardet.detect(content)
         encoding = detected['encoding'] if detected['encoding'] else 'utf-8'
         try:
@@ -43,15 +43,17 @@ async def data_import_router(file: UploadFile = File(...), db: AsyncSession = De
             csv_reader = csv.DictReader(io.StringIO(csv_content))
             data = list(csv_reader)
         except UnicodeDecodeError:
+            # Handle decoding errors
             raise HTTPException(status_code=400, detail="Unable to decode the CSV file. Please check the file encoding.")
-    else:  # xlsx
+    else:  # Handle XLSX files
         try:
             df = pd.read_excel(io.BytesIO(content))
             data = df.to_dict('records')
         except Exception as e:
+            # Handle errors in reading XLSX file
             raise HTTPException(status_code=400, detail=f"Error reading XLSX file: {str(e)}")
 
-    # Convert the data to JSON string, then to bytes
+    # Convert the data to JSON string, then to bytes for storage
     json_data = json.dumps(data).encode('utf-8')
 
     db_imported_data = models.ImportedData(

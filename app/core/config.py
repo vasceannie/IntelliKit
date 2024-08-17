@@ -3,7 +3,7 @@ Configuration Module
 
 This module defines the application's configuration settings using Pydantic's BaseSettings.
 
-The Settings class includes:
+The Settings class includes various settings related to:
 - Database configuration (DATABASE_URL)
 - API version prefix (API_V1_STR)
 - Other application-specific settings (commented out as examples)
@@ -25,7 +25,7 @@ Note:
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    # Database configuration
+    # Database configuration and application settings
     DATABASE_URL: str
     SECRET_KEY: str
     DOMAIN: str
@@ -47,13 +47,14 @@ class Settings(BaseSettings):
     SENTRY_DSN: str
     DOCKER_IMAGE_BACKEND: str
     DOCKER_IMAGE_FRONTEND: str
-    API_V1_STR: str = "/api/v1"
+    API_V1_STR: str = "/api/v1"  # API version prefix
     SONAR_TOKEN: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int
     OPENAI_API_KEY: str
 
     class Config:
-        env_file = ".env"
-        case_sensitive = False
+        env_file = ".env"  # Load settings from .env file
+        case_sensitive = False  # Environment variable names are case insensitive
 
+# Create a global instance of settings
 settings = Settings()
