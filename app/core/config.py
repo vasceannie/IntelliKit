@@ -22,7 +22,10 @@ Note:
     with the necessary configuration values.
 """
 
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class Settings(BaseSettings):
     # Database configuration and application settings
@@ -47,14 +50,18 @@ class Settings(BaseSettings):
     SENTRY_DSN: str
     DOCKER_IMAGE_BACKEND: str
     DOCKER_IMAGE_FRONTEND: str
-    API_V1_STR: str = "/api/v1"  # API version prefix
+    API_V1_STR: str
     SONAR_TOKEN: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int
     OPENAI_API_KEY: str
-
-    class Config:
-        env_file = ".env"  # Load settings from .env file
-        case_sensitive = False  # Environment variable names are case insensitive
+    SEND_EMAILS: bool
+    TEST_USER: str
+    TEST_PASSWORD: str
+    TEST_DATABASE_URL: str
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        case_sensitive=False
+    )
 
 # Create a global instance of settings
 settings = Settings()

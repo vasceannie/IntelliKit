@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
 import uuid
+from pydantic import ConfigDict
 
 class ImportedDataBase(BaseModel):
     file_name: str
@@ -14,8 +15,7 @@ class ImportedData(ImportedDataBase):
     uploaded_at: datetime
     data_content: Optional[bytes]
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class ImportedDataUpdate(ImportedDataBase):
     data_content: Optional[bytes] = None

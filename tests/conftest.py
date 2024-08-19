@@ -1,47 +1,42 @@
 import os
+from dotenv import load_dotenv
 import pytest
-# The line `from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession` is importing the
-# `create_async_engine` function and the `AsyncSession` class from the `sqlalchemy.ext.asyncio`
-# module. These are used for working with asynchronous database operations in SQLAlchemy with asyncio
-# in Python.
+import pytest_asyncio
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
-from app.db import Base
-import logging
-from dotenv import load_dotenv
-
+from app.db.base_class import Base
+import pytest
+from httpx import AsyncClient
+from app.main import app
+# Load environment variables from .env file
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-if not DATABASE_URL:
-    raise ValueError("DATABASE_URL environment variable is not set")
+def get_test_database_url():
+    test_db_url = os.getenv("TEST_DATABASE_URL")
+    if not test_db_url:
+        raise ValueError("TEST_DATABASE_URL environment variable is not set")
+    return test_db_url
 
-test_engine = create_async_engine(DATABASE_URL, echo=True)
-TestingSessionLocal = sessionmaker(
-    test_engine, class_=AsyncSession, expire_on_commit=False
-)
-
-
-@pytest.fixture(scope="function")
-async def test_db():
-    async with test_engine.begin() as conn:
-        await conn.run_sync(Base.metadata.drop_all)
+@pytest_asyncio.fixture(scope="module")
+async def async_engine():
+    engine = create_async_engine(get_test_database_url(), echo=True)
+    async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
-    yield
-    async with test_engine.begin() as conn:
+    yield engine
+    async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
+    await engine.dispose()
 
-
-@pytest.fixture(scope="function")
-async def test_session(test_db):
-    async with TestingSessionLocal() as session:
+@pytest_asyncio.fixture(scope="function")
+async def db_session(async_engine):
+    async_session_maker = sessionmaker(
+        async_engine, class_=AsyncSession, expire_on_commit=False
+    )
+    async with async_session_maker() as session:
         yield session
+        await session.rollback()
 
-@pytest.fixture(autouse=True, scope="module")
-async def initialize_database():
-    logging.info("Initializing database...")
-    async with test_engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-    logging.info("Database initialized successfully.")
-
-pytest.register_assert_rewrite('fastapi.testclient')
+@pytest.fixture(scope="module")
+async def client():
+    async with AsyncClient(app=app, base_url="http://test") as ac:
+        yield ac

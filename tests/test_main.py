@@ -1,16 +1,16 @@
 import pytest
 from httpx import ASGITransport, AsyncClient
 import pytest
-from fastapi import FastAPI
-from app.routers import router as data_import_router
-from app.db import get_db, Base, init_db
+from fastapi import FastAPI, APIRouter
+from app.api.endpoints import data as data_import_router
+from app.db.base_class import get_db, Base, init_db
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
-from app.main import app
+from app.main import app as test_app
 import os
 
-TEST_DATABASE_URL = TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL", "postgresql+asyncpg://overlord:password@localhost:5432/diqs")
-
+TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL", "postgresql+asyncpg://overlord:password@localhost:5432/diqs_test")
+router = APIRouter()
 
 @pytest.fixture(scope="module")
 def event_loop():
@@ -32,15 +32,15 @@ async def test_app():
         async with testing_session_local() as session:
             yield session
 
-    app.dependency_overrides[get_db] = override_get_db
+    test_app.dependency_overrides[get_db] = override_get_db
 
     async with test_engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)
 
-    yield app
+    yield test_app
 
-    app.dependency_overrides.clear()
+    test_app.dependency_overrides.clear()
 
     async with test_engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
@@ -58,7 +58,7 @@ async def initialize_database():
 
 
 @pytest.mark.asyncio
-async def test_import_data(client):
+async def test_import_data(client: AsyncClient):
     csv_content = "name,email\nJohn,john@email.com\nJane,jane@email.com"
     files = {"file": ("test.csv", csv_content, "text/csv")}
     response = await client.post("/api/v1/import/", files=files)
@@ -79,7 +79,7 @@ async def test_import_data(client):
 
 
 @pytest.mark.asyncio
-async def test_import_data_invalid_file(client):
+async def test_import_data_invalid_file(client: AsyncClient):
     files = {"file": ("test.txt", "Invalid content", "text/plain")}
     response = await client.post("/api/v1/import/", files=files)
 

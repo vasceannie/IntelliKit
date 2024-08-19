@@ -6,34 +6,35 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import select
 
-from app.models import models
-from app.main import app
+from app.models import ImportedData
+from app.main import app as test_app
+from app.db.session import AsyncSession
 
 
 @pytest.fixture(scope="module")
-async def client(test_app):
+async def client(client: AsyncClient):
     async with AsyncClient(app=test_app, base_url="http://test") as ac:
         yield ac
 
 
-
 @pytest.mark.asyncio
-async def test_imported_data_model(test_db):
-    data = models.ImportedData(
+async def test_imported_data_model(db_session: AsyncSession):
+    data = ImportedData(
         file_name="test.csv", uploaded_at=datetime.now(), data_content={"key": "value"}
     )
-    test_db.add(data)
-    await test_db.commit()  # Ensure this is awaited
+    db_session.add(data)
+    await db_session.commit()
 
-    fetched_data = await test_db.execute(select(models.ImportedData)).first()
+    fetched_data = await db_session.execute(select(ImportedData))
+    fetched_data = fetched_data.scalars().first()
     assert fetched_data.file_name == "test.csv"
     assert isinstance(fetched_data.id, uuid.UUID)
     assert isinstance(fetched_data.uploaded_at, datetime)
     assert fetched_data.data_content == {"key": "value"}
 
-
-def test_import_data_invalid_file(client):
+@pytest.mark.asyncio
+async def test_import_data_invalid_file(client):
     files = {"file": ("test.txt", "Invalid content", "text/plain")}
-    response = client.post("/api/v1/import/", files=files)
+    response = await client.post("/api/v1/import/", files=files)
 
     assert response.status_code == 422  # Unprocessable Entity
