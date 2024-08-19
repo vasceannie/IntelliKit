@@ -38,7 +38,7 @@ async def test_imported_data_model(db_session: AsyncSession):
 @pytest.mark.asyncio
 async def test_import_data_invalid_file(client: AsyncClient):
     files = {"file": ("test.txt", "Invalid content", "text/plain")}
-    response = await client.post("/api/v1/import/", files=files)
+    response = await client.post("/import/", files=files)
     
     print(f"Response status: {response.status_code}")
     print(f"Response content: {response.content}")
