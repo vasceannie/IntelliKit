@@ -1,4 +1,5 @@
 from typing import Any, List
+import logging
 
 from fastapi import APIRouter, Body, Depends, HTTPException, Header
 from fastapi.encoders import jsonable_encoder
@@ -10,6 +11,7 @@ from app.api import deps
 from app.core.config import settings
 
 router = APIRouter()
+logger = logging.getLogger(__name__)
 
 @router.get("/", response_model=List[schemas.User])
 async def read_users(
@@ -29,7 +31,9 @@ async def read_users(
     Returns:
         List[schemas.User]: A list of users.
     """
+    logger.info(f"Retrieving users. Skip: {skip}, Limit: {limit}")
     users = await crud.user.get_multi(db, skip=skip, limit=limit)
+    logger.info(f"Retrieved {len(users)} users")
     return users
 
 @router.post("/", response_model=schemas.User)
@@ -53,23 +57,28 @@ async def create_user(
     Returns:
         schemas.User: The created user.
     """
+    logger.info(f"Attempting to create user with email: {user_in.email}")
     try:
         existing_user = await crud.user.get_by_email(db, email=user_in.email)
         if existing_user:
+            logger.warning(f"User with email {user_in.email} already exists")
             raise HTTPException(
                 status_code=400,
                 detail="User with this email already exists",
             )
         
         user = await crud.user.create(db, obj_in=user_in)
+        logger.info(f"User created successfully: {user.email}")
         return user
     except IntegrityError:
+        logger.error(f"IntegrityError: User with email {user_in.email} already exists")
         await db.rollback()
         raise HTTPException(
             status_code=400,
             detail="User with this email already exists",
         )
     except Exception as e:
+        logger.error(f"Error creating user: {str(e)}")
         await db.rollback()
         raise HTTPException(
             status_code=500,
@@ -98,15 +107,22 @@ async def update_user_me(
     Returns:
         schemas.User: The updated user.
     """
+    logger.info(f"Updating user profile for user: {current_user.email}")
     current_user_data = jsonable_encoder(current_user)
     user_in = schemas.UserUpdate(**current_user_data)
     if password is not None:
         user_in.password = password
-    if full_name is not None:
-        user_in.first_name, user_in.last_name = full_name.split(maxsplit=1)
+        logger.info("Password update requested")
+    if full_name is not None and isinstance(full_name, str):
+        name_parts = full_name.split(maxsplit=1)
+        user_in.first_name = name_parts[0]
+        user_in.last_name = name_parts[1] if len(name_parts) > 1 else ""
+        logger.info("Full name update requested")
     if email is not None:
         user_in.email = email
+        logger.info("Email update requested")
     user = await crud.user.update(db, db_obj=current_user, obj_in=user_in)
+    logger.info(f"User profile updated successfully: {user.email}")
     return user
 
 @router.get("/me", response_model=schemas.User)
@@ -126,5 +142,6 @@ async def read_user_me(
     Returns:
         models.User: The currently authenticated user.
     """
-    print(f"Authorization header: {authorization}")
+    logger.info(f"Retrieving user details for: {current_user.email}")
+    logger.debug(f"Authorization header: {authorization}")
     return current_user

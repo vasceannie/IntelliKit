@@ -6,7 +6,7 @@ from app.api.endpoints import data as data_import_router
 from app.db.base_class import get_db, Base, init_db
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
-from app.main import app as test_app
+from app.main import app as fastapi_app
 import os
 
 TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL", "postgresql+asyncpg://overlord:password@localhost:5432/diqs_test")
@@ -32,15 +32,15 @@ async def test_app():
         async with testing_session_local() as session:
             yield session
 
-    test_app.dependency_overrides[get_db] = override_get_db
+    fastapi_app.dependency_overrides[get_db] = override_get_db
 
     async with test_engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)
 
-    yield test_app
+    yield fastapi_app
 
-    test_app.dependency_overrides.clear()
+    fastapi_app.dependency_overrides.clear()
 
     async with test_engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
@@ -48,7 +48,7 @@ async def test_app():
 
 @pytest.fixture(scope="function")
 async def client(test_app):
-    async with AsyncClient(transport=ASGITransport(app=test_app), base_url="http://test") as ac:
+    async with AsyncClient(app=test_app, base_url="http://test") as ac:
         yield ac
 
 

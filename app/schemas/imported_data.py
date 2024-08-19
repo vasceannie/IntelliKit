@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, Dict, Any, List
 from datetime import datetime
 import uuid
 from pydantic import ConfigDict
@@ -19,3 +19,13 @@ class ImportedData(ImportedDataBase):
 
 class ImportedDataUpdate(ImportedDataBase):
     data_content: Optional[bytes] = None
+
+class ImportedDataResponse(BaseModel):
+    id: uuid.UUID
+    file_name: str
+    uploaded_at: datetime
+    total_rows: int
+    data_sample: List[Dict[str, Any]]
+
+    class Config:
+        from_attributes = True

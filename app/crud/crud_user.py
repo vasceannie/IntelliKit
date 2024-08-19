@@ -48,7 +48,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             obj_in (UserCreate): Data to create the user.
 
         Raises:
-            ValueError: If a user with the given email already exists.
+            IntegrityError: If a user with the given email already exists.
 
         Returns:
             User: The created user.
@@ -66,9 +66,9 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             await db.commit()
             await db.refresh(db_obj)
             return db_obj
-        except IntegrityError:
+        except IntegrityError as e:
             await db.rollback()
-            raise ValueError("User with this email already exists")
+            raise IntegrityError("User with this email already exists", params=e.params, orig=e.orig) from e
 
     async def update(
         self, db: AsyncSession, *, db_obj: User, obj_in: Union[UserUpdate, Dict[str, Any]]
@@ -113,7 +113,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             return None
         return user
 
-    def is_active(self, user: User) -> bool:
+    async def is_active(self, user: User) -> bool:
         """
         Check if a user is active.
 
@@ -125,7 +125,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         """
         return user.is_active
 
-    def is_superuser(self, user: User) -> bool:
+    async def is_superuser(self, user: User) -> bool:
         """
         Check if a user has superuser privileges.
 
