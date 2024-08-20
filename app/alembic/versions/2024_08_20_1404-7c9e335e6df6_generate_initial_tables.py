@@ -1,8 +1,8 @@
-"""follow up after changes
+"""Generate initial tables
 
-Revision ID: 3a8d04f624c8
-Revises: 50df4961efee
-Create Date: 2024-08-20 11:52:13.708656
+Revision ID: 7c9e335e6df6
+Revises: 925f61b1c04f
+Create Date: 2024-08-20 14:04:48.674140
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '3a8d04f624c8'
-down_revision = '50df4961efee'
+revision = '7c9e335e6df6'
+down_revision = '925f61b1c04f'
 branch_labels = None
 depends_on = None
 

@@ -8,7 +8,6 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app.models import Base
 from httpx import AsyncClient
-from fastapi.testclient import TestClient
 from app.main import app as fastapi_app
 from app.auth import dependencies as deps
 from app.config import settings
@@ -24,8 +23,8 @@ def get_test_database_url():
         raise ValueError("TEST_DATABASE_URL environment variable is not set")
     return test_db_url
 
-@pytest.fixture(scope="module")
-def async_engine():
+@pytest_asyncio.fixture(scope="module")
+async def async_engine():
     engine = create_async_engine(get_test_database_url(), echo=True)
     yield engine
     engine.dispose()
@@ -46,7 +45,7 @@ async def db_session(async_engine):
     async with async_engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
 
-@pytest_asyncio.fixture(scope="module")
+@pytest_asyncio.fixture(scope="function")
 async def test_app(db_session):
     async def override_get_db():
         yield db_session
@@ -55,9 +54,10 @@ async def test_app(db_session):
     yield fastapi_app
     fastapi_app.dependency_overrides.clear()
 
-@pytest.fixture(scope="module")
-def client(test_app):
-    return TestClient(test_app)
+@pytest_asyncio.fixture(scope="function")
+async def client(test_app):
+    async with AsyncClient(app=test_app, base_url="http://test") as client:
+        yield client
 
 @pytest_asyncio.fixture(scope="function")
 async def test_user(db_session):
@@ -84,3 +84,5 @@ async def test_group(db_session):
     group_create = GroupCreate(name="test_group", description="Test group")
     group = await auth_service.create_group(db_session, group_create)
     return group
+
+pytest_plugins = ['pytest_asyncio']

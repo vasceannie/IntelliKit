@@ -10,7 +10,11 @@ from alembic import context
 # Add the root directory of your project to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
+# Import all models
 from app.models import Base
+from app.auth.models import User, Role, Permission, Group
+from app.validator.models import ImportedData, ValidationResult
+
 from app.config import settings
 
 # this is the Alembic Config object, which provides

@@ -17,6 +17,10 @@ async def create_user(db: AsyncSession, user: schemas.UserCreate):
     db.add(db_user)
     await db.commit()
     await db.refresh(db_user)
+    
+    # Eagerly load roles and groups
+    await db.execute(select(User).options(selectinload(User.roles), selectinload(User.groups)).where(User.id == db_user.id))
+    
     return db_user
 
 async def create_role(db: AsyncSession, role: schemas.RoleCreate):

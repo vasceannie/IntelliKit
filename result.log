@@ -1,34 +1,1595 @@
-INFO     sqlalchemy.engine.Engine:base.py:1846 select pg_catalog.version()
-INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
-INFO     sqlalchemy.engine.Engine:base.py:1846 select current_schema()
-INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
-INFO     sqlalchemy.engine.Engine:base.py:1846 show standard_conforming_strings
-INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
-INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
-INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
-FROM users 
-WHERE users.email = $1::VARCHAR
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00044s] ('test@example.com',)
-WARNING  passlib.handlers.bcrypt:bcrypt.py:622 (trapped) error reading bcrypt version
-Traceback (most recent call last):
-  File "C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
-    version = _bcrypt.__about__.__version__
-              ^^^^^^^^^^^^^^^^^
-AttributeError: module 'bcrypt' has no attribute '__about__'
-INFO     sqlalchemy.engine.Engine:base.py:1846 INSERT INTO users (id, email, hashed_password, is_active, is_superuser, first_name, last_name, created_at, updated_at) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::BOOLEAN, $5::BOOLEAN, $6::VARCHAR, $7::VARCHAR, $8::TIMESTAMP WITHOUT TIME ZONE, $9::TIMESTAMP WITHOUT TIME ZONE)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00027s] (UUID('0a03d3ea-7dd9-419d-b9ca-67bbc6c9b309'), 'test@example.com', '$2b$12$yDkbOSJusMwmWNAsFgyA1uuSW7GaOoN/k4lyxGc61V/DWaspnNe3i', True, False, None, None, datetime.datetime(2024, 8, 20, 17, 35, 5, 182189), datetime.datetime(2024, 8, 20, 17, 35, 5, 182189))
-INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
-INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
-INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
-FROM users 
-WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00024s] (UUID('0a03d3ea-7dd9-419d-b9ca-67bbc6c9b309'),)
-INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT roles.id AS roles_id, roles.name AS roles_name, roles.description AS roles_description, roles.created_at AS roles_created_at, roles.updated_at AS roles_updated_at 
-FROM roles, user_role 
-WHERE $1::UUID = user_role.user_id AND roles.id = user_role.role_id
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00023s] (UUID('0a03d3ea-7dd9-419d-b9ca-67bbc6c9b309'),)
-INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT groups.id AS groups_id, groups.name AS groups_name, groups.description AS groups_description, groups.created_at AS groups_created_at, groups.updated_at AS groups_updated_at 
-FROM groups, user_group 
-WHERE $1::UUID = user_group.user_id AND groups.id = user_group.group_id
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00041s] (UUID('0a03d3ea-7dd9-419d-b9ca-67bbc6c9b309'),)
-INFO     sqlalchemy.engine.Engine:base.py:2704 ROLLBACK
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.3.2, pluggy-1.5.0
+rootdir: E:\RadianceNow.worktrees\master
+configfile: pytest.ini
+plugins: anyio-4.4.0, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 11 items
+
+tests/auth/test_main_auth.py::test_create_user ERROR                     [  9%]
+tests/auth/test_main_auth.py::test_user_login_and_protected_route ERROR  [ 18%]
+tests/auth/test_main_auth.py::test_user_role_assignment ERROR            [ 27%]
+tests/auth/test_main_auth.py::test_update_user ERROR                     [ 36%]
+tests/auth/test_main_auth.py::test_delete_user ERROR                     [ 45%]
+tests/normalizer/test_schemas.py::test_imported_data_schema 
+-------------------------------- live log call --------------------------------
+INFO     httpx:_client.py:1026 HTTP Request: POST http://testserver/api/v1/import/ "HTTP/1.1 404 Not Found"
+FAILED                                                                   [ 54%]
+tests/normalizer/test_schemas.py::test_validation_result_schema 
+-------------------------------- live log call --------------------------------
+INFO     httpx:_client.py:1026 HTTP Request: POST http://testserver/api/v1/validate/ "HTTP/1.1 404 Not Found"
+FAILED                                                                   [ 63%]
+tests/validator/test_models.py::test_imported_data_model FAILED          [ 72%]
+tests/validator/test_models.py::test_validation_result_model FAILED      [ 81%]
+tests/validator/test_models.py::test_create_validation_result FAILED     [ 90%]
+tests/validator/test_models_validator.py::test_create_validation_result FAILED [100%]
+
+=================================== ERRORS ====================================
+_____________________ ERROR at setup of test_create_user ______________________
+
+self = <sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_cursor object at 0x0000029B0AD0A800>
+operation = 'DELETE FROM validation_results', parameters = ()
+
+    async def _prepare_and_execute(self, operation, parameters):
+        adapt_connection = self._adapt_connection
+    
+        async with adapt_connection._execute_mutex:
+            if not adapt_connection._started:
+                await adapt_connection._start_transaction()
+    
+            if parameters is None:
+                parameters = ()
+    
+            try:
+>               prepared_stmt, attributes = await adapt_connection._prepare(
+                    operation, self._invalidate_schema_cache_asof
+                )
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:514: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:760: in _prepare
+    prepared_stmt = await self._connection.prepare(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\asyncpg\connection.py:636: in prepare
+    return await self._prepare(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\asyncpg\connection.py:654: in _prepare
+    stmt = await self._get_statement(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\asyncpg\connection.py:433: in _get_statement
+    statement = await self._protocol.prepare(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+>   ???
+E   asyncpg.exceptions.UndefinedTableError: relation "validation_results" does not exist
+
+asyncpg\protocol\protocol.pyx:166: UndefinedTableError
+
+The above exception was the direct cause of the following exception:
+
+self = <sqlalchemy.engine.base.Connection object at 0x0000029B0AD4B610>
+dialect = <sqlalchemy.dialects.postgresql.asyncpg.PGDialect_asyncpg object at 0x0000029B0ADAECD0>
+context = <sqlalchemy.dialects.postgresql.asyncpg.PGExecutionContext_asyncpg object at 0x0000029B0AD4B650>
+statement = <sqlalchemy.dialects.postgresql.asyncpg.PGCompiler_asyncpg object at 0x0000029B0ADD6610>
+parameters = [()]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -> CursorResult[Any]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        if self._has_events or self.engine._has_events:
+            for fn in self.dispatch.before_cursor_execute:
+                str_statement, effective_parameters = fn(
+                    self,
+                    cursor,
+                    str_statement,
+                    effective_parameters,
+                    context,
+                    context.executemany,
+                )
+    
+        if self._echo:
+            self._log_info(str_statement)
+    
+            stats = context._get_cache_stats()
+    
+            if not self.engine.hide_parameters:
+                self._log_info(
+                    "[%s] %r",
+                    stats,
+                    sql_util._repr_params(
+                        effective_parameters,
+                        batches=10,
+                        ismulti=context.executemany,
+                    ),
+                )
+            else:
+                self._log_info(
+                    "[%s] [SQL parameters hidden due to hide_parameters=True]",
+                    stats,
+                )
+    
+        evt_handled: bool = False
+        try:
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+>                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1967: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\default.py:941: in do_execute
+    cursor.execute(statement, parameters)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:572: in execute
+    self._adapt_connection.await_(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:550: in _prepare_and_execute
+    self._handle_exception(error)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:501: in _handle_exception
+    self._adapt_connection._handle_exception(error)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <AdaptedConnection <asyncpg.connection.Connection object at 0x0000029B0ADCAA70>>
+error = UndefinedTableError('relation "validation_results" does not exist')
+
+    def _handle_exception(self, error):
+        if self._connection.is_closed():
+            self._transaction = None
+            self._started = False
+    
+        if not isinstance(error, AsyncAdapt_asyncpg_dbapi.Error):
+            exception_mapping = self.dbapi._asyncpg_error_translate
+    
+            for super_ in type(error).__mro__:
+                if super_ in exception_mapping:
+                    translated_error = exception_mapping[super_](
+                        "%s: %s" % (type(error), error)
+                    )
+                    translated_error.pgcode = translated_error.sqlstate = (
+                        getattr(error, "sqlstate", None)
+                    )
+>                   raise translated_error from error
+E                   sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.ProgrammingError: <class 'asyncpg.exceptions.UndefinedTableError'>: relation "validation_results" does not exist
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:784: ProgrammingError
+
+The above exception was the direct cause of the following exception:
+
+db_session = <sqlalchemy.orm.session.AsyncSession object at 0x0000029B0ADAEF90>
+
+    @pytest_asyncio.fixture(autouse=True)
+    async def clear_database(db_session: AsyncSession):
+        async with db_session.begin():
+            for table in reversed(Base.metadata.sorted_tables):
+>               await db_session.execute(delete(table))
+
+tests\auth\test_main_auth.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\ext\asyncio\session.py:461: in execute
+    result = await greenlet_spawn(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:201: in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\orm\session.py:2362: in execute
+    return self._execute_internal(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\orm\session.py:2256: in _execute_internal
+    result = conn.execute(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1418: in execute
+    return meth(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\sql\elements.py:515: in _execute_on_connection
+    return connection._execute_clauseelement(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1640: in _execute_clauseelement
+    ret = self._execute_context(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1846: in _execute_context
+    return self._exec_single_context(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1986: in _exec_single_context
+    self._handle_dbapi_exception(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:2355: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1967: in _exec_single_context
+    self.dialect.do_execute(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\default.py:941: in do_execute
+    cursor.execute(statement, parameters)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:572: in execute
+    self._adapt_connection.await_(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:550: in _prepare_and_execute
+    self._handle_exception(error)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:501: in _handle_exception
+    self._adapt_connection._handle_exception(error)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <AdaptedConnection <asyncpg.connection.Connection object at 0x0000029B0ADCAA70>>
+error = UndefinedTableError('relation "validation_results" does not exist')
+
+    def _handle_exception(self, error):
+        if self._connection.is_closed():
+            self._transaction = None
+            self._started = False
+    
+        if not isinstance(error, AsyncAdapt_asyncpg_dbapi.Error):
+            exception_mapping = self.dbapi._asyncpg_error_translate
+    
+            for super_ in type(error).__mro__:
+                if super_ in exception_mapping:
+                    translated_error = exception_mapping[super_](
+                        "%s: %s" % (type(error), error)
+                    )
+                    translated_error.pgcode = translated_error.sqlstate = (
+                        getattr(error, "sqlstate", None)
+                    )
+>                   raise translated_error from error
+E                   sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedTableError'>: relation "validation_results" does not exist
+E                   [SQL: DELETE FROM validation_results]
+E                   (Background on this error at: https://sqlalche.me/e/20/f405)
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:784: ProgrammingError
+____________ ERROR at setup of test_user_login_and_protected_route ____________
+
+self = <sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_cursor object at 0x0000029B0ADBF760>
+operation = 'DELETE FROM validation_results', parameters = ()
+
+    async def _prepare_and_execute(self, operation, parameters):
+        adapt_connection = self._adapt_connection
+    
+        async with adapt_connection._execute_mutex:
+            if not adapt_connection._started:
+                await adapt_connection._start_transaction()
+    
+            if parameters is None:
+                parameters = ()
+    
+            try:
+>               prepared_stmt, attributes = await adapt_connection._prepare(
+                    operation, self._invalidate_schema_cache_asof
+                )
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:514: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:760: in _prepare
+    prepared_stmt = await self._connection.prepare(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\asyncpg\connection.py:636: in prepare
+    return await self._prepare(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\asyncpg\connection.py:654: in _prepare
+    stmt = await self._get_statement(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\asyncpg\connection.py:433: in _get_statement
+    statement = await self._protocol.prepare(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+>   ???
+E   asyncpg.exceptions.UndefinedTableError: relation "validation_results" does not exist
+
+asyncpg\protocol\protocol.pyx:166: UndefinedTableError
+
+The above exception was the direct cause of the following exception:
+
+self = <sqlalchemy.engine.base.Connection object at 0x0000029B0C807A50>
+dialect = <sqlalchemy.dialects.postgresql.asyncpg.PGDialect_asyncpg object at 0x0000029B0CA5DA50>
+context = <sqlalchemy.dialects.postgresql.asyncpg.PGExecutionContext_asyncpg object at 0x0000029B0C9F7190>
+statement = <sqlalchemy.dialects.postgresql.asyncpg.PGCompiler_asyncpg object at 0x0000029B0C9F6850>
+parameters = [()]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -> CursorResult[Any]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        if self._has_events or self.engine._has_events:
+            for fn in self.dispatch.before_cursor_execute:
+                str_statement, effective_parameters = fn(
+                    self,
+                    cursor,
+                    str_statement,
+                    effective_parameters,
+                    context,
+                    context.executemany,
+                )
+    
+        if self._echo:
+            self._log_info(str_statement)
+    
+            stats = context._get_cache_stats()
+    
+            if not self.engine.hide_parameters:
+                self._log_info(
+                    "[%s] %r",
+                    stats,
+                    sql_util._repr_params(
+                        effective_parameters,
+                        batches=10,
+                        ismulti=context.executemany,
+                    ),
+                )
+            else:
+                self._log_info(
+                    "[%s] [SQL parameters hidden due to hide_parameters=True]",
+                    stats,
+                )
+    
+        evt_handled: bool = False
+        try:
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+>                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1967: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\default.py:941: in do_execute
+    cursor.execute(statement, parameters)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:572: in execute
+    self._adapt_connection.await_(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:550: in _prepare_and_execute
+    self._handle_exception(error)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:501: in _handle_exception
+    self._adapt_connection._handle_exception(error)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <AdaptedConnection <asyncpg.connection.Connection object at 0x0000029B0B19D030>>
+error = UndefinedTableError('relation "validation_results" does not exist')
+
+    def _handle_exception(self, error):
+        if self._connection.is_closed():
+            self._transaction = None
+            self._started = False
+    
+        if not isinstance(error, AsyncAdapt_asyncpg_dbapi.Error):
+            exception_mapping = self.dbapi._asyncpg_error_translate
+    
+            for super_ in type(error).__mro__:
+                if super_ in exception_mapping:
+                    translated_error = exception_mapping[super_](
+                        "%s: %s" % (type(error), error)
+                    )
+                    translated_error.pgcode = translated_error.sqlstate = (
+                        getattr(error, "sqlstate", None)
+                    )
+>                   raise translated_error from error
+E                   sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.ProgrammingError: <class 'asyncpg.exceptions.UndefinedTableError'>: relation "validation_results" does not exist
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:784: ProgrammingError
+
+The above exception was the direct cause of the following exception:
+
+db_session = <sqlalchemy.orm.session.AsyncSession object at 0x0000029B0CA5FFD0>
+
+    @pytest_asyncio.fixture(autouse=True)
+    async def clear_database(db_session: AsyncSession):
+        async with db_session.begin():
+            for table in reversed(Base.metadata.sorted_tables):
+>               await db_session.execute(delete(table))
+
+tests\auth\test_main_auth.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\ext\asyncio\session.py:461: in execute
+    result = await greenlet_spawn(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:201: in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\orm\session.py:2362: in execute
+    return self._execute_internal(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\orm\session.py:2256: in _execute_internal
+    result = conn.execute(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1418: in execute
+    return meth(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\sql\elements.py:515: in _execute_on_connection
+    return connection._execute_clauseelement(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1640: in _execute_clauseelement
+    ret = self._execute_context(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1846: in _execute_context
+    return self._exec_single_context(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1986: in _exec_single_context
+    self._handle_dbapi_exception(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:2355: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1967: in _exec_single_context
+    self.dialect.do_execute(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\default.py:941: in do_execute
+    cursor.execute(statement, parameters)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:572: in execute
+    self._adapt_connection.await_(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:550: in _prepare_and_execute
+    self._handle_exception(error)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:501: in _handle_exception
+    self._adapt_connection._handle_exception(error)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <AdaptedConnection <asyncpg.connection.Connection object at 0x0000029B0B19D030>>
+error = UndefinedTableError('relation "validation_results" does not exist')
+
+    def _handle_exception(self, error):
+        if self._connection.is_closed():
+            self._transaction = None
+            self._started = False
+    
+        if not isinstance(error, AsyncAdapt_asyncpg_dbapi.Error):
+            exception_mapping = self.dbapi._asyncpg_error_translate
+    
+            for super_ in type(error).__mro__:
+                if super_ in exception_mapping:
+                    translated_error = exception_mapping[super_](
+                        "%s: %s" % (type(error), error)
+                    )
+                    translated_error.pgcode = translated_error.sqlstate = (
+                        getattr(error, "sqlstate", None)
+                    )
+>                   raise translated_error from error
+E                   sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedTableError'>: relation "validation_results" does not exist
+E                   [SQL: DELETE FROM validation_results]
+E                   (Background on this error at: https://sqlalche.me/e/20/f405)
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:784: ProgrammingError
+_________________ ERROR at setup of test_user_role_assignment _________________
+
+self = <sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_cursor object at 0x0000029B0B436140>
+operation = 'DELETE FROM validation_results', parameters = ()
+
+    async def _prepare_and_execute(self, operation, parameters):
+        adapt_connection = self._adapt_connection
+    
+        async with adapt_connection._execute_mutex:
+            if not adapt_connection._started:
+                await adapt_connection._start_transaction()
+    
+            if parameters is None:
+                parameters = ()
+    
+            try:
+>               prepared_stmt, attributes = await adapt_connection._prepare(
+                    operation, self._invalidate_schema_cache_asof
+                )
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:514: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:760: in _prepare
+    prepared_stmt = await self._connection.prepare(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\asyncpg\connection.py:636: in prepare
+    return await self._prepare(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\asyncpg\connection.py:654: in _prepare
+    stmt = await self._get_statement(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\asyncpg\connection.py:433: in _get_statement
+    statement = await self._protocol.prepare(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+>   ???
+E   asyncpg.exceptions.UndefinedTableError: relation "validation_results" does not exist
+
+asyncpg\protocol\protocol.pyx:166: UndefinedTableError
+
+The above exception was the direct cause of the following exception:
+
+self = <sqlalchemy.engine.base.Connection object at 0x0000029B0ADAF390>
+dialect = <sqlalchemy.dialects.postgresql.asyncpg.PGDialect_asyncpg object at 0x0000029B0AD06A50>
+context = <sqlalchemy.dialects.postgresql.asyncpg.PGExecutionContext_asyncpg object at 0x0000029B0ACE7990>
+statement = <sqlalchemy.dialects.postgresql.asyncpg.PGCompiler_asyncpg object at 0x0000029B0ACE7950>
+parameters = [()]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -> CursorResult[Any]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        if self._has_events or self.engine._has_events:
+            for fn in self.dispatch.before_cursor_execute:
+                str_statement, effective_parameters = fn(
+                    self,
+                    cursor,
+                    str_statement,
+                    effective_parameters,
+                    context,
+                    context.executemany,
+                )
+    
+        if self._echo:
+            self._log_info(str_statement)
+    
+            stats = context._get_cache_stats()
+    
+            if not self.engine.hide_parameters:
+                self._log_info(
+                    "[%s] %r",
+                    stats,
+                    sql_util._repr_params(
+                        effective_parameters,
+                        batches=10,
+                        ismulti=context.executemany,
+                    ),
+                )
+            else:
+                self._log_info(
+                    "[%s] [SQL parameters hidden due to hide_parameters=True]",
+                    stats,
+                )
+    
+        evt_handled: bool = False
+        try:
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+>                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1967: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\default.py:941: in do_execute
+    cursor.execute(statement, parameters)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:572: in execute
+    self._adapt_connection.await_(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:550: in _prepare_and_execute
+    self._handle_exception(error)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:501: in _handle_exception
+    self._adapt_connection._handle_exception(error)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <AdaptedConnection <asyncpg.connection.Connection object at 0x0000029B0B19EE30>>
+error = UndefinedTableError('relation "validation_results" does not exist')
+
+    def _handle_exception(self, error):
+        if self._connection.is_closed():
+            self._transaction = None
+            self._started = False
+    
+        if not isinstance(error, AsyncAdapt_asyncpg_dbapi.Error):
+            exception_mapping = self.dbapi._asyncpg_error_translate
+    
+            for super_ in type(error).__mro__:
+                if super_ in exception_mapping:
+                    translated_error = exception_mapping[super_](
+                        "%s: %s" % (type(error), error)
+                    )
+                    translated_error.pgcode = translated_error.sqlstate = (
+                        getattr(error, "sqlstate", None)
+                    )
+>                   raise translated_error from error
+E                   sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.ProgrammingError: <class 'asyncpg.exceptions.UndefinedTableError'>: relation "validation_results" does not exist
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:784: ProgrammingError
+
+The above exception was the direct cause of the following exception:
+
+db_session = <sqlalchemy.orm.session.AsyncSession object at 0x0000029B0ADAFED0>
+
+    @pytest_asyncio.fixture(autouse=True)
+    async def clear_database(db_session: AsyncSession):
+        async with db_session.begin():
+            for table in reversed(Base.metadata.sorted_tables):
+>               await db_session.execute(delete(table))
+
+tests\auth\test_main_auth.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\ext\asyncio\session.py:461: in execute
+    result = await greenlet_spawn(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:201: in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\orm\session.py:2362: in execute
+    return self._execute_internal(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\orm\session.py:2256: in _execute_internal
+    result = conn.execute(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1418: in execute
+    return meth(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\sql\elements.py:515: in _execute_on_connection
+    return connection._execute_clauseelement(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1640: in _execute_clauseelement
+    ret = self._execute_context(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1846: in _execute_context
+    return self._exec_single_context(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1986: in _exec_single_context
+    self._handle_dbapi_exception(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:2355: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1967: in _exec_single_context
+    self.dialect.do_execute(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\default.py:941: in do_execute
+    cursor.execute(statement, parameters)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:572: in execute
+    self._adapt_connection.await_(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:550: in _prepare_and_execute
+    self._handle_exception(error)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:501: in _handle_exception
+    self._adapt_connection._handle_exception(error)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <AdaptedConnection <asyncpg.connection.Connection object at 0x0000029B0B19EE30>>
+error = UndefinedTableError('relation "validation_results" does not exist')
+
+    def _handle_exception(self, error):
+        if self._connection.is_closed():
+            self._transaction = None
+            self._started = False
+    
+        if not isinstance(error, AsyncAdapt_asyncpg_dbapi.Error):
+            exception_mapping = self.dbapi._asyncpg_error_translate
+    
+            for super_ in type(error).__mro__:
+                if super_ in exception_mapping:
+                    translated_error = exception_mapping[super_](
+                        "%s: %s" % (type(error), error)
+                    )
+                    translated_error.pgcode = translated_error.sqlstate = (
+                        getattr(error, "sqlstate", None)
+                    )
+>                   raise translated_error from error
+E                   sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedTableError'>: relation "validation_results" does not exist
+E                   [SQL: DELETE FROM validation_results]
+E                   (Background on this error at: https://sqlalche.me/e/20/f405)
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:784: ProgrammingError
+_____________________ ERROR at setup of test_update_user ______________________
+
+self = <sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_cursor object at 0x0000029B0D26C1C0>
+operation = 'DELETE FROM validation_results', parameters = ()
+
+    async def _prepare_and_execute(self, operation, parameters):
+        adapt_connection = self._adapt_connection
+    
+        async with adapt_connection._execute_mutex:
+            if not adapt_connection._started:
+                await adapt_connection._start_transaction()
+    
+            if parameters is None:
+                parameters = ()
+    
+            try:
+>               prepared_stmt, attributes = await adapt_connection._prepare(
+                    operation, self._invalidate_schema_cache_asof
+                )
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:514: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:760: in _prepare
+    prepared_stmt = await self._connection.prepare(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\asyncpg\connection.py:636: in prepare
+    return await self._prepare(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\asyncpg\connection.py:654: in _prepare
+    stmt = await self._get_statement(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\asyncpg\connection.py:433: in _get_statement
+    statement = await self._protocol.prepare(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+>   ???
+E   asyncpg.exceptions.UndefinedTableError: relation "validation_results" does not exist
+
+asyncpg\protocol\protocol.pyx:166: UndefinedTableError
+
+The above exception was the direct cause of the following exception:
+
+self = <sqlalchemy.engine.base.Connection object at 0x0000029B0C805DD0>
+dialect = <sqlalchemy.dialects.postgresql.asyncpg.PGDialect_asyncpg object at 0x0000029B0CA5C8D0>
+context = <sqlalchemy.dialects.postgresql.asyncpg.PGExecutionContext_asyncpg object at 0x0000029B0AD52410>
+statement = <sqlalchemy.dialects.postgresql.asyncpg.PGCompiler_asyncpg object at 0x0000029B0AD53550>
+parameters = [()]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -> CursorResult[Any]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        if self._has_events or self.engine._has_events:
+            for fn in self.dispatch.before_cursor_execute:
+                str_statement, effective_parameters = fn(
+                    self,
+                    cursor,
+                    str_statement,
+                    effective_parameters,
+                    context,
+                    context.executemany,
+                )
+    
+        if self._echo:
+            self._log_info(str_statement)
+    
+            stats = context._get_cache_stats()
+    
+            if not self.engine.hide_parameters:
+                self._log_info(
+                    "[%s] %r",
+                    stats,
+                    sql_util._repr_params(
+                        effective_parameters,
+                        batches=10,
+                        ismulti=context.executemany,
+                    ),
+                )
+            else:
+                self._log_info(
+                    "[%s] [SQL parameters hidden due to hide_parameters=True]",
+                    stats,
+                )
+    
+        evt_handled: bool = False
+        try:
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+>                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1967: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\default.py:941: in do_execute
+    cursor.execute(statement, parameters)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:572: in execute
+    self._adapt_connection.await_(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:550: in _prepare_and_execute
+    self._handle_exception(error)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:501: in _handle_exception
+    self._adapt_connection._handle_exception(error)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <AdaptedConnection <asyncpg.connection.Connection object at 0x0000029B0B19DA80>>
+error = UndefinedTableError('relation "validation_results" does not exist')
+
+    def _handle_exception(self, error):
+        if self._connection.is_closed():
+            self._transaction = None
+            self._started = False
+    
+        if not isinstance(error, AsyncAdapt_asyncpg_dbapi.Error):
+            exception_mapping = self.dbapi._asyncpg_error_translate
+    
+            for super_ in type(error).__mro__:
+                if super_ in exception_mapping:
+                    translated_error = exception_mapping[super_](
+                        "%s: %s" % (type(error), error)
+                    )
+                    translated_error.pgcode = translated_error.sqlstate = (
+                        getattr(error, "sqlstate", None)
+                    )
+>                   raise translated_error from error
+E                   sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.ProgrammingError: <class 'asyncpg.exceptions.UndefinedTableError'>: relation "validation_results" does not exist
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:784: ProgrammingError
+
+The above exception was the direct cause of the following exception:
+
+db_session = <sqlalchemy.orm.session.AsyncSession object at 0x0000029B0CA5C050>
+
+    @pytest_asyncio.fixture(autouse=True)
+    async def clear_database(db_session: AsyncSession):
+        async with db_session.begin():
+            for table in reversed(Base.metadata.sorted_tables):
+>               await db_session.execute(delete(table))
+
+tests\auth\test_main_auth.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\ext\asyncio\session.py:461: in execute
+    result = await greenlet_spawn(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:201: in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\orm\session.py:2362: in execute
+    return self._execute_internal(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\orm\session.py:2256: in _execute_internal
+    result = conn.execute(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1418: in execute
+    return meth(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\sql\elements.py:515: in _execute_on_connection
+    return connection._execute_clauseelement(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1640: in _execute_clauseelement
+    ret = self._execute_context(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1846: in _execute_context
+    return self._exec_single_context(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1986: in _exec_single_context
+    self._handle_dbapi_exception(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:2355: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1967: in _exec_single_context
+    self.dialect.do_execute(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\default.py:941: in do_execute
+    cursor.execute(statement, parameters)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:572: in execute
+    self._adapt_connection.await_(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:550: in _prepare_and_execute
+    self._handle_exception(error)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:501: in _handle_exception
+    self._adapt_connection._handle_exception(error)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <AdaptedConnection <asyncpg.connection.Connection object at 0x0000029B0B19DA80>>
+error = UndefinedTableError('relation "validation_results" does not exist')
+
+    def _handle_exception(self, error):
+        if self._connection.is_closed():
+            self._transaction = None
+            self._started = False
+    
+        if not isinstance(error, AsyncAdapt_asyncpg_dbapi.Error):
+            exception_mapping = self.dbapi._asyncpg_error_translate
+    
+            for super_ in type(error).__mro__:
+                if super_ in exception_mapping:
+                    translated_error = exception_mapping[super_](
+                        "%s: %s" % (type(error), error)
+                    )
+                    translated_error.pgcode = translated_error.sqlstate = (
+                        getattr(error, "sqlstate", None)
+                    )
+>                   raise translated_error from error
+E                   sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedTableError'>: relation "validation_results" does not exist
+E                   [SQL: DELETE FROM validation_results]
+E                   (Background on this error at: https://sqlalche.me/e/20/f405)
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:784: ProgrammingError
+_____________________ ERROR at setup of test_delete_user ______________________
+
+self = <sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_cursor object at 0x0000029B0D26C640>
+operation = 'DELETE FROM validation_results', parameters = ()
+
+    async def _prepare_and_execute(self, operation, parameters):
+        adapt_connection = self._adapt_connection
+    
+        async with adapt_connection._execute_mutex:
+            if not adapt_connection._started:
+                await adapt_connection._start_transaction()
+    
+            if parameters is None:
+                parameters = ()
+    
+            try:
+>               prepared_stmt, attributes = await adapt_connection._prepare(
+                    operation, self._invalidate_schema_cache_asof
+                )
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:514: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:760: in _prepare
+    prepared_stmt = await self._connection.prepare(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\asyncpg\connection.py:636: in prepare
+    return await self._prepare(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\asyncpg\connection.py:654: in _prepare
+    stmt = await self._get_statement(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\asyncpg\connection.py:433: in _get_statement
+    statement = await self._protocol.prepare(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+>   ???
+E   asyncpg.exceptions.UndefinedTableError: relation "validation_results" does not exist
+
+asyncpg\protocol\protocol.pyx:166: UndefinedTableError
+
+The above exception was the direct cause of the following exception:
+
+self = <sqlalchemy.engine.base.Connection object at 0x0000029B0C805C10>
+dialect = <sqlalchemy.dialects.postgresql.asyncpg.PGDialect_asyncpg object at 0x0000029B0ACE77D0>
+context = <sqlalchemy.dialects.postgresql.asyncpg.PGExecutionContext_asyncpg object at 0x0000029B0ADAFDD0>
+statement = <sqlalchemy.dialects.postgresql.asyncpg.PGCompiler_asyncpg object at 0x0000029B0ADAFE50>
+parameters = [()]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -> CursorResult[Any]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        if self._has_events or self.engine._has_events:
+            for fn in self.dispatch.before_cursor_execute:
+                str_statement, effective_parameters = fn(
+                    self,
+                    cursor,
+                    str_statement,
+                    effective_parameters,
+                    context,
+                    context.executemany,
+                )
+    
+        if self._echo:
+            self._log_info(str_statement)
+    
+            stats = context._get_cache_stats()
+    
+            if not self.engine.hide_parameters:
+                self._log_info(
+                    "[%s] %r",
+                    stats,
+                    sql_util._repr_params(
+                        effective_parameters,
+                        batches=10,
+                        ismulti=context.executemany,
+                    ),
+                )
+            else:
+                self._log_info(
+                    "[%s] [SQL parameters hidden due to hide_parameters=True]",
+                    stats,
+                )
+    
+        evt_handled: bool = False
+        try:
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+>                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1967: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\default.py:941: in do_execute
+    cursor.execute(statement, parameters)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:572: in execute
+    self._adapt_connection.await_(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:550: in _prepare_and_execute
+    self._handle_exception(error)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:501: in _handle_exception
+    self._adapt_connection._handle_exception(error)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <AdaptedConnection <asyncpg.connection.Connection object at 0x0000029B0B19F3D0>>
+error = UndefinedTableError('relation "validation_results" does not exist')
+
+    def _handle_exception(self, error):
+        if self._connection.is_closed():
+            self._transaction = None
+            self._started = False
+    
+        if not isinstance(error, AsyncAdapt_asyncpg_dbapi.Error):
+            exception_mapping = self.dbapi._asyncpg_error_translate
+    
+            for super_ in type(error).__mro__:
+                if super_ in exception_mapping:
+                    translated_error = exception_mapping[super_](
+                        "%s: %s" % (type(error), error)
+                    )
+                    translated_error.pgcode = translated_error.sqlstate = (
+                        getattr(error, "sqlstate", None)
+                    )
+>                   raise translated_error from error
+E                   sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.ProgrammingError: <class 'asyncpg.exceptions.UndefinedTableError'>: relation "validation_results" does not exist
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:784: ProgrammingError
+
+The above exception was the direct cause of the following exception:
+
+db_session = <sqlalchemy.orm.session.AsyncSession object at 0x0000029B0ACE58D0>
+
+    @pytest_asyncio.fixture(autouse=True)
+    async def clear_database(db_session: AsyncSession):
+        async with db_session.begin():
+            for table in reversed(Base.metadata.sorted_tables):
+>               await db_session.execute(delete(table))
+
+tests\auth\test_main_auth.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\ext\asyncio\session.py:461: in execute
+    result = await greenlet_spawn(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:201: in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\orm\session.py:2362: in execute
+    return self._execute_internal(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\orm\session.py:2256: in _execute_internal
+    result = conn.execute(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1418: in execute
+    return meth(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\sql\elements.py:515: in _execute_on_connection
+    return connection._execute_clauseelement(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1640: in _execute_clauseelement
+    ret = self._execute_context(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1846: in _execute_context
+    return self._exec_single_context(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1986: in _exec_single_context
+    self._handle_dbapi_exception(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:2355: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\base.py:1967: in _exec_single_context
+    self.dialect.do_execute(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\engine\default.py:941: in do_execute
+    cursor.execute(statement, parameters)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:572: in execute
+    self._adapt_connection.await_(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:132: in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py:196: in greenlet_spawn
+    value = await result
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:550: in _prepare_and_execute
+    self._handle_exception(error)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:501: in _handle_exception
+    self._adapt_connection._handle_exception(error)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <AdaptedConnection <asyncpg.connection.Connection object at 0x0000029B0B19F3D0>>
+error = UndefinedTableError('relation "validation_results" does not exist')
+
+    def _handle_exception(self, error):
+        if self._connection.is_closed():
+            self._transaction = None
+            self._started = False
+    
+        if not isinstance(error, AsyncAdapt_asyncpg_dbapi.Error):
+            exception_mapping = self.dbapi._asyncpg_error_translate
+    
+            for super_ in type(error).__mro__:
+                if super_ in exception_mapping:
+                    translated_error = exception_mapping[super_](
+                        "%s: %s" % (type(error), error)
+                    )
+                    translated_error.pgcode = translated_error.sqlstate = (
+                        getattr(error, "sqlstate", None)
+                    )
+>                   raise translated_error from error
+E                   sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedTableError'>: relation "validation_results" does not exist
+E                   [SQL: DELETE FROM validation_results]
+E                   (Background on this error at: https://sqlalche.me/e/20/f405)
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py:784: ProgrammingError
+================================== FAILURES ===================================
+__________________________ test_imported_data_schema __________________________
+
+client = <starlette.testclient.TestClient object at 0x0000029B0ADAF090>
+
+    def test_imported_data_schema(client):
+        csv_content = "name,email\nJohn,john@email.com\nJane,jane@email.com"
+        files = {"file": ("test.csv", csv_content, "text/csv")}
+        response = client.post("/api/v1/import/", files=files)
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\normalizer\test_schemas.py:16: AssertionError
+------------------------------ Captured log call ------------------------------
+INFO     httpx:_client.py:1026 HTTP Request: POST http://testserver/api/v1/import/ "HTTP/1.1 404 Not Found"
+________________________ test_validation_result_schema ________________________
+
+client = <starlette.testclient.TestClient object at 0x0000029B0ADAF090>
+
+    def test_validation_result_schema(client):
+        data = {
+            "id": str(uuid.uuid4()),
+            "imported_data_id": str(uuid.uuid4()),
+            "field_name": "test_field",
+            "validation_status": "valid",
+            "error_message": None
+        }
+        response = client.post("/api/v1/validate/", json=data)
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\normalizer\test_schemas.py:34: AssertionError
+------------------------------ Captured log call ------------------------------
+INFO     httpx:_client.py:1026 HTTP Request: POST http://testserver/api/v1/validate/ "HTTP/1.1 404 Not Found"
+__________________________ test_imported_data_model ___________________________
+
+client = <starlette.testclient.TestClient object at 0x0000029B0B481B50>
+db_session = <async_generator object db_session at 0x0000029B0ADA2420>
+
+    def test_imported_data_model(client, db_session):
+        data_content = json.dumps([{"key": "value"}]).encode('utf-8')
+        data = ImportedData(
+            file_name="test.csv",
+            uploaded_at=datetime.now(),
+            data_content=data_content,
+        )
+>       db_session.add(data)
+E       AttributeError: 'async_generator' object has no attribute 'add'
+
+tests\validator\test_models.py:47: AttributeError
+________________________ test_validation_result_model _________________________
+
+client = <starlette.testclient.TestClient object at 0x0000029B0B481B50>
+db_session = <async_generator object db_session at 0x0000029B0B471540>
+
+    def test_validation_result_model(client, db_session):
+        imported_data = ImportedData(
+            file_name="test.csv",
+            uploaded_at=datetime.now(),
+            data_content=json.dumps([{"key": "value"}]).encode('utf-8')
+        )
+>       db_session.add(imported_data)
+E       AttributeError: 'async_generator' object has no attribute 'add'
+
+tests\validator\test_models.py:63: AttributeError
+________________________ test_create_validation_result ________________________
+
+client = <starlette.testclient.TestClient object at 0x0000029B0B481B50>
+
+    def test_create_validation_result(client: TestClient):
+        validation_result_data = ValidationResultCreate(
+            imported_data_id=str(uuid.uuid4()),
+            field_name="test_field",
+            validation_status="valid",
+            error_message=None
+        )
+>       response = client.post("/validator/results/", json=validation_result_data.dict())
+
+tests\validator\test_models.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\starlette\testclient.py:636: in post
+    return super().post(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\httpx\_client.py:1145: in post
+    return self.request(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\starlette\testclient.py:519: in request
+    return super().request(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\httpx\_client.py:814: in request
+    request = self.build_request(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\httpx\_client.py:357: in build_request
+    return Request(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\httpx\_models.py:340: in __init__
+    headers, stream = encode_request(
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\httpx\_content.py:212: in encode_request
+    return encode_json(json)
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\httpx\_content.py:175: in encode_json
+    body = json_dumps(json).encode("utf-8")
+C:\Users\Trav\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py:231: in dumps
+    return _default_encoder.encode(obj)
+C:\Users\Trav\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py:200: in encode
+    chunks = self.iterencode(o, _one_shot=True)
+C:\Users\Trav\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py:258: in iterencode
+    return _iterencode(o, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <json.encoder.JSONEncoder object at 0x0000029B0583A390>
+o = UUID('aef8d0f3-fafd-4d8a-93d0-abffef027fba')
+
+    def default(self, o):
+        """Implement this method in a subclass such that it returns
+        a serializable object for ``o``, or calls the base implementation
+        (to raise a ``TypeError``).
+    
+        For example, to support arbitrary iterators, you could
+        implement default like this::
+    
+            def default(self, o):
+                try:
+                    iterable = iter(o)
+                except TypeError:
+                    pass
+                else:
+                    return list(iterable)
+                # Let the base class default method raise the TypeError
+                return super().default(o)
+    
+        """
+>       raise TypeError(f'Object of type {o.__class__.__name__} '
+                        f'is not JSON serializable')
+E       TypeError: Object of type UUID is not JSON serializable
+
+C:\Users\Trav\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py:180: TypeError
+________________________ test_create_validation_result ________________________
+
+client = <starlette.testclient.TestClient object at 0x0000029B0C820E10>
+db_session = <async_generator object db_session at 0x0000029B0B3FE6C0>
+
+    def test_create_validation_result(client: TestClient, db_session: Session):
+        # First, create an ImportedData instance
+        imported_data = ImportedData(file_name="test.csv")
+>       db_session.add(imported_data)
+E       AttributeError: 'async_generator' object has no attribute 'add'
+
+tests\validator\test_models_validator.py:23: AttributeError
+============================== warnings summary ===============================
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\pydantic\_internal\_config.py:291
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\pydantic\_internal\_config.py:291
+  C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\pydantic\_internal\_config.py:291: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.8/migration/
+    warnings.warn(DEPRECATION_MESSAGE, DeprecationWarning)
+
+C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\fastapi\applications.py:1051
+  C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\fastapi\applications.py:1051: PytestCollectionWarning: cannot collect 'test_app' because it is not a function.
+    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+
+tests/validator/test_models.py::test_create_validation_result
+  C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\pydantic\main.py:1087: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.8/migration/
+    warnings.warn('The `dict` method is deprecated; use `model_dump` instead.', category=PydanticDeprecatedSince20)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/normalizer/test_schemas.py::test_imported_data_schema - assert 4...
+FAILED tests/normalizer/test_schemas.py::test_validation_result_schema - asse...
+FAILED tests/validator/test_models.py::test_imported_data_model - AttributeEr...
+FAILED tests/validator/test_models.py::test_validation_result_model - Attribu...
+FAILED tests/validator/test_models.py::test_create_validation_result - TypeEr...
+FAILED tests/validator/test_models_validator.py::test_create_validation_result
+ERROR tests/auth/test_main_auth.py::test_create_user - sqlalchemy.exc.Program...
+ERROR tests/auth/test_main_auth.py::test_user_login_and_protected_route - sql...
+ERROR tests/auth/test_main_auth.py::test_user_role_assignment - sqlalchemy.ex...
+ERROR tests/auth/test_main_auth.py::test_update_user - sqlalchemy.exc.Program...
+ERROR tests/auth/test_main_auth.py::test_delete_user - sqlalchemy.exc.Program...
+=================== 6 failed, 4 warnings, 5 errors in 1.57s ===================
