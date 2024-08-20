@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr, UUID4
-from typing import Optional, List
+from typing import Optional, List, Any
 
 class UserBase(BaseModel):
     email: EmailStr
@@ -37,8 +37,8 @@ class User(UserBase):
     roles: List[RoleBase] = []
     groups: List[GroupBase] = []
 
-    class Config:
-        orm_mode = True
+    class ConfigDict:
+        from_attributes = True
         arbitrary_types_allowed = True
 
 class Role(RoleBase):
@@ -46,26 +46,34 @@ class Role(RoleBase):
     users: List[User] = []
     permissions: List[PermissionBase] = []
 
-    class Config:
-        orm_mode = True
+    class ConfigDict:
+        from_attributes = True
         arbitrary_types_allowed = True
 
 class Permission(PermissionBase):
     id: UUID4
     roles: List[Role] = []
 
-    class Config:
-        orm_mode = True
+    class ConfigDict:
+        from_attributes = True
         arbitrary_types_allowed = True
 
 class Group(GroupBase):
     id: UUID4
     users: List[User] = []
 
-    class Config:
-        orm_mode = True
+    class ConfigDict:
+        from_attributes = True
         arbitrary_types_allowed = True
 
 class Token(BaseModel):
     access_token: str
     token_type: str
+
+class UserResponse(UserBase):
+    id: UUID4
+    roles: List[RoleBase] = []
+    groups: List[GroupBase] = []
+
+    class ConfigDict:
+        from_attributes = True

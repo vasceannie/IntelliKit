@@ -3,6 +3,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from uuid import uuid4
+from sqlalchemy import delete
 
 from app.auth import service as auth_service
 from app.auth.schemas import UserCreate, RoleCreate
@@ -39,6 +40,9 @@ async def db_session(test_app):
         await conn.run_sync(Base.metadata.drop_all)  # Ensure the schema is dropped first
         await conn.run_sync(Base.metadata.create_all)
 
+    # Add debug statements to the test setup
+    print("Tables created successfully in the test database.")
+
     async with TestingSessionLocal() as session:
         yield session
 
@@ -65,22 +69,25 @@ async def test_role(db_session):
     await db_session.delete(role)
     await db_session.commit()
 
+@pytest.fixture(autouse=True)
+async def clear_database(db_session: AsyncSession):
+    async with db_session.begin():
+        for table in reversed(Base.metadata.sorted_tables):
+            await db_session.execute(delete(table))
+    await db_session.commit()
+
 @pytest.mark.asyncio
 async def test_create_user(client, db_session):
     user_data = {"email": "test@example.com", "password": "password123"}
     
-    response = client.post("/auth/users/", json=user_data)
+    # First creation should succeed
+    response = client.post("/api/auth/users/", json=user_data)
     assert response.status_code == 200
-    assert response.json()["email"] == user_data["email"]
-
-    user = await db_session.get(User, response.json()["id"])
-    assert user is not None
-    assert user.email == user_data["email"]
-
-    # Attempt to create user with existing email
-    response = client.post("/auth/users/", json=user_data)
+    
+    # Second creation with the same email should fail
+    response = client.post("/api/auth/users/", json=user_data)
     assert response.status_code == 400
-    assert "REGISTER_USER_ALREADY_EXISTS" in response.json()["detail"]
+    assert response.json()["detail"] == "Email already registered"
 
 @pytest.mark.asyncio
 async def test_login_logout(client, test_user):

@@ -1,0 +1,34 @@
+INFO     sqlalchemy.engine.Engine:base.py:1846 select pg_catalog.version()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 select current_schema()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 show standard_conforming_strings
+INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
+INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
+FROM users 
+WHERE users.email = $1::VARCHAR
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00044s] ('test@example.com',)
+WARNING  passlib.handlers.bcrypt:bcrypt.py:622 (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\Trav\AppData\Local\pypoetry\Cache\virtualenvs\intellikit-AbHG0SL2-py3.11\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+INFO     sqlalchemy.engine.Engine:base.py:1846 INSERT INTO users (id, email, hashed_password, is_active, is_superuser, first_name, last_name, created_at, updated_at) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::BOOLEAN, $5::BOOLEAN, $6::VARCHAR, $7::VARCHAR, $8::TIMESTAMP WITHOUT TIME ZONE, $9::TIMESTAMP WITHOUT TIME ZONE)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00027s] (UUID('0a03d3ea-7dd9-419d-b9ca-67bbc6c9b309'), 'test@example.com', '$2b$12$yDkbOSJusMwmWNAsFgyA1uuSW7GaOoN/k4lyxGc61V/DWaspnNe3i', True, False, None, None, datetime.datetime(2024, 8, 20, 17, 35, 5, 182189), datetime.datetime(2024, 8, 20, 17, 35, 5, 182189))
+INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
+INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00024s] (UUID('0a03d3ea-7dd9-419d-b9ca-67bbc6c9b309'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT roles.id AS roles_id, roles.name AS roles_name, roles.description AS roles_description, roles.created_at AS roles_created_at, roles.updated_at AS roles_updated_at 
+FROM roles, user_role 
+WHERE $1::UUID = user_role.user_id AND roles.id = user_role.role_id
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00023s] (UUID('0a03d3ea-7dd9-419d-b9ca-67bbc6c9b309'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT groups.id AS groups_id, groups.name AS groups_name, groups.description AS groups_description, groups.created_at AS groups_created_at, groups.updated_at AS groups_updated_at 
+FROM groups, user_group 
+WHERE $1::UUID = user_group.user_id AND groups.id = user_group.group_id
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00041s] (UUID('0a03d3ea-7dd9-419d-b9ca-67bbc6c9b309'),)
+INFO     sqlalchemy.engine.Engine:base.py:2704 ROLLBACK

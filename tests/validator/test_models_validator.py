@@ -12,12 +12,10 @@ def client():
     return TestClient(test_app)
 
 @pytest.fixture(scope="function")
-def db_session():
-    db = next(get_db())
-    try:
+async def db_session():
+    async with get_db() as db:
         yield db
-    finally:
-        db.close()
+        await db.rollback()
 
 def test_create_validation_result(client: TestClient, db_session: Session):
     # First, create an ImportedData instance
@@ -39,7 +37,7 @@ def test_create_validation_result(client: TestClient, db_session: Session):
 
     # Verify the data in the database
     validation_result = db_session.query(ValidationResult).filter(
-        ValidationResult.imported_data_id == imported_data.id
+        ValidationResult.imported_data_id == str(imported_data.id)
     ).first()
     assert validation_result is not None
     assert validation_result.validation_status == validation_result_data.validation_status

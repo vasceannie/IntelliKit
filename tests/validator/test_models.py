@@ -32,12 +32,10 @@ def test_app():
     Base.metadata.drop_all(bind=engine)
 
 @pytest.fixture
-def db_session():
-    db = next(get_db())
-    try:
+async def db_session():
+    async with get_db() as db:
         yield db
-    finally:
-        db.close()
+        await db.rollback()
 
 def test_imported_data_model(client, db_session):
     data_content = json.dumps([{"key": "value"}]).encode('utf-8')
@@ -66,7 +64,7 @@ def test_validation_result_model(client, db_session):
     db_session.commit()
 
     result = ValidationResult(
-        imported_data_id=imported_data.id,
+        imported_data_id=str(imported_data.id),
         field_name="test_field",
         validation_status="valid",
         error_message=None,
@@ -79,11 +77,11 @@ def test_validation_result_model(client, db_session):
     assert fetched_result.validation_status == "valid"
     assert fetched_result.error_message is None
     assert isinstance(fetched_result.id, uuid.UUID)
-    assert fetched_result.imported_data_id == imported_data.id
+    assert fetched_result.imported_data_id == str(imported_data.id)
     
 def test_create_validation_result(client: TestClient):
     validation_result_data = ValidationResultCreate(
-        imported_data_id=uuid.uuid4(),
+        imported_data_id=str(uuid.uuid4()),
         field_name="test_field",
         validation_status="valid",
         error_message=None

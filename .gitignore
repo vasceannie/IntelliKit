@@ -2,6 +2,8 @@
 !/app/alembic/env.py
 !/app/alembic/versions/*
 .env
+.whl
+.pyc
 .idea
 .vscode
 .DS_Store
@@ -9,3 +11,7 @@
 .mypy_cache
 .ruff_cache
 __pycache__
+.properties
+.property
+.log
+.sql

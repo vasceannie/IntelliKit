@@ -46,3 +46,10 @@ async def read_users_me(current_user: schemas.User = Depends(get_current_user)):
 async def logout(response: Response):
     response.delete_cookie("access_token")
     return {"message": "Logged out successfully"}
+
+@router.get("/users/{user_id}", response_model=schemas.UserResponse)
+async def read_user(user_id: int, db: AsyncSession = Depends(get_db)):
+    user = await service.get_user(db, user_id)
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user

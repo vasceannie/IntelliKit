@@ -63,7 +63,9 @@ def client(test_app):
 async def test_user(db_session):
     user_create = UserCreate(email="testuser@example.com", password="testpassword")
     user = await auth_service.create_user(db_session, user_create)
-    return user
+    yield user
+    await db_session.delete(user)
+    await db_session.commit()
 
 @pytest_asyncio.fixture(scope="function")
 async def test_role(db_session):

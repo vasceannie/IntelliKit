@@ -14,5 +14,6 @@
             "database": "diqs",
             "username": "overlord"
         }
-    ]
+    ],
+    "wolf.disableHotModeWarning": true
 }
