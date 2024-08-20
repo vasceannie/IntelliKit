@@ -1,43 +1,15 @@
-from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from sqlalchemy.ext.asyncio import create_async_engine
-from sqlalchemy.orm import sessionmaker
-from fastapi.middleware.cors import CORSMiddleware
-from app.db import Base
-from app.core.config import settings
-from app.api.endpoints import api_router
-from app.db.session import engine
-import sys
-import os
-
-sys.path.append(os.path.abspath('app'))
-
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # Startup
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-    
-    yield
-    
-    # Shutdown
-    await engine.dispose()
+from app.auth.router import router as auth_router
+# from app.validator.router import router as validator_router
+# from app.normalizer.router import router as normalizer_router
+from app.config import settings
 
 app = FastAPI(title=settings.PROJECT_NAME)
 
-# Include routers
-app.include_router(api_router, prefix=settings.API_V1_STR)
+app.include_router(auth_router, prefix="/api/auth", tags=["auth"])
+# app.include_router(validator_router, prefix="/api/validator", tags=["validator"])
+# app.include_router(normalizer_router, prefix="/api/normalizer", tags=["normalizer"])
 
-@app.get("/")
+@app.get("/api")
 async def root():
-    return {"message": "Hello World"}
-
-# Configure CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Adjust this to your frontend URL
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+    return {"message": "Welcome to the API"}
