@@ -6,54 +6,54 @@ INFO     sqlalchemy.engine.Engine:base.py:1846 show standard_conforming_strings
 INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM validation_results
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00015s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM user_role
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM user_group
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00011s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM role_permission
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM users
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM roles
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00011s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM permissions
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00011s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00010s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM imported_data
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM groups
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00011s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.email = $1::VARCHAR
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00021s] ('test@example.com',)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00019s] ('test@example.com',)
 INFO     sqlalchemy.engine.Engine:base.py:1846 INSERT INTO users (id, email, hashed_password, is_active, is_superuser, first_name, last_name, created_at, updated_at) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::BOOLEAN, $5::BOOLEAN, $6::VARCHAR, $7::VARCHAR, $8::TIMESTAMP WITHOUT TIME ZONE, $9::TIMESTAMP WITHOUT TIME ZONE)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00030s] (UUID('35d6891d-a48b-4533-b9dd-bba2a88cba0c'), 'test@example.com', '$argon2id$v=19$m=65536,t=3,p=4$rxVibA3BWKs1ZgwBgFAK4Q$POkl2NyNUcoqukloD9O8FGUVxfKmAWNT7z1r6OKkAco', True, False, None, None, datetime.datetime(2024, 8, 21, 5, 6, 25, 659411), datetime.datetime(2024, 8, 21, 5, 6, 25, 659411))
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00025s] (UUID('640c2d0b-8053-4766-8c8a-703c4d7e4f9b'), 'test@example.com', '$argon2id$v=19$m=65536,t=3,p=4$VCoF4Lz3XisFICRkbE0pRQ$an1fr2oOGk580T2GTa1iDqYOE50uh2DKVfepAE6/Sic', True, False, None, None, datetime.datetime(2024, 8, 21, 5, 12, 50, 290683), datetime.datetime(2024, 8, 21, 5, 12, 50, 290683))
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] (UUID('35d6891d-a48b-4533-b9dd-bba2a88cba0c'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00015s] (UUID('640c2d0b-8053-4766-8c8a-703c4d7e4f9b'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00020s] (UUID('35d6891d-a48b-4533-b9dd-bba2a88cba0c'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00019s] (UUID('640c2d0b-8053-4766-8c8a-703c4d7e4f9b'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users_1.id AS users_1_id, roles.id AS roles_id, roles.name AS roles_name, roles.description AS roles_description, roles.created_at AS roles_created_at, roles.updated_at AS roles_updated_at 
 FROM users AS users_1 JOIN user_role AS user_role_1 ON users_1.id = user_role_1.user_id JOIN roles ON roles.id = user_role_1.role_id 
 WHERE users_1.id IN ($1::UUID)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00024s] (UUID('35d6891d-a48b-4533-b9dd-bba2a88cba0c'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00023s] (UUID('640c2d0b-8053-4766-8c8a-703c4d7e4f9b'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users_1.id AS users_1_id, groups.id AS groups_id, groups.name AS groups_name, groups.description AS groups_description, groups.created_at AS groups_created_at, groups.updated_at AS groups_updated_at 
 FROM users AS users_1 JOIN user_group AS user_group_1 ON users_1.id = user_group_1.user_id JOIN groups ON groups.id = user_group_1.group_id 
 WHERE users_1.id IN ($1::UUID)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00020s] (UUID('35d6891d-a48b-4533-b9dd-bba2a88cba0c'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00019s] (UUID('640c2d0b-8053-4766-8c8a-703c4d7e4f9b'),)
 INFO     httpx:_client.py:1773 HTTP Request: POST http://test/api/v1/auth/users/ "HTTP/1.1 201 Created"
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.email = $1::VARCHAR
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.0539s ago] ('test@example.com',)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.05178s ago] ('test@example.com',)
 INFO     httpx:_client.py:1773 HTTP Request: POST http://test/api/v1/auth/users/ "HTTP/1.1 400 Bad Request"
 INFO     sqlalchemy.engine.Engine:base.py:2704 ROLLBACK
 INFO     sqlalchemy.engine.Engine:base.py:1846 select pg_catalog.version()
@@ -66,66 +66,66 @@ INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM validation_results
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00009s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM user_role
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM user_group
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00015s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM role_permission
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM users
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM roles
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00017s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM permissions
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM imported_data
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM groups
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00015s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.email = $1::VARCHAR
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ('testuser@example.com',)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ('testuser@example.com',)
 INFO     sqlalchemy.engine.Engine:base.py:1846 INSERT INTO users (id, email, hashed_password, is_active, is_superuser, first_name, last_name, created_at, updated_at) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::BOOLEAN, $5::BOOLEAN, $6::VARCHAR, $7::VARCHAR, $8::TIMESTAMP WITHOUT TIME ZONE, $9::TIMESTAMP WITHOUT TIME ZONE)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00025s] (UUID('c73ac0aa-9972-4d7d-8725-3e1caf308f43'), 'testuser@example.com', '$argon2id$v=19$m=65536,t=3,p=4$653znjMmJMSYs/a+dw5BaA$3L2rUjwjA2Xu3pCeAoa7Y7nm2KqXFnqz4kz8ar+d6LE', True, False, None, None, datetime.datetime(2024, 8, 21, 5, 6, 25, 758232), datetime.datetime(2024, 8, 21, 5, 6, 25, 758232))
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00025s] (UUID('70528eef-1026-4527-9ca5-c813f58e502b'), 'testuser@example.com', '$argon2id$v=19$m=65536,t=3,p=4$X8v5X4vxPmfsPadU6p1z7g$Ow47b3y5aAFxiJGwgPyqjhFRPosAqn4w/Itctzf3w6g', True, False, None, None, datetime.datetime(2024, 8, 21, 5, 12, 50, 379263), datetime.datetime(2024, 8, 21, 5, 12, 50, 379263))
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00015s] (UUID('c73ac0aa-9972-4d7d-8725-3e1caf308f43'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] (UUID('70528eef-1026-4527-9ca5-c813f58e502b'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] (UUID('c73ac0aa-9972-4d7d-8725-3e1caf308f43'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] (UUID('70528eef-1026-4527-9ca5-c813f58e502b'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users_1.id AS users_1_id, roles.id AS roles_id, roles.name AS roles_name, roles.description AS roles_description, roles.created_at AS roles_created_at, roles.updated_at AS roles_updated_at 
 FROM users AS users_1 JOIN user_role AS user_role_1 ON users_1.id = user_role_1.user_id JOIN roles ON roles.id = user_role_1.role_id 
 WHERE users_1.id IN ($1::UUID)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00017s] (UUID('c73ac0aa-9972-4d7d-8725-3e1caf308f43'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00019s] (UUID('70528eef-1026-4527-9ca5-c813f58e502b'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users_1.id AS users_1_id, groups.id AS groups_id, groups.name AS groups_name, groups.description AS groups_description, groups.created_at AS groups_created_at, groups.updated_at AS groups_updated_at 
 FROM users AS users_1 JOIN user_group AS user_group_1 ON users_1.id = user_group_1.user_id JOIN groups ON groups.id = user_group_1.group_id 
 WHERE users_1.id IN ($1::UUID)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] (UUID('c73ac0aa-9972-4d7d-8725-3e1caf308f43'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00017s] (UUID('70528eef-1026-4527-9ca5-c813f58e502b'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.email = $1::VARCHAR
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.0592s ago] ('testuser@example.com',)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.05045s ago] ('testuser@example.com',)
 INFO     httpx:_client.py:1773 HTTP Request: POST http://test/api/v1/auth/jwt/login "HTTP/1.1 200 OK"
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.email = $1::VARCHAR
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.09393s ago] ('testuser@example.com',)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.08199s ago] ('testuser@example.com',)
 INFO     httpx:_client.py:1773 HTTP Request: GET http://test/api/v1/auth/users/me "HTTP/1.1 200 OK"
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.email = $1::VARCHAR
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.09767s ago] ('testuser@example.com',)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.08542s ago] ('testuser@example.com',)
 INFO     httpx:_client.py:1773 HTTP Request: POST http://test/api/v1/auth/jwt/login "HTTP/1.1 401 Unauthorized"
 INFO     httpx:_client.py:1773 HTTP Request: GET http://test/api/v1/auth/users/me "HTTP/1.1 401 Unauthorized"
 INFO     httpx:_client.py:1773 HTTP Request: POST http://test/api/v1/auth/jwt/logout "HTTP/1.1 200 OK"
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM users WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00030s] (UUID('c73ac0aa-9972-4d7d-8725-3e1caf308f43'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00020s] (UUID('70528eef-1026-4527-9ca5-c813f58e502b'),)
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:1846 select pg_catalog.version()
 INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
@@ -137,13 +137,13 @@ INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM validation_results
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00009s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM user_role
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00015s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM user_group
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM role_permission
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM users
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM roles
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM permissions
@@ -155,77 +155,77 @@ INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 INSERT INTO roles (id, name, description, created_at, updated_at) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::TIMESTAMP WITHOUT TIME ZONE, $5::TIMESTAMP WITHOUT TIME ZONE)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] (UUID('308b48a5-e074-4e35-a31a-dac97b856d86'), 'test_role', 'Test role', datetime.datetime(2024, 8, 21, 5, 6, 25, 881417), datetime.datetime(2024, 8, 21, 5, 6, 25, 881417))
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] (UUID('fb0f550d-21e4-41a7-ae44-331273e5571c'), 'test_role', 'Test role', datetime.datetime(2024, 8, 21, 5, 12, 50, 503648), datetime.datetime(2024, 8, 21, 5, 12, 50, 503648))
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT roles.id, roles.name, roles.description, roles.created_at, roles.updated_at 
 FROM roles 
 WHERE roles.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00011s] (UUID('308b48a5-e074-4e35-a31a-dac97b856d86'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] (UUID('fb0f550d-21e4-41a7-ae44-331273e5571c'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.email = $1::VARCHAR
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ('testuser@example.com',)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] ('testuser@example.com',)
 INFO     sqlalchemy.engine.Engine:base.py:1846 INSERT INTO users (id, email, hashed_password, is_active, is_superuser, first_name, last_name, created_at, updated_at) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::BOOLEAN, $5::BOOLEAN, $6::VARCHAR, $7::VARCHAR, $8::TIMESTAMP WITHOUT TIME ZONE, $9::TIMESTAMP WITHOUT TIME ZONE)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00024s] (UUID('6d36a4ea-8e09-4a8d-b70a-50af5a1e8905'), 'testuser@example.com', '$argon2id$v=19$m=65536,t=3,p=4$w5hTCgEAAACAUEpJCcG49w$8O9yXYlfQitQY6gx5bKSbT99DX+V91LXYunn3sDWLxI', True, False, None, None, datetime.datetime(2024, 8, 21, 5, 6, 25, 918375), datetime.datetime(2024, 8, 21, 5, 6, 25, 918375))
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00024s] (UUID('eb741ecd-84dc-42f6-8177-e34e0aa6df35'), 'testuser@example.com', '$argon2id$v=19$m=65536,t=3,p=4$qDWm1DonJITwXquVMkaIMQ$t0iqiPPL4RgKEBAXTrB9jh7b6uPaDc9YtCvZoW14QK8', True, False, None, None, datetime.datetime(2024, 8, 21, 5, 12, 50, 541672), datetime.datetime(2024, 8, 21, 5, 12, 50, 541672))
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] (UUID('6d36a4ea-8e09-4a8d-b70a-50af5a1e8905'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] (UUID('eb741ecd-84dc-42f6-8177-e34e0aa6df35'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] (UUID('6d36a4ea-8e09-4a8d-b70a-50af5a1e8905'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00015s] (UUID('eb741ecd-84dc-42f6-8177-e34e0aa6df35'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users_1.id AS users_1_id, roles.id AS roles_id, roles.name AS roles_name, roles.description AS roles_description, roles.created_at AS roles_created_at, roles.updated_at AS roles_updated_at 
 FROM users AS users_1 JOIN user_role AS user_role_1 ON users_1.id = user_role_1.user_id JOIN roles ON roles.id = user_role_1.role_id 
 WHERE users_1.id IN ($1::UUID)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00020s] (UUID('6d36a4ea-8e09-4a8d-b70a-50af5a1e8905'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00017s] (UUID('eb741ecd-84dc-42f6-8177-e34e0aa6df35'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users_1.id AS users_1_id, groups.id AS groups_id, groups.name AS groups_name, groups.description AS groups_description, groups.created_at AS groups_created_at, groups.updated_at AS groups_updated_at 
 FROM users AS users_1 JOIN user_group AS user_group_1 ON users_1.id = user_group_1.user_id JOIN groups ON groups.id = user_group_1.group_id 
 WHERE users_1.id IN ($1::UUID)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00022s] (UUID('6d36a4ea-8e09-4a8d-b70a-50af5a1e8905'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] (UUID('eb741ecd-84dc-42f6-8177-e34e0aa6df35'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00033s] (UUID('6d36a4ea-8e09-4a8d-b70a-50af5a1e8905'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00020s] (UUID('eb741ecd-84dc-42f6-8177-e34e0aa6df35'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT roles.id, roles.name, roles.description, roles.created_at, roles.updated_at 
 FROM roles 
 WHERE roles.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] (UUID('308b48a5-e074-4e35-a31a-dac97b856d86'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] (UUID('fb0f550d-21e4-41a7-ae44-331273e5571c'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 INSERT INTO user_role (user_id, role_id) VALUES ($1::UUID, $2::UUID)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00019s] (UUID('6d36a4ea-8e09-4a8d-b70a-50af5a1e8905'), UUID('308b48a5-e074-4e35-a31a-dac97b856d86'))
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] (UUID('eb741ecd-84dc-42f6-8177-e34e0aa6df35'), UUID('fb0f550d-21e4-41a7-ae44-331273e5571c'))
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.01682s ago] (UUID('6d36a4ea-8e09-4a8d-b70a-50af5a1e8905'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.01685s ago] (UUID('eb741ecd-84dc-42f6-8177-e34e0aa6df35'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] (UUID('6d36a4ea-8e09-4a8d-b70a-50af5a1e8905'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] (UUID('eb741ecd-84dc-42f6-8177-e34e0aa6df35'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users_1.id AS users_1_id, roles.id AS roles_id, roles.name AS roles_name, roles.description AS roles_description, roles.created_at AS roles_created_at, roles.updated_at AS roles_updated_at 
 FROM users AS users_1 JOIN user_role AS user_role_1 ON users_1.id = user_role_1.user_id JOIN roles ON roles.id = user_role_1.role_id 
 WHERE users_1.id IN ($1::UUID)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] (UUID('6d36a4ea-8e09-4a8d-b70a-50af5a1e8905'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00023s] (UUID('eb741ecd-84dc-42f6-8177-e34e0aa6df35'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.01176s ago] (UUID('6d36a4ea-8e09-4a8d-b70a-50af5a1e8905'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.01473s ago] (UUID('eb741ecd-84dc-42f6-8177-e34e0aa6df35'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT roles.id, roles.name, roles.description, roles.created_at, roles.updated_at 
 FROM roles 
 WHERE roles.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.01108s ago] (UUID('d333d83e-cf78-4f95-aa4d-6d302afa111b'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.01455s ago] (UUID('27074a7c-4fec-49a7-b894-1ac08f95d5b4'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT groups.id AS groups_id, groups.name AS groups_name, groups.description AS groups_description, groups.created_at AS groups_created_at, groups.updated_at AS groups_updated_at 
 FROM groups, user_group 
 WHERE $1::UUID = user_group.user_id AND groups.id = user_group.group_id
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00026s] (UUID('6d36a4ea-8e09-4a8d-b70a-50af5a1e8905'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00019s] (UUID('eb741ecd-84dc-42f6-8177-e34e0aa6df35'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM user_role WHERE user_role.user_id = $1::UUID AND user_role.role_id = $2::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] (UUID('6d36a4ea-8e09-4a8d-b70a-50af5a1e8905'), UUID('308b48a5-e074-4e35-a31a-dac97b856d86'))
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] (UUID('eb741ecd-84dc-42f6-8177-e34e0aa6df35'), UUID('fb0f550d-21e4-41a7-ae44-331273e5571c'))
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM users WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] (UUID('6d36a4ea-8e09-4a8d-b70a-50af5a1e8905'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] (UUID('eb741ecd-84dc-42f6-8177-e34e0aa6df35'),)
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:1846 select pg_catalog.version()
 INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
@@ -235,21 +235,21 @@ INFO     sqlalchemy.engine.Engine:base.py:1846 show standard_conforming_strings
 INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM validation_results
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00009s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM user_role
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00010s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM user_group
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00011s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM role_permission
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00010s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM users
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00011s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM roles
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00011s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM permissions
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00011s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM imported_data
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00011s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00010s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM groups
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00011s] ()
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
@@ -259,62 +259,62 @@ FROM users
 WHERE users.email = $1::VARCHAR
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ('testuser@example.com',)
 INFO     sqlalchemy.engine.Engine:base.py:1846 INSERT INTO users (id, email, hashed_password, is_active, is_superuser, first_name, last_name, created_at, updated_at) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::BOOLEAN, $5::BOOLEAN, $6::VARCHAR, $7::VARCHAR, $8::TIMESTAMP WITHOUT TIME ZONE, $9::TIMESTAMP WITHOUT TIME ZONE)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00025s] (UUID('a030e26b-13ba-44a1-9c16-b1705d52f0ff'), 'testuser@example.com', '$argon2id$v=19$m=65536,t=3,p=4$jXFOKaWUkrI2xriX8p7TWg$2OYDLjG9AKkQxPeHCGJBWVBqLmUKe16TwYYWEUk0Joo', True, False, None, None, datetime.datetime(2024, 8, 21, 5, 6, 26, 13591), datetime.datetime(2024, 8, 21, 5, 6, 26, 13591))
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00024s] (UUID('5e9d8277-02a9-4752-9289-5721c64db3a7'), 'testuser@example.com', '$argon2id$v=19$m=65536,t=3,p=4$M2bMuVdq7R3DuPdeC8E4Rw$jD5IAjoRg1JsUXYnNKNBoO+wQXbSuqL2pzZYyBQKQ7E', True, False, None, None, datetime.datetime(2024, 8, 21, 5, 12, 50, 643581), datetime.datetime(2024, 8, 21, 5, 12, 50, 643581))
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] (UUID('a030e26b-13ba-44a1-9c16-b1705d52f0ff'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] (UUID('5e9d8277-02a9-4752-9289-5721c64db3a7'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00015s] (UUID('a030e26b-13ba-44a1-9c16-b1705d52f0ff'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] (UUID('5e9d8277-02a9-4752-9289-5721c64db3a7'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users_1.id AS users_1_id, roles.id AS roles_id, roles.name AS roles_name, roles.description AS roles_description, roles.created_at AS roles_created_at, roles.updated_at AS roles_updated_at 
 FROM users AS users_1 JOIN user_role AS user_role_1 ON users_1.id = user_role_1.user_id JOIN roles ON roles.id = user_role_1.role_id 
 WHERE users_1.id IN ($1::UUID)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00017s] (UUID('a030e26b-13ba-44a1-9c16-b1705d52f0ff'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00017s] (UUID('5e9d8277-02a9-4752-9289-5721c64db3a7'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users_1.id AS users_1_id, groups.id AS groups_id, groups.name AS groups_name, groups.description AS groups_description, groups.created_at AS groups_created_at, groups.updated_at AS groups_updated_at 
 FROM users AS users_1 JOIN user_group AS user_group_1 ON users_1.id = user_group_1.user_id JOIN groups ON groups.id = user_group_1.group_id 
 WHERE users_1.id IN ($1::UUID)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00017s] (UUID('a030e26b-13ba-44a1-9c16-b1705d52f0ff'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00017s] (UUID('5e9d8277-02a9-4752-9289-5721c64db3a7'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.email = $1::VARCHAR
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.0464s ago] ('testuser@example.com',)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.04516s ago] ('testuser@example.com',)
 INFO     httpx:_client.py:1773 HTTP Request: POST http://test/api/v1/auth/jwt/login "HTTP/1.1 200 OK"
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.email = $1::VARCHAR
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.07628s ago] ('testuser@example.com',)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.07524s ago] ('testuser@example.com',)
 INFO     sqlalchemy.engine.Engine:base.py:1846 UPDATE users SET first_name=$1::VARCHAR, last_name=$2::VARCHAR, updated_at=$3::TIMESTAMP WITHOUT TIME ZONE WHERE users.id = $4::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] ('Updated', 'User', datetime.datetime(2024, 8, 21, 5, 6, 26, 61615), UUID('a030e26b-13ba-44a1-9c16-b1705d52f0ff'))
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] ('Updated', 'User', datetime.datetime(2024, 8, 21, 5, 12, 50, 690628), UUID('5e9d8277-02a9-4752-9289-5721c64db3a7'))
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.04641s ago] (UUID('a030e26b-13ba-44a1-9c16-b1705d52f0ff'),)
-INFO     httpx:_client.py:1773 HTTP Request: PATCH http://test/api/v1/auth/users/a030e26b-13ba-44a1-9c16-b1705d52f0ff "HTTP/1.1 200 OK"
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.04811s ago] (UUID('5e9d8277-02a9-4752-9289-5721c64db3a7'),)
+INFO     httpx:_client.py:1773 HTTP Request: PATCH http://test/api/v1/auth/users/5e9d8277-02a9-4752-9289-5721c64db3a7 "HTTP/1.1 200 OK"
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.email = $1::VARCHAR
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.08464s ago] ('testuser@example.com',)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.08465s ago] ('testuser@example.com',)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.first_name AS users_first_name, users.last_name AS users_last_name, users.created_at AS users_created_at, users.updated_at AS users_updated_at 
 FROM users 
 WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] (UUID('37c67485-cfef-441f-868b-4a969f778911'),)
-INFO     httpx:_client.py:1773 HTTP Request: PATCH http://test/api/v1/auth/users/37c67485-cfef-441f-868b-4a969f778911 "HTTP/1.1 404 Not Found"
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] (UUID('09c4888c-5bf6-41cd-8412-5239f3d65af2'),)
+INFO     httpx:_client.py:1773 HTTP Request: PATCH http://test/api/v1/auth/users/09c4888c-5bf6-41cd-8412-5239f3d65af2 "HTTP/1.1 404 Not Found"
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT roles.id AS roles_id, roles.name AS roles_name, roles.description AS roles_description, roles.created_at AS roles_created_at, roles.updated_at AS roles_updated_at 
 FROM roles, user_role 
 WHERE $1::UUID = user_role.user_id AND roles.id = user_role.role_id
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00033s] (UUID('a030e26b-13ba-44a1-9c16-b1705d52f0ff'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00021s] (UUID('5e9d8277-02a9-4752-9289-5721c64db3a7'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT groups.id AS groups_id, groups.name AS groups_name, groups.description AS groups_description, groups.created_at AS groups_created_at, groups.updated_at AS groups_updated_at 
 FROM groups, user_group 
 WHERE $1::UUID = user_group.user_id AND groups.id = user_group.group_id
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00015s] (UUID('a030e26b-13ba-44a1-9c16-b1705d52f0ff'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] (UUID('5e9d8277-02a9-4752-9289-5721c64db3a7'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM users WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] (UUID('a030e26b-13ba-44a1-9c16-b1705d52f0ff'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] (UUID('5e9d8277-02a9-4752-9289-5721c64db3a7'),)
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:1846 select pg_catalog.version()
 INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
@@ -324,23 +324,23 @@ INFO     sqlalchemy.engine.Engine:base.py:1846 show standard_conforming_strings
 INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM validation_results
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00009s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM user_role
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00019s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00015s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM user_group
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM role_permission
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM users
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM roles
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00011s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM permissions
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00011s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM imported_data
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00011s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM groups
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00011s] ()
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
@@ -348,82 +348,82 @@ FROM users
 WHERE users.email = $1::VARCHAR
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00011s] ('testuser@example.com',)
 INFO     sqlalchemy.engine.Engine:base.py:1846 INSERT INTO users (id, email, hashed_password, is_active, is_superuser, first_name, last_name, created_at, updated_at) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::BOOLEAN, $5::BOOLEAN, $6::VARCHAR, $7::VARCHAR, $8::TIMESTAMP WITHOUT TIME ZONE, $9::TIMESTAMP WITHOUT TIME ZONE)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00023s] (UUID('9d42dc6e-d486-43d7-a77e-016969885650'), 'testuser@example.com', '$argon2id$v=19$m=65536,t=3,p=4$9x4jRAhhLAUAQIjx3vufkw$YqiVDlwr4GQ4knrpB163HN7prZmiXNBe8ykVAIuqWkM', True, False, None, None, datetime.datetime(2024, 8, 21, 5, 6, 26, 140411), datetime.datetime(2024, 8, 21, 5, 6, 26, 140411))
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00024s] (UUID('75c6a3be-2c41-497a-abfe-9700f9bb5b83'), 'testuser@example.com', '$argon2id$v=19$m=65536,t=3,p=4$KuVcC0HIOWdMCQHAOAegVA$XMbMkw8uqY/2xy6LndxwsayUeilh2MResn+VLxZ2mM8', True, False, None, None, datetime.datetime(2024, 8, 21, 5, 12, 50, 772332), datetime.datetime(2024, 8, 21, 5, 12, 50, 772332))
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] (UUID('9d42dc6e-d486-43d7-a77e-016969885650'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] (UUID('75c6a3be-2c41-497a-abfe-9700f9bb5b83'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] (UUID('9d42dc6e-d486-43d7-a77e-016969885650'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00017s] (UUID('75c6a3be-2c41-497a-abfe-9700f9bb5b83'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users_1.id AS users_1_id, roles.id AS roles_id, roles.name AS roles_name, roles.description AS roles_description, roles.created_at AS roles_created_at, roles.updated_at AS roles_updated_at 
 FROM users AS users_1 JOIN user_role AS user_role_1 ON users_1.id = user_role_1.user_id JOIN roles ON roles.id = user_role_1.role_id 
 WHERE users_1.id IN ($1::UUID)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] (UUID('9d42dc6e-d486-43d7-a77e-016969885650'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] (UUID('75c6a3be-2c41-497a-abfe-9700f9bb5b83'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users_1.id AS users_1_id, groups.id AS groups_id, groups.name AS groups_name, groups.description AS groups_description, groups.created_at AS groups_created_at, groups.updated_at AS groups_updated_at 
 FROM users AS users_1 JOIN user_group AS user_group_1 ON users_1.id = user_group_1.user_id JOIN groups ON groups.id = user_group_1.group_id 
 WHERE users_1.id IN ($1::UUID)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00017s] (UUID('9d42dc6e-d486-43d7-a77e-016969885650'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] (UUID('75c6a3be-2c41-497a-abfe-9700f9bb5b83'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.email = $1::VARCHAR
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.04317s ago] ('second@example.com',)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.04531s ago] ('second@example.com',)
 INFO     sqlalchemy.engine.Engine:base.py:1846 INSERT INTO users (id, email, hashed_password, is_active, is_superuser, first_name, last_name, created_at, updated_at) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::BOOLEAN, $5::BOOLEAN, $6::VARCHAR, $7::VARCHAR, $8::TIMESTAMP WITHOUT TIME ZONE, $9::TIMESTAMP WITHOUT TIME ZONE)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.04168s ago] (UUID('ade76169-32a6-4e84-97c2-7ecae94f3cea'), 'second@example.com', '$argon2id$v=19$m=65536,t=3,p=4$zzkHQMhZC0Hofe9di5Ey5g$uhVlypfBuu72BNaXZeApk1ZV1gu8ZACz++AdVRZjxD4', True, False, None, None, datetime.datetime(2024, 8, 21, 5, 6, 26, 181416), datetime.datetime(2024, 8, 21, 5, 6, 26, 181416))
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.0433s ago] (UUID('c04de229-eef0-420d-a115-5ca2fb051c6a'), 'second@example.com', '$argon2id$v=19$m=65536,t=3,p=4$l5ISopQy5hzDeI8x5tzbew$UilWeEmmQNKBkdeoDkymQpu3h4OD8mn0ZyKTDOmJct0', True, False, None, None, datetime.datetime(2024, 8, 21, 5, 12, 50, 815348), datetime.datetime(2024, 8, 21, 5, 12, 50, 815348))
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.04187s ago] (UUID('ade76169-32a6-4e84-97c2-7ecae94f3cea'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.0425s ago] (UUID('c04de229-eef0-420d-a115-5ca2fb051c6a'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.04125s ago] (UUID('ade76169-32a6-4e84-97c2-7ecae94f3cea'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.04146s ago] (UUID('c04de229-eef0-420d-a115-5ca2fb051c6a'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users_1.id AS users_1_id, roles.id AS roles_id, roles.name AS roles_name, roles.description AS roles_description, roles.created_at AS roles_created_at, roles.updated_at AS roles_updated_at 
 FROM users AS users_1 JOIN user_role AS user_role_1 ON users_1.id = user_role_1.user_id JOIN roles ON roles.id = user_role_1.role_id 
 WHERE users_1.id IN ($1::UUID)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.04084s ago] (UUID('ade76169-32a6-4e84-97c2-7ecae94f3cea'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.04094s ago] (UUID('c04de229-eef0-420d-a115-5ca2fb051c6a'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users_1.id AS users_1_id, groups.id AS groups_id, groups.name AS groups_name, groups.description AS groups_description, groups.created_at AS groups_created_at, groups.updated_at AS groups_updated_at 
 FROM users AS users_1 JOIN user_group AS user_group_1 ON users_1.id = user_group_1.user_id JOIN groups ON groups.id = user_group_1.group_id 
 WHERE users_1.id IN ($1::UUID)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.03951s ago] (UUID('ade76169-32a6-4e84-97c2-7ecae94f3cea'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.03965s ago] (UUID('c04de229-eef0-420d-a115-5ca2fb051c6a'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.email = $1::VARCHAR
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.08355s ago] ('second@example.com',)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.08585s ago] ('second@example.com',)
 INFO     httpx:_client.py:1773 HTTP Request: POST http://test/api/v1/auth/jwt/login "HTTP/1.1 200 OK"
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.email = $1::VARCHAR
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.1154s ago] ('second@example.com',)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.1181s ago] ('second@example.com',)
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM users WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] (UUID('9d42dc6e-d486-43d7-a77e-016969885650'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] (UUID('75c6a3be-2c41-497a-abfe-9700f9bb5b83'),)
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
-INFO     httpx:_client.py:1773 HTTP Request: DELETE http://test/api/v1/auth/users/9d42dc6e-d486-43d7-a77e-016969885650 "HTTP/1.1 204 No Content"
+INFO     httpx:_client.py:1773 HTTP Request: DELETE http://test/api/v1/auth/users/75c6a3be-2c41-497a-abfe-9700f9bb5b83 "HTTP/1.1 204 No Content"
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.first_name AS users_first_name, users.last_name AS users_last_name, users.created_at AS users_created_at, users.updated_at AS users_updated_at 
 FROM users 
 WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] (UUID('9d42dc6e-d486-43d7-a77e-016969885650'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00011s] (UUID('75c6a3be-2c41-497a-abfe-9700f9bb5b83'),)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id, users.email, users.hashed_password, users.is_active, users.is_superuser, users.first_name, users.last_name, users.created_at, users.updated_at 
 FROM users 
 WHERE users.email = $1::VARCHAR
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.123s ago] ('second@example.com',)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.1277s ago] ('second@example.com',)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser, users.first_name AS users_first_name, users.last_name AS users_last_name, users.created_at AS users_created_at, users.updated_at AS users_updated_at 
 FROM users 
 WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.003433s ago] (UUID('6f76efde-2d65-4060-8cda-c96275e29fdc'),)
-INFO     httpx:_client.py:1773 HTTP Request: DELETE http://test/api/v1/auth/users/6f76efde-2d65-4060-8cda-c96275e29fdc "HTTP/1.1 404 Not Found"
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.003519s ago] (UUID('c7c148e0-0822-4487-bc0d-1345e7608d19'),)
+INFO     httpx:_client.py:1773 HTTP Request: DELETE http://test/api/v1/auth/users/c7c148e0-0822-4487-bc0d-1345e7608d19 "HTTP/1.1 404 Not Found"
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM users WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.008367s ago] (UUID('ade76169-32a6-4e84-97c2-7ecae94f3cea'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.01075s ago] (UUID('c04de229-eef0-420d-a115-5ca2fb051c6a'),)
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 DELETE FROM users WHERE users.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.01178s ago] (UUID('9d42dc6e-d486-43d7-a77e-016969885650'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [cached since 0.01541s ago] (UUID('75c6a3be-2c41-497a-abfe-9700f9bb5b83'),)
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:1846 select pg_catalog.version()
 INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
@@ -433,7 +433,7 @@ INFO     sqlalchemy.engine.Engine:base.py:1846 show standard_conforming_strings
 INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE users CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00010s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00009s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE roles CASCADE
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE permissions CASCADE
@@ -441,34 +441,34 @@ INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE user_role CASCADE
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE role_permission CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00015s] ()
-INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE user_group CASCADE
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE user_group CASCADE
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE groups CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00011s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE imported_data CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00020s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00017s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE validation_results CASCADE
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] ()
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 INSERT INTO imported_data (id, file_name, uploaded_at, data_content, created_at, updated_at) VALUES ($1::UUID, $2::VARCHAR, $3::TIMESTAMP WITHOUT TIME ZONE, $4::BYTEA, $5::TIMESTAMP WITHOUT TIME ZONE, $6::TIMESTAMP WITHOUT TIME ZONE)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] (UUID('959e5735-fe36-495c-ace4-cbb63319bee6'), 'test.csv', datetime.datetime(2024, 8, 21, 5, 6, 26, 343230), None, datetime.datetime(2024, 8, 21, 5, 6, 26, 343230), datetime.datetime(2024, 8, 21, 5, 6, 26, 343230))
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00029s] (UUID('d7e45057-c025-410e-bb7a-3174a656c5cf'), 'test.csv', datetime.datetime(2024, 8, 21, 5, 12, 51, 37367), None, datetime.datetime(2024, 8, 21, 5, 12, 51, 37367), datetime.datetime(2024, 8, 21, 5, 12, 51, 37367))
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 INSERT INTO validation_results (id, imported_data_id, field_name, validation_status, error_message, created_at, updated_at) VALUES ($1::UUID, $2::UUID, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::TIMESTAMP WITHOUT TIME ZONE, $7::TIMESTAMP WITHOUT TIME ZONE)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00017s] (UUID('45ca51c2-e7fe-477a-89b5-b1e868489c1f'), UUID('959e5735-fe36-495c-ace4-cbb63319bee6'), 'test_field', 'valid', None, datetime.datetime(2024, 8, 21, 5, 6, 26, 351235), datetime.datetime(2024, 8, 21, 5, 6, 26, 351235))
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00017s] (UUID('248fb765-c4fd-4407-978b-88ad560ed7a8'), UUID('d7e45057-c025-410e-bb7a-3174a656c5cf'), 'test_field', 'valid', None, datetime.datetime(2024, 8, 21, 5, 12, 51, 45377), datetime.datetime(2024, 8, 21, 5, 12, 51, 45377))
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT validation_results.id, validation_results.imported_data_id, validation_results.field_name, validation_results.validation_status, validation_results.error_message, validation_results.created_at, validation_results.updated_at 
 FROM validation_results 
 WHERE validation_results.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] (UUID('45ca51c2-e7fe-477a-89b5-b1e868489c1f'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00017s] (UUID('248fb765-c4fd-4407-978b-88ad560ed7a8'),)
 INFO     httpx:_client.py:1773 HTTP Request: POST http://test/api/v1/validator/results/ "HTTP/1.1 200 OK"
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT validation_results.id, validation_results.imported_data_id, validation_results.field_name, validation_results.validation_status, validation_results.error_message, validation_results.created_at, validation_results.updated_at 
 FROM validation_results 
 WHERE validation_results.imported_data_id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] (UUID('959e5735-fe36-495c-ace4-cbb63319bee6'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] (UUID('d7e45057-c025-410e-bb7a-3174a656c5cf'),)
 INFO     sqlalchemy.engine.Engine:base.py:2704 ROLLBACK
 INFO     sqlalchemy.engine.Engine:base.py:1846 select pg_catalog.version()
 INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
@@ -482,27 +482,66 @@ INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00009s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE roles CASCADE
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE permissions CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00017s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00020s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE user_role CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00019s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE role_permission CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE user_group CASCADE
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE groups CASCADE
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE imported_data CASCADE
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE validation_results CASCADE
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00020s] ()
+INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
+INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1846 INSERT INTO imported_data (id, file_name, uploaded_at, data_content, created_at, updated_at) VALUES ($1::UUID, $2::VARCHAR, $3::TIMESTAMP WITHOUT TIME ZONE, $4::BYTEA, $5::TIMESTAMP WITHOUT TIME ZONE, $6::TIMESTAMP WITHOUT TIME ZONE)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00017s] (UUID('5ad69c41-30e5-4fac-883a-46fce988d0b4'), 'test.csv', datetime.datetime(2024, 8, 21, 1, 12, 51, 209652), b'[{"key": "value"}]', datetime.datetime(2024, 8, 21, 5, 12, 51, 210662), datetime.datetime(2024, 8, 21, 5, 12, 51, 210662))
+INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
+INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT imported_data.id, imported_data.file_name, imported_data.uploaded_at, imported_data.data_content, imported_data.created_at, imported_data.updated_at 
+FROM imported_data
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
+INFO     sqlalchemy.engine.Engine:base.py:2704 ROLLBACK
+INFO     sqlalchemy.engine.Engine:base.py:1846 select pg_catalog.version()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 select current_schema()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 show standard_conforming_strings
+INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
+INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE users CASCADE
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00009s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE roles CASCADE
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00021s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE permissions CASCADE
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE user_role CASCADE
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00021s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE role_permission CASCADE
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE user_group CASCADE
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE groups CASCADE
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE imported_data CASCADE
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00019s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE validation_results CASCADE
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] ()
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 INSERT INTO imported_data (id, file_name, uploaded_at, data_content, created_at, updated_at) VALUES ($1::UUID, $2::VARCHAR, $3::TIMESTAMP WITHOUT TIME ZONE, $4::BYTEA, $5::TIMESTAMP WITHOUT TIME ZONE, $6::TIMESTAMP WITHOUT TIME ZONE)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] (UUID('4fbb7bfa-7254-47ee-896a-7de24b565086'), 'test.csv', datetime.datetime(2024, 8, 21, 1, 6, 26, 467299), b'[{"key": "value"}]', datetime.datetime(2024, 8, 21, 5, 6, 26, 468301), datetime.datetime(2024, 8, 21, 5, 6, 26, 468301))
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] (UUID('d5d8a5fb-22b2-4b8d-a178-8b4b88f1203d'), 'test.csv', datetime.datetime(2024, 8, 21, 1, 12, 51, 381243), b'[{"key": "value"}]', datetime.datetime(2024, 8, 21, 5, 12, 51, 382242), datetime.datetime(2024, 8, 21, 5, 12, 51, 382242))
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
-INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT imported_data.id, imported_data.file_name, imported_data.uploaded_at, imported_data.data_content, imported_data.created_at, imported_data.updated_at 
-FROM imported_data
+INFO     sqlalchemy.engine.Engine:base.py:1846 INSERT INTO validation_results (id, imported_data_id, field_name, validation_status, error_message, created_at, updated_at) VALUES ($1::UUID, $2::UUID, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::TIMESTAMP WITHOUT TIME ZONE, $7::TIMESTAMP WITHOUT TIME ZONE)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] (UUID('e04394d1-9f15-418c-9803-0eb77b885b1d'), 'd5d8a5fb-22b2-4b8d-a178-8b4b88f1203d', 'test_field', 'valid', None, datetime.datetime(2024, 8, 21, 5, 12, 51, 389232), datetime.datetime(2024, 8, 21, 5, 12, 51, 389232))
+INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
+INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT validation_results.id, validation_results.imported_data_id, validation_results.field_name, validation_results.validation_status, validation_results.error_message, validation_results.created_at, validation_results.updated_at 
+FROM validation_results
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00011s] ()
 INFO     sqlalchemy.engine.Engine:base.py:2704 ROLLBACK
 INFO     sqlalchemy.engine.Engine:base.py:1846 select pg_catalog.version()
@@ -515,58 +554,19 @@ INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE users CASCADE
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00009s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE roles CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00017s] ()
-INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE permissions CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00019s] ()
-INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE user_role CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00019s] ()
-INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE role_permission CASCADE
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE permissions CASCADE
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE user_role CASCADE
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE role_permission CASCADE
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00015s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE user_group CASCADE
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE groups CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
-INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE imported_data CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] ()
-INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE validation_results CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] ()
-INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
-INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
-INFO     sqlalchemy.engine.Engine:base.py:1846 INSERT INTO imported_data (id, file_name, uploaded_at, data_content, created_at, updated_at) VALUES ($1::UUID, $2::VARCHAR, $3::TIMESTAMP WITHOUT TIME ZONE, $4::BYTEA, $5::TIMESTAMP WITHOUT TIME ZONE, $6::TIMESTAMP WITHOUT TIME ZONE)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00015s] (UUID('cc723f47-7758-462d-b980-27a93563b2c1'), 'test.csv', datetime.datetime(2024, 8, 21, 1, 6, 26, 579391), b'[{"key": "value"}]', datetime.datetime(2024, 8, 21, 5, 6, 26, 580390), datetime.datetime(2024, 8, 21, 5, 6, 26, 580390))
-INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
-INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
-INFO     sqlalchemy.engine.Engine:base.py:1846 INSERT INTO validation_results (id, imported_data_id, field_name, validation_status, error_message, created_at, updated_at) VALUES ($1::UUID, $2::UUID, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::TIMESTAMP WITHOUT TIME ZONE, $7::TIMESTAMP WITHOUT TIME ZONE)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] (UUID('d6bb03b5-c317-41ad-ad13-698ec4359419'), 'cc723f47-7758-462d-b980-27a93563b2c1', 'test_field', 'valid', None, datetime.datetime(2024, 8, 21, 5, 6, 26, 585390), datetime.datetime(2024, 8, 21, 5, 6, 26, 585390))
-INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
-INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
-INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT validation_results.id, validation_results.imported_data_id, validation_results.field_name, validation_results.validation_status, validation_results.error_message, validation_results.created_at, validation_results.updated_at 
-FROM validation_results
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
-INFO     sqlalchemy.engine.Engine:base.py:2704 ROLLBACK
-INFO     sqlalchemy.engine.Engine:base.py:1846 select pg_catalog.version()
-INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
-INFO     sqlalchemy.engine.Engine:base.py:1846 select current_schema()
-INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
-INFO     sqlalchemy.engine.Engine:base.py:1846 show standard_conforming_strings
-INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
-INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
-INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE users CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00009s] ()
-INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE roles CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00020s] ()
-INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE permissions CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00019s] ()
-INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE user_role CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] ()
-INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE role_permission CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00015s] ()
-INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE user_group CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00015s] ()
-INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE groups CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE imported_data CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00017s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00019s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE validation_results CASCADE
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] ()
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
@@ -578,13 +578,13 @@ INFO     sqlalchemy.engine.Engine:base.py:1846 show standard_conforming_strings
 INFO     sqlalchemy.engine.Engine:base.py:1846 [raw sql] ()
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 INSERT INTO imported_data (id, file_name, uploaded_at, data_content, created_at, updated_at) VALUES ($1::UUID, $2::VARCHAR, $3::TIMESTAMP WITHOUT TIME ZONE, $4::BYTEA, $5::TIMESTAMP WITHOUT TIME ZONE, $6::TIMESTAMP WITHOUT TIME ZONE)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] (UUID('5b625e10-08b1-4c75-a847-8cb04329344e'), 'test.csv', datetime.datetime(2024, 8, 21, 5, 6, 26, 709560), b'[{"name": "John", "email": "john@email.com"}, {"name": "Jane", "email": "jane@email.com"}]', datetime.datetime(2024, 8, 21, 5, 6, 26, 709560), datetime.datetime(2024, 8, 21, 5, 6, 26, 709560))
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] (UUID('c593266c-65e2-4c49-bd0a-c1bc4c2a5e0f'), 'test.csv', datetime.datetime(2024, 8, 21, 5, 12, 51, 560612), b'[{"name": "John", "email": "john@email.com"}, {"name": "Jane", "email": "jane@email.com"}]', datetime.datetime(2024, 8, 21, 5, 12, 51, 560612), datetime.datetime(2024, 8, 21, 5, 12, 51, 560612))
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT imported_data.id, imported_data.file_name, imported_data.uploaded_at, imported_data.data_content, imported_data.created_at, imported_data.updated_at 
 FROM imported_data 
 WHERE imported_data.id = $1::UUID
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] (UUID('5b625e10-08b1-4c75-a847-8cb04329344e'),)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] (UUID('c593266c-65e2-4c49-bd0a-c1bc4c2a5e0f'),)
 INFO     sqlalchemy.engine.Engine:base.py:2704 ROLLBACK
 INFO     httpx:_client.py:1773 HTTP Request: POST http://test/api/v1/validator/import/ "HTTP/1.1 200 OK"
 INFO     sqlalchemy.engine.Engine:base.py:1846 select pg_catalog.version()
@@ -597,24 +597,32 @@ INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE users CASCADE
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00009s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE roles CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00019s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE permissions CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00017s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00020s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE user_role CASCADE
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE role_permission CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00017s] ()
-INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE user_group CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00013s] ()
-INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE groups CASCADE
 INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00014s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE user_group CASCADE
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE groups CASCADE
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00012s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE imported_data CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00019s] ()
 INFO     sqlalchemy.engine.Engine:base.py:1846 TRUNCATE TABLE validation_results CASCADE
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00025s] ()
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00018s] ()
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
 INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
 INFO     sqlalchemy.engine.Engine:base.py:1846 INSERT INTO imported_data (id, file_name, uploaded_at, data_content, created_at, updated_at) VALUES ($1::UUID, $2::VARCHAR, $3::TIMESTAMP WITHOUT TIME ZONE, $4::BYTEA, $5::TIMESTAMP WITHOUT TIME ZONE, $6::TIMESTAMP WITHOUT TIME ZONE)
-INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00027s] (UUID('facbb6ec-1198-478e-8a37-46a7b823bfe7'), 'test.csv', datetime.datetime(2024, 8, 21, 1, 6, 26, 924793), b'{"test_field": "test_value"}', datetime.datetime(2024, 8, 21, 5, 6, 26, 925791), datetime.datetime(2024, 8, 21, 5, 6, 26, 925791))
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] (UUID('b8a0c434-8ec4-419b-a1de-54af8f182050'), 'test.csv', datetime.datetime(2024, 8, 21, 1, 12, 51, 718581), b'{"test_field": "test_value"}', datetime.datetime(2024, 8, 21, 5, 12, 51, 719581), datetime.datetime(2024, 8, 21, 5, 12, 51, 719581))
 INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
-INFO     httpx:_client.py:1773 HTTP Request: POST http://test/api/v1/validate/ "HTTP/1.1 404 Not Found"
+INFO     sqlalchemy.engine.Engine:base.py:2701 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1846 SELECT imported_data.id, imported_data.file_name, imported_data.uploaded_at, imported_data.data_content, imported_data.created_at, imported_data.updated_at 
+FROM imported_data 
+WHERE imported_data.id = $1::UUID
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00011s] ('b8a0c434-8ec4-419b-a1de-54af8f182050',)
+INFO     sqlalchemy.engine.Engine:base.py:1846 INSERT INTO validation_results (id, imported_data_id, field_name, validation_status, error_message, created_at, updated_at) VALUES ($1::UUID, $2::UUID, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::TIMESTAMP WITHOUT TIME ZONE, $7::TIMESTAMP WITHOUT TIME ZONE)
+INFO     sqlalchemy.engine.Engine:base.py:1846 [generated in 0.00016s] (UUID('98f0bed0-0f95-4c6e-abed-cbd69b2c07be'), 'b8a0c434-8ec4-419b-a1de-54af8f182050', 'test_field', 'valid', None, datetime.datetime(2024, 8, 21, 5, 12, 51, 728102), datetime.datetime(2024, 8, 21, 5, 12, 51, 728102))
+INFO     sqlalchemy.engine.Engine:base.py:2707 COMMIT
+INFO     httpx:_client.py:1773 HTTP Request: POST http://test/api/v1/validator/validate/ "HTTP/1.1 200 OK"

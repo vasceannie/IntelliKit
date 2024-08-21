@@ -53,7 +53,7 @@ async def validate_data(db: AsyncSessionLocal, imported_data_id: uuid.UUID, vali
                         validation_status="invalid",
                         error_message=error_message
                     )
-                    db_validation_result = ValidationResult(**validation_result.dict())
+                    db_validation_result = ValidationResult(**{k: v for k, v in validation_result.model_dump().items() if k != "validation_rules"})
                     db.add(db_validation_result)
                     validation_results.append(db_validation_result)
             else:
@@ -64,7 +64,7 @@ async def validate_data(db: AsyncSessionLocal, imported_data_id: uuid.UUID, vali
                     validation_status="valid",
                     error_message=None
                 )
-                db_validation_result = ValidationResult(**validation_result.dict())
+                db_validation_result = ValidationResult(**{k: v for k, v in validation_result.model_dump().items() if k != "validation_rules"})
                 db.add(db_validation_result)
                 validation_results.append(db_validation_result)
 

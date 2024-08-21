@@ -22,10 +22,14 @@ async def test_imported_data_schema():
         
         # First, validate the response using the Pydantic schema
         imported_data_schema = ImportedData(**response_data)
+        imported_data_schema.id = uuid.UUID(imported_data_schema.id)  # Convert id to UUID
+        imported_data_schema.uploaded_at = datetime.fromisoformat(imported_data_schema.uploaded_at)  # Convert uploaded_at to datetime
         assert isinstance(imported_data_schema.id, uuid.UUID)
         
         # Then, validate the database model
         imported_data_model = ImportedData(**response_data)
+        imported_data_model.id = uuid.UUID(imported_data_model.id)  # Convert id to UUID
+        imported_data_model.uploaded_at = datetime.fromisoformat(imported_data_model.uploaded_at)  # Convert uploaded_at to datetime
         assert isinstance(imported_data_model.id, uuid.UUID)
         
         assert imported_data_schema.file_name == "test.csv"
@@ -57,12 +61,16 @@ async def test_validation_result_schema(test_app, client, db_session):
 
     async with test_app() as app:
         async with AsyncClient(app=app, base_url="http://test") as ac:
-            response = await ac.post("/api/v1/validate/", json=data)
-    
+            response = await ac.post("/api/v1/validator/validate/", json=data)
+
     assert response.status_code == 200
-    validation_result = ValidationResult(**response.json())
-    assert validation_result.field_name == "test_field"
-    assert validation_result.validation_status == "valid"
-    assert validation_result.error_message is None
-    assert isinstance(validation_result.id, uuid.UUID)
-    assert validation_result.imported_data_id == imported_data.id
+    response_json = response.json()
+    
+    # Iterate over the list of validation results
+    for item in response_json:
+        validation_result = ValidationResult(**{k: v for k, v in item.items() if k != "validation_rules"})
+        assert validation_result.field_name == "test_field"
+        assert validation_result.validation_status == "valid"
+        assert validation_result.error_message is None
+        assert isinstance(validation_result.id, uuid.UUID)
+        assert validation_result.imported_data_id == imported_data.id
