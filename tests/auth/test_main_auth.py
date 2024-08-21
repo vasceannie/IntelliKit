@@ -37,6 +37,16 @@ async def clear_database(db_session: AsyncSessionLocal):
 
 @pytest.mark.asyncio
 async def test_create_user(test_app, db_session):
+    """
+    Test the user creation endpoint.
+
+    This test verifies that a user can be created successfully and that
+    attempting to create a user with an already registered email fails.
+
+    Args:
+        test_app: The FastAPI test application instance.
+        db_session: The database session used for the test.
+    """
     user_data = {"email": "test@example.com", "password": "password123"}
     
     async with test_app() as app:
@@ -44,16 +54,27 @@ async def test_create_user(test_app, db_session):
             # First creation should succeed
             response = await client.post(f"{settings.API_V1_STR}/auth/users/", json=user_data)
             assert response.status_code == 201  # Expect 201 Created
-            assert "id" in response.json()
-            assert response.json()["email"] == user_data["email"]
+            assert "id" in response.json()  # Ensure the response contains an ID
+            assert response.json()["email"] == user_data["email"]  # Check the email matches
             
             # Second creation should fail
             response = await client.post(f"{settings.API_V1_STR}/auth/users/", json=user_data)
             assert response.status_code == 400  # Expect 400 Bad Request
-            assert "Email already registered" in response.json()["detail"]
+            assert "Email already registered" in response.json()["detail"]  # Check for error message
 
 @pytest.mark.asyncio
 async def test_user_login_and_protected_route(test_app, test_user, db_session):
+    """
+    Test user login and access to a protected route.
+
+    This test verifies that a user can log in successfully, access their
+    information, and that invalid credentials or tokens are handled correctly.
+
+    Args:
+        test_app: The FastAPI test application instance.
+        test_user: The user to be tested.
+        db_session: The database session used for the test.
+    """
     user = await db_session.get(User, test_user.id)
     assert user is not None  # Ensure the user exists
 
@@ -76,7 +97,7 @@ async def test_user_login_and_protected_route(test_app, test_user, db_session):
             login_data["password"] = "wrongpassword"
             response = await client.post(f"{settings.API_V1_STR}/auth/jwt/login", data=login_data)
             assert response.status_code == 401  # Expect failure due to bad credentials
-            assert "Incorrect username or password" in response.json()["detail"]
+            assert "Incorrect username or password" in response.json()["detail"]  # Check for error message
 
             # Test with an invalid token
             headers = {"Authorization": "Bearer invalidtoken"}
@@ -86,10 +107,21 @@ async def test_user_login_and_protected_route(test_app, test_user, db_session):
             # Log out
             response = await client.post(f"{settings.API_V1_STR}/auth/jwt/logout")
             assert response.status_code == 200  # Expect successful logout
-            assert response.json()["message"] == "Logged out successfully"
+            assert response.json()["message"] == "Logged out successfully"  # Check logout message
 
 @pytest.mark.asyncio
 async def test_user_role_assignment(db_session, test_role, test_user):
+    """
+    Test assigning a role to a user.
+
+    This test verifies that a role can be successfully assigned to a user
+    and that attempting to assign a non-existent role returns None.
+
+    Args:
+        db_session: The database session used for the test.
+        test_role: The role to be assigned.
+        test_user: The user to whom the role will be assigned.
+    """
     await auth_service.assign_role_to_user(db_session, test_user.id, test_role.id)
     
     # Fetch the user again to ensure we have the latest data
@@ -97,7 +129,7 @@ async def test_user_role_assignment(db_session, test_role, test_user):
     result = await db_session.execute(stmt)
     user = result.scalar_one_or_none()
     
-    assert user is not None
+    assert user is not None  # Ensure the user exists
     assert any(role.id == test_role.id for role in user.roles)  # Check if the role is in the user's roles
 
     non_existent_role_id = uuid4()  # Generate a random UUID for a non-existent role
@@ -106,6 +138,17 @@ async def test_user_role_assignment(db_session, test_role, test_user):
 
 @pytest.mark.asyncio
 async def test_update_user(test_app, db_session, test_user):
+    """
+    Test updating a user's information.
+
+    This test verifies that a user's information can be updated successfully
+    and that attempting to update a non-existent user returns a 404 error.
+
+    Args:
+        test_app: The FastAPI test application instance.
+        db_session: The database session used for the test.
+        test_user: The user to be updated.
+    """
     user = await db_session.get(User, test_user.id)
     assert user is not None  # Ensure the user exists
 
@@ -115,15 +158,15 @@ async def test_update_user(test_app, db_session, test_user):
             # Login to get the access token
             login_data = {"username": test_user.email, "password": "testpassword"}
             login_response = await client.post(f"{settings.API_V1_STR}/auth/jwt/login", data=login_data)
-            assert login_response.status_code == 200
+            assert login_response.status_code == 200  # Expect successful login
             token = login_response.json()["access_token"]
 
             # Update existing user with authentication
             headers = {"Authorization": f"Bearer {token}"}
             response = await client.patch(f"{settings.API_V1_STR}/auth/users/{test_user.id}", json=update_data, headers=headers)
             assert response.status_code == 200  # Expect successful update
-            assert response.json()["first_name"] == update_data["first_name"]
-            assert response.json()["last_name"] == update_data["last_name"]
+            assert response.json()["first_name"] == update_data["first_name"]  # Check updated first name
+            assert response.json()["last_name"] == update_data["last_name"]  # Check updated last name
 
             # Attempt to update a non-existent user
             non_existent_user_id = uuid4()
@@ -132,6 +175,17 @@ async def test_update_user(test_app, db_session, test_user):
 
 @pytest.mark.asyncio
 async def test_delete_user(test_app, db_session, test_user):
+    """
+    Test deleting a user.
+
+    This test verifies that a user can be deleted successfully and that
+    attempting to delete a non-existent user returns a 404 error.
+
+    Args:
+        test_app: The FastAPI test application instance.
+        db_session: The database session used for the test.
+        test_user: The user to be deleted.
+    """
     # Create a second user for authentication
     second_user = await auth_service.create_user(db_session, UserCreate(email="second@example.com", password="password123"))
 
@@ -140,7 +194,7 @@ async def test_delete_user(test_app, db_session, test_user):
             # Login with the second user to get the access token
             login_data = {"username": second_user.email, "password": "password123"}
             login_response = await client.post(f"{settings.API_V1_STR}/auth/jwt/login", data=login_data)
-            assert login_response.status_code == 200
+            assert login_response.status_code == 200  # Expect successful login
             token = login_response.json()["access_token"]
 
             headers = {"Authorization": f"Bearer {token}"}

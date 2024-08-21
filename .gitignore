@@ -14,4 +14,4 @@ __pycache__
 .properties
 .property
 .log
-.sql
+session.sql
