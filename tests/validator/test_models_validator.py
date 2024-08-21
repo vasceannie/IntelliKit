@@ -10,6 +10,8 @@ from datetime import datetime  # Importing datetime for handling date and time
 from app.config import UUIDEncoder  # Importing UUIDEncoder for encoding UUIDs
 from httpx import AsyncClient  # Importing AsyncClient for making asynchronous HTTP requests
 
+from sqlalchemy import select  # Correct import for select
+
 @pytest.mark.asyncio
 async def test_create_validation_result(test_app, client, db_session):
     """

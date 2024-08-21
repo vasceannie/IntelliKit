@@ -1,17 +1,17 @@
-!/app/alembic/versions/
-!/app/alembic/env.py
-!/app/alembic/versions/*
+# Start of Selection
+/app/alembic/versions/
+/app/alembic/env.py
 .env
 .whl
 .pyc
-.idea
-.vscode
+.idea/
+.vscode/
 .DS_Store
-.pytest_cache
-.mypy_cache
-.ruff_cache
-__pycache__
-.properties
-.property
-.log
-session.sql
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+__pycache__/
+*.properties
+*.log
+*.sql
+# End of Selection
