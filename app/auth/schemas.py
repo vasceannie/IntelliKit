@@ -1,4 +1,6 @@
-from pydantic import BaseModel, EmailStr, UUID4
+from datetime import datetime
+from pydantic import BaseModel, EmailStr
+from uuid import UUID
 from typing import Optional, List, Any
 
 class UserBase(BaseModel):
@@ -10,6 +12,18 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     password: str
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
+
+class UserUpdate(BaseModel):
+    email: Optional[EmailStr] = None
+    is_active: Optional[bool] = None
+    is_superuser: Optional[bool] = None
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    password: Optional[str] = None
 
 class RoleBase(BaseModel):
     name: str
@@ -33,7 +47,7 @@ class GroupCreate(GroupBase):
     pass
 
 class User(UserBase):
-    id: UUID4
+    id: UUID
     roles: List[RoleBase] = []
     groups: List[GroupBase] = []
 
@@ -42,7 +56,7 @@ class User(UserBase):
         arbitrary_types_allowed = True
 
 class Role(RoleBase):
-    id: UUID4
+    id: UUID
     users: List[User] = []
     permissions: List[PermissionBase] = []
 
@@ -51,7 +65,7 @@ class Role(RoleBase):
         arbitrary_types_allowed = True
 
 class Permission(PermissionBase):
-    id: UUID4
+    id: UUID
     roles: List[Role] = []
 
     class ConfigDict:
@@ -59,7 +73,7 @@ class Permission(PermissionBase):
         arbitrary_types_allowed = True
 
 class Group(GroupBase):
-    id: UUID4
+    id: UUID
     users: List[User] = []
 
     class ConfigDict:
@@ -70,10 +84,15 @@ class Token(BaseModel):
     access_token: str
     token_type: str
 
-class UserResponse(UserBase):
-    id: UUID4
-    roles: List[RoleBase] = []
-    groups: List[GroupBase] = []
+class UserResponse(BaseModel):
+    id: UUID
+    email: str
+    is_active: bool
+    is_superuser: bool
+    first_name: str | None
+    last_name: str | None
+    created_at: datetime
+    updated_at: datetime
 
     class ConfigDict:
         from_attributes = True

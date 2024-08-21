@@ -4,8 +4,10 @@ from app.auth.models import User, Role, Permission, Group
 from passlib.context import CryptContext
 from sqlalchemy.orm import selectinload
 from sqlalchemy import select
+from uuid import UUID
+from app.auth.schemas import UserUpdate
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
 async def create_user(db: AsyncSession, user: schemas.UserCreate):
     existing_user = await db.execute(select(User).where(User.email == user.email))
@@ -22,6 +24,26 @@ async def create_user(db: AsyncSession, user: schemas.UserCreate):
     await db.execute(select(User).options(selectinload(User.roles), selectinload(User.groups)).where(User.id == db_user.id))
     
     return db_user
+
+async def update_user(db: AsyncSession, user_id: UUID, user_update: UserUpdate) -> User | None:
+    user = await db.get(User, user_id)
+    if not user:
+        return None
+    
+    for key, value in user_update.model_dump(exclude_unset=True).items():
+        setattr(user, key, value)
+    
+    await db.commit()
+    await db.refresh(user)
+    return user
+
+async def delete_user(db: AsyncSession, user_id: UUID) -> bool:
+    user = await db.get(User, user_id)
+    if user:
+        await db.delete(user)
+        await db.commit()
+        return True
+    return False
 
 async def create_role(db: AsyncSession, role: schemas.RoleCreate):
     db_role = Role(name=role.name, description=role.description)
@@ -44,33 +66,43 @@ async def create_group(db: AsyncSession, group: schemas.GroupCreate):
     await db.refresh(db_group)
     return db_group
 
-async def get_user_by_username(db: AsyncSession, username: str):
-    result = await db.execute(User.__table__.select().where(User.username == username))
+async def get_user_by_email(db: AsyncSession, email: str):
+    result = await db.execute(select(User).where(User.email == email))
     return result.scalar_one_or_none()
 
-async def authenticate_user(db: AsyncSession, username: str, password: str):
-    user = await get_user_by_username(db, username)
-    if not user or not pwd_context.verify(password, user.hashed_password):
-        return None
+async def authenticate_user(db: AsyncSession, email: str, password: str):
+    user = await db.execute(select(User).filter(User.email == email))
+    user = user.scalar_one_or_none()
+    if not user:
+        return False
+    if not pwd_context.verify(password, user.hashed_password):
+        return False
     return user
 
-async def assign_role_to_user(db: AsyncSession, user_id: int, role_id: int):
-    user = await db.get(User, user_id)
-    role = await db.get(Role, role_id)
-    user.roles.append(role)
-    await db.commit()
-    await db.refresh(user)
-    return user
+async def assign_role_to_user(db: AsyncSession, user_id: UUID, role_id: UUID):
+    user_stmt = select(User).where(User.id == user_id)
+    role_stmt = select(Role).where(Role.id == role_id)
+    
+    user_result = await db.execute(user_stmt)
+    role_result = await db.execute(role_stmt)
+    
+    user = user_result.scalar_one_or_none()
+    role = role_result.scalar_one_or_none()
+    
+    if user and role:
+        user.roles.append(role)
+        await db.commit()
+        await db.refresh(user)
+        return user
+    return None
 
-from sqlalchemy.orm import selectinload
-
-async def get_user(db: AsyncSession, user_id: int):
+async def get_user(db: AsyncSession, user_id: UUID):
     result = await db.execute(
         select(User).options(selectinload(User.roles), selectinload(User.groups)).filter(User.id == user_id)
     )
     user = result.scalar_one_or_none()
     if user is None:
         return None
-    return UserResponse.from_orm(user)  # Convert to Pydantic model
+    return schemas.UserResponse.model_validate(user)  # Use model_validate instead of from_orm
 
 # Add other user-related services here

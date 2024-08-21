@@ -1,6 +1,6 @@
 from typing import Optional
 from sqlalchemy.orm import relationship
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import UUID as PostgresUUID
 import uuid
 import datetime
 from app.models import Base
@@ -20,7 +20,7 @@ class ImportedData(Base):
     __tablename__ = "imported_data"
     
     # Columns for imported data
-    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id: Mapped[uuid.UUID] = mapped_column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     file_name: Mapped[str] = mapped_column(String, nullable=False)
     uploaded_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=datetime.datetime.utcnow)
     data_content: Mapped[bytes | None] = mapped_column(LargeBinary, nullable=True)
@@ -43,8 +43,8 @@ class ValidationResult(Base):
     __tablename__ = "validation_results"
     
     # Columns for the validation result
-    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    imported_data_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("imported_data.id"), nullable=False)
+    id: Mapped[uuid.UUID] = mapped_column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    imported_data_id: Mapped[uuid.UUID] = mapped_column(PostgresUUID(as_uuid=True), ForeignKey("imported_data.id"), nullable=False)
     field_name: Mapped[str] = mapped_column(String, nullable=False)
     validation_status: Mapped[str] = mapped_column(String, nullable=False)
     error_message: Mapped[Optional[str]] = mapped_column(String)

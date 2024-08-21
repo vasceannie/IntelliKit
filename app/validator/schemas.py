@@ -1,9 +1,11 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 import uuid
 from typing import Optional, Dict, Any, List
 from datetime import datetime
 from pydantic import ConfigDict
+from sqlalchemy import UUID
 from sqlalchemy.orm import Mapped, mapped_column
+from pydantic import Field  # Removed 'validator' import
 
 class ValidationResultBase(BaseModel):
     """
@@ -23,12 +25,13 @@ class ValidationResultCreate(ValidationResultBase):
     Schema for creating a validation result.
 
     Inherits from ValidationResultBase and adds:
-        imported_data_id (uuid.UUID): The ID of the imported data associated with the validation result.
+        imported_data_id (str): The ID of the imported data associated with the validation result.
+        validation_rules (Optional[Dict[str, Any]]): Optional dictionary of validation rules.
     """
-    imported_data_id: uuid.UUID
+    imported_data_id: str
+    validation_rules: Optional[Dict[str, Any]] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 
 class ValidationResultUpdate(ValidationResultBase):
     """
@@ -46,10 +49,8 @@ class ValidationResult(ValidationResultBase):
         id (uuid.UUID): The unique ID of the validation result.
         imported_data_id (uuid.UUID): The ID of the imported data associated with the validation result.
     """
-
-    __tablename__ = "validation_results"  # Specify the table name here
-    id: Mapped[uuid.UUID] = mapped_column(primary_key=True)
-    imported_data_id: Mapped[uuid.UUID] = mapped_column()
+    id: uuid.UUID
+    imported_data_id: uuid.UUID
 
     model_config = ConfigDict(arbitrary_types_allowed=True, from_attributes=True)
         
@@ -61,20 +62,26 @@ class ImportedDataCreate(ImportedDataBase):
 
 class ImportedData(ImportedDataBase):
     id: uuid.UUID
+    file_name: str
     uploaded_at: datetime
-    data_content: Optional[bytes]
+    data_content: str
 
-    model_config = ConfigDict(arbitrary_types_allowed=True, from_attributes=True)
+    model_config = ConfigDict(from_attributes=True)
+
 
 class ImportedDataUpdate(ImportedDataBase):
-    data_content: Optional[bytes]
+    data_content: Optional[str]
 
-class ImportedDataResponse(ImportedDataBase):
+class ImportedDataResponse(BaseModel):
     id: uuid.UUID
     file_name: str
     uploaded_at: datetime
-    total_rows: int
-    data_sample: List[Dict[str, Any]]
+    data_content: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
+
+    @field_validator('id')
+    def validate_id(cls, v):
+        if isinstance(v, str):
+            return uuid.UUID(v)
+        return v

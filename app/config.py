@@ -24,8 +24,20 @@ Note:
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from dotenv import load_dotenv
+import json
+from uuid import UUID
+from fastapi.encoders import jsonable_encoder
 
 load_dotenv()
+
+class UUIDEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, UUID):
+            return str(obj)
+        return json.JSONEncoder.default(self, obj)
+
+def custom_jsonable_encoder(obj):
+    return json.loads(json.dumps(jsonable_encoder(obj), cls=UUIDEncoder))
 
 class Settings(BaseSettings):
     # Database configuration and application settings
