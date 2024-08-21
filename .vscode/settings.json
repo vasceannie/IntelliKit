@@ -15,5 +15,8 @@
             "username": "overlord"
         }
     ],
-    "wolf.disableHotModeWarning": true
+    "wolf.disableHotModeWarning": true,
+    "files.autoSave": "afterDelay",
+    "explorer.excludeGitIgnore": true,
+    "explorer.fileNesting.enabled": true
 }

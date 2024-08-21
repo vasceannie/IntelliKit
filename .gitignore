@@ -14,4 +14,5 @@ __pycache__/
 *.properties
 *.log
 *.sql
+*.ini
 # End of Selection
