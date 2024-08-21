@@ -29,12 +29,12 @@ if not os.getenv("OPENAI_API_KEY"):
 
 # Define the directories to review
 directories_to_review = [
-    "app/api/endpoints",
-    "app/core",
-    "app/crud",
+    "app/auth",
+    "app/validator",
     "app/models",
-    "app/schemas",
-    "app/utils"
+    "app/database",
+    "app/config",
+    "app/main.py"
 ]
 
 # Initialize an empty string to store all code content
