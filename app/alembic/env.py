@@ -2,10 +2,13 @@ import sys
 import os
 import asyncio
 from logging.config import fileConfig
-
+from dotenv import load_dotenv
 from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 from alembic import context
+
+# Load environment variables
+load_dotenv()
 
 # Add the root directory of your project to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))

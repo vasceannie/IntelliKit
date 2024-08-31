@@ -17,6 +17,6 @@
     ],
     "wolf.disableHotModeWarning": true,
     "files.autoSave": "afterDelay",
-    "explorer.excludeGitIgnore": true,
+    "explorer.excludeGitIgnore": false,
     "explorer.fileNesting.enabled": true
 }
