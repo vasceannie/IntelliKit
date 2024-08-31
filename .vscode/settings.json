@@ -18,5 +18,9 @@
     "wolf.disableHotModeWarning": true,
     "files.autoSave": "afterDelay",
     "explorer.excludeGitIgnore": false,
-    "explorer.fileNesting.enabled": true
+    "explorer.fileNesting.enabled": true,
+    "sonarlint.connectedMode.project": {
+        "connectionId": "Personal",
+        "projectKey": "vasceannie_intellikit"
+    }
 }
