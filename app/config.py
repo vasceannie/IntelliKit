@@ -27,7 +27,7 @@ from dotenv import load_dotenv
 import json
 from uuid import UUID
 from fastapi.encoders import jsonable_encoder
-
+import os
 # Load environment variables from a .env file
 load_dotenv()
 
@@ -99,7 +99,7 @@ class Settings(BaseSettings):
         TEST_DATABASE_URL (str): The database URL for testing purposes.
     """
     # Database configuration and application settings
-    DATABASE_URL: str
+    DATABASE_URL = f"postgresql+asyncpg://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('POSTGRES_SERVER')}:{os.getenv('POSTGRES_PORT')}/{os.getenv('POSTGRES_DB')}"
     SECRET_KEY: str
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
@@ -128,7 +128,7 @@ class Settings(BaseSettings):
     SEND_EMAILS: bool
     TEST_USER: str
     TEST_PASSWORD: str
-    TEST_DATABASE_URL: str
+    TEST_DATABASE_URL: str = f"postgresql+asyncpg://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('POSTGRES_SERVER')}:{os.getenv('POSTGRES_PORT')}/{os.getenv('POSTGRES_DB')}_test"
 
     # Configuration for loading environment variables
     model_config = SettingsConfigDict(
