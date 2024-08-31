@@ -5,7 +5,12 @@ from app.auth.router import router as auth_router  # Importing the authenticatio
 from app.validator.router import router as validator_router  # Importing the validator router for handling validation-related endpoints.
 # from app.normalizer.router import router as normalizer_router  # Importing the normalizer router (currently commented out).
 from app.config import settings  # Importing application settings for configuration.
+from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+database_url = os.getenv("DATABASE_URL")
 # Creating an instance of the FastAPI application with a title and a custom JSON encoder.
 app = FastAPI(title=settings.PROJECT_NAME, json_encoder=UUIDEncoder)
 
