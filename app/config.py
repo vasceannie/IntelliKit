@@ -100,7 +100,7 @@ class Settings(BaseSettings):
         TEST_DATABASE_URL (str): The database URL for testing purposes.
     """
     # Database configuration and application settings
-    DATABASE_URL: ClassVar[str] = f"postgresql+asyncpg://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('POSTGRES_SERVER')}:{os.getenv('POSTGRES_PORT')}/{os.getenv('POSTGRES_DB')}"
+    DATABASE_URL: str
     SECRET_KEY: str
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
@@ -129,13 +129,22 @@ class Settings(BaseSettings):
     SEND_EMAILS: bool
     TEST_USER: str
     TEST_PASSWORD: str
-    TEST_DATABASE_URL: ClassVar[str] = f"postgresql+asyncpg://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('POSTGRES_SERVER')}:{os.getenv('POSTGRES_PORT')}/{os.getenv('POSTGRES_DB')}_test"
+    TEST_DATABASE_URL: str
 
     # Configuration for loading environment variables
     model_config = SettingsConfigDict(
         env_file=".env",  # Specify the .env file to load
         case_sensitive=False  # Set case sensitivity for environment variable names
     )
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.DATABASE_URL = self.get_database_url()
+        self.TEST_DATABASE_URL = self.get_database_url(test=True)
+
+    def get_database_url(self, test=False):
+        db_name = f"{self.POSTGRES_DB}_test" if test else self.POSTGRES_DB
+        return f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{db_name}"
 
 # Create a global instance of settings to be used throughout the application
 settings = Settings()
