@@ -3,7 +3,8 @@
 /backend/app/alembic/env.py
 .env
 .whl
-.pyc
+*.pyc
+*.pyo
 .idea/
 .vscode/
 .DS_Store
