@@ -8,15 +8,16 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import text
 import sys
 
-# Add the parent directory to the system path to import app modules
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from app.models import Base
+# Update the path to include the backend directory
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
+from backend.app.models import Base
 from httpx import AsyncClient
-from app.main import app as fastapi_app
-from app.auth import dependencies as deps
-from app.config import settings
-from app.auth import service as auth_service
-from app.auth.schemas import UserCreate, RoleCreate, PermissionCreate, GroupCreate
+from backend.app.main import app as fastapi_app
+from backend.app.auth import dependencies as deps
+from backend.app.config import settings
+from backend.app.auth import service as auth_service
+from backend.app.auth.schemas import UserCreate, RoleCreate, PermissionCreate, GroupCreate
 import contextlib
 
 # Load environment variables from the .env file for configuration

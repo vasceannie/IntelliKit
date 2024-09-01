@@ -1,11 +1,9 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.auth import schemas
-from app.auth.models import User, Role, Permission, Group
+from backend.app.auth import models, schemas
+from backend.app.config import settings
+import jwt
+from datetime import datetime, timedelta
 from passlib.context import CryptContext
-from sqlalchemy.orm import selectinload
-from sqlalchemy import select
-from uuid import UUID
-from app.auth.schemas import UserUpdate
 
 # Initialize the password context for hashing passwords using Argon2
 pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")

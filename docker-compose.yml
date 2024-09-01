@@ -1,9 +1,11 @@
 services:
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     volumes:
-      - .:/app
+      - ./backend:/app/backend
     ports:
       - "8000:8000"
     environment:
@@ -20,7 +22,7 @@ services:
     image: postgres:latest
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-      - ./db_init:/docker-entrypoint-initdb.d  # Mount the init scripts
+      - ./backend/db_init:/docker-entrypoint-initdb.d  # Mount the init scripts
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}

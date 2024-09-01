@@ -4,9 +4,9 @@ It configures the database URL, creates an asynchronous engine, and provides a s
 for managing database sessions in an asynchronous context.
 """
 
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
-from app.config import settings
+from backend.app.config import settings
 
 # Retrieve the database URL from the application settings.
 DATABASE_URL = settings.DATABASE_URL  # Updated to use config.settings

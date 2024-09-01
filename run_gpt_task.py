@@ -29,77 +29,11 @@ if not os.getenv("OPENAI_API_KEY"):
 
 # Define the directories to review
 directories_to_review = [
-    "app/auth",
-    "app/validator",
-    "app",
-    "tests",
+    "backend/app/auth",
+    "backend/app/validator",
+    "backend/app",
+    "backend/tests",
 ]
 
 # Initialize an empty string to store all code content
 code_content = ""
-
-# Loop through each directory and read .py files
-for directory in directories_to_review:
-    if os.path.exists(directory):
-        for filename in os.listdir(directory):
-            if filename.endswith(".py"):
-                filepath = os.path.join(directory, filename)
-                with open(filepath, "r") as file:
-                    code_content += f"\n\n# File: {filepath}\n\n" + file.read()
-    else:
-        print(f"Warning: Directory {directory} does not exist.")
-
-if not code_content.strip():
-    print("No code content found to review.")
-    exit(1)
-
-# Create a client instance
-client = OpenAI()
-
-# Step 1: Identify Bugs
-try:
-    bug_review = create_completion_with_retry(
-        client,
-        "gpt-4o-mini",
-        [
-            {"role": "system", "content": "You are an expert code reviewer."},
-            {"role": "user", "content": f"Please review the following code and identify any bugs:\n\n{code_content}"}
-        ]
-    )
-    print("Bugs and Issues:")
-    print(bug_review.choices[0].message.content)
-except Exception as e:
-    print(f"An error occurred during bug review: {e}")
-    exit(1)  # Exit the script if an error occurs during bug review
-
-# Step 2: Suggest Optimizations
-try:
-    optimization_review = create_completion_with_retry(
-        client,
-        "gpt-4o-mini",
-        [
-            {"role": "system", "content": "You are an expert code reviewer."},
-            {"role": "user", "content": f"Please suggest optimizations for the following code:\n\n{code_content}"}
-        ]
-    )
-    print("Optimizations:")
-    print(optimization_review.choices[0].message.content)
-except Exception as e:
-    print(f"An error occurred during optimization review: {e}")
-    exit(1)  # Exit the script if an error occurs during optimization review
-
-# Step 3: Generate Docstrings and Comments
-try:
-    docstring_review = create_completion_with_retry(
-        client,
-        "gpt-4o-mini",
-        [
-            {"role": "system", "content": "You are an expert Python developer."},
-            {"role": "user", "content": f"Please add docstrings and comments to the following code:\n\n{code_content}"}
-        ]
-    )
-    print("Docstrings and Comments:")
-    print(docstring_review.choices[0].message.content)
-except Exception as e:
-    print(f"An error occurred during docstring and comment generation: {e}")
-    exit(1)  # Exit the script if an error occurs during docstring generation
