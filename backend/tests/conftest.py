@@ -13,6 +13,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '.
 
 from backend.app.models import Base
 from httpx import AsyncClient
+from fastapi import FastAPI
+from httpx import ASGITransport
 from backend.app.main import app as fastapi_app
 from backend.app.auth import dependencies as deps
 from backend.app.config import settings
@@ -192,5 +194,13 @@ async def clear_database(db_session: AsyncSession):
         for table in tables:
             await db_session.execute(text(f"TRUNCATE TABLE {table} CASCADE"))
     await db_session.commit()
+
+@pytest_asyncio.fixture(scope="function")
+async def async_client():
+    async with AsyncClient(
+        transport=ASGITransport(app=fastapi_app),
+        base_url="http://test"
+    ) as client:
+        yield client
 
 pytest_plugins = ['pytest_asyncio']

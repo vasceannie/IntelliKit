@@ -7,16 +7,16 @@ from uuid import uuid4
 from sqlalchemy import delete
 from sqlalchemy.orm import selectinload
 from sqlalchemy.future import select
-from app.auth import service as auth_service
-from app.auth.schemas import UserCreate, RoleCreate
-from app.auth.models import User, Role, Permission, Group
-from app.main import app as fastapi_app
-from app.config import settings
+from backend.app.auth import service as auth_service
+from backend.app.auth.schemas import UserCreate, RoleCreate
+from backend.app.auth.models import User, Role, Permission, Group
+from backend.app.main import app as fastapi_app
+from backend.app.config import settings
 
 from tests.conftest import test_app, db_session, test_role, test_user  # Import fixtures from conftest.py
 
 @pytest_asyncio.fixture(autouse=True)
-async def clear_database(db_session: AsyncSessionLocal):
+async def clear_database(db_session):
     """
     Fixture to clear the database before each test.
 
@@ -25,7 +25,7 @@ async def clear_database(db_session: AsyncSessionLocal):
     in the database before each test runs.
 
     Args:
-        db_session (AsyncSessionLocal): The database session used to interact with the database.
+        db_session: The database session used to interact with the database.
     """
     try:
         async with db_session.begin():

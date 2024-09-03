@@ -13,8 +13,9 @@ from .schemas import ValidationResultCreate
 import uuid
 import json
 from app.config import UUIDEncoder
+from sqlalchemy.ext.asyncio import AsyncSession
 
-async def validate_data(db: AsyncSessionLocal, imported_data_id: uuid.UUID, validation_rules: Dict[str, Dict[str, Any]]) -> List[ValidationResult]:
+async def validate_data(db: AsyncSession, imported_data_id: uuid.UUID, validation_rules: Dict[str, Dict[str, Any]]) -> List[ValidationResult]:
     """
     Validate imported data based on the provided validation rules.
 
@@ -23,7 +24,7 @@ async def validate_data(db: AsyncSessionLocal, imported_data_id: uuid.UUID, vali
     ValidationResult objects indicating the validation status of each field.
 
     Args:
-        db (AsyncSessionLocal): The database session used to query the database.
+        db (AsyncSession): The database session used to query the database.
         imported_data_id (uuid.UUID): The ID of the imported data to validate.
         validation_rules (Dict[str, Dict[str, Any]]): A dictionary of validation rules for each field.
 

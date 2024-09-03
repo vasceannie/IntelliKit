@@ -1,13 +1,13 @@
 import select  # Importing the select module for SQLAlchemy queries
 import pytest  # Importing pytest for testing functionalities
 from fastapi.testclient import TestClient  # Importing TestClient for testing FastAPI applications
-from app.validator.models import ValidationResult, ImportedData  # Importing models for validation results and imported data
-from app.validator.schemas import ValidationResultCreate  # Importing schema for creating validation results
-from app.main import app as test_app  # Importing the FastAPI application instance for testing
+from backend.app.validator.models import ValidationResult, ImportedData  # Importing models for validation results and imported data
+from backend.app.validator.schemas import ValidationResultCreate  # Importing schema for creating validation results
+from backend.app.main import app as test_app  # Importing the FastAPI application instance for testing
 import uuid  # Importing uuid for generating unique identifiers
 import json  # Importing json for handling JSON data
 from datetime import datetime  # Importing datetime for handling date and time
-from app.config import UUIDEncoder  # Importing UUIDEncoder for encoding UUIDs
+from backend.app.config import UUIDEncoder  # Importing UUIDEncoder for encoding UUIDs
 from httpx import AsyncClient  # Importing AsyncClient for making asynchronous HTTP requests
 
 from sqlalchemy import select  # Correct import for select

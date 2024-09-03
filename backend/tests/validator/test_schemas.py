@@ -1,12 +1,12 @@
 import json  # Importing the json module for handling JSON data
 import pytest  # Importing pytest for testing functionalities
 import httpx  # Importing httpx for making HTTP requests
-from httpx import AsyncClient  # Importing AsyncClient for making asynchronous HTTP requests
-from app.validator.schemas import ImportedData, ValidationResult  # Importing schemas for validation
+from httpx import ASGITransport, AsyncClient  # Importing AsyncClient for making asynchronous HTTP requests
+from backend.app.validator.schemas import ImportedData, ValidationResult  # Importing schemas for validation
 from datetime import datetime  # Importing datetime for handling date and time
 import uuid  # Importing uuid for generating unique identifiers
-from app.main import app  # Importing the FastAPI application instance
-from app.validator.models import ImportedData  # Importing the ImportedData model
+from backend.app.main import app  # Importing the FastAPI application instance
+from backend.app.validator.models import ImportedData  # Importing the ImportedData model
 
 @pytest.mark.asyncio
 async def test_imported_data_schema():
@@ -24,7 +24,10 @@ async def test_imported_data_schema():
         3. Deserialize the response data into the ImportedData schema.
         4. Validate the attributes of the deserialized schema.
     """
-    async with AsyncClient(app=app, base_url="http://test") as client:
+    async with AsyncClient(
+        transport=ASGITransport(app=app),
+        base_url="http://test"
+    ) as client:
         # Prepare CSV content for testing
         csv_content = "name,email\nJohn,john@email.com\nJane,jane@email.com"
         files = {"file": ("test.csv", csv_content, "text/csv")}  # Prepare the file to be sent in the request

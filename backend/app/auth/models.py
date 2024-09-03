@@ -17,7 +17,8 @@ user_role = Table('user_role', Base.metadata,
 # Each entry in this table links a role to a permission.
 role_permission = Table('role_permission', Base.metadata,
     Column('role_id', UUID(as_uuid=True), ForeignKey('roles.id')),
-    Column('permission_id', UUID(as_uuid=True), ForeignKey('permissions.id'))
+    Column('permission_id', UUID(as_uuid=True), ForeignKey('permissions.id')),
+    extend_existing=True
 )
 
 # Association table for User-Group relationship

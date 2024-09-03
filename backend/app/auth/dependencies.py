@@ -1,9 +1,9 @@
-from fastapi import Depends, HTTPException, status
+from datetime import datetime, timedelta, timezone
+from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer
-from sqlalchemy.ext.asyncio import AsyncSession
-from backend.app.database import get_session
-from backend.app.auth import service, models
-from backend.app.config import settings
+from app.auth import exceptions
+from app.database import get_db
+from app.config import settings
 
 # OAuth2PasswordBearer is a class that provides a way to extract the token from the request.
 # It expects the token to be sent in the "Authorization" header as a Bearer token.

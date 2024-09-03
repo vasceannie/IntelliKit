@@ -21,6 +21,7 @@ class ImportedData(Base):
         data_content (bytes): The binary content of the uploaded file, stored as large binary data.
     """
     __tablename__ = "imported_data"
+    __table_args__ = {'extend_existing': True}
     
     # Unique identifier for the imported data
     id: Mapped[uuid.UUID] = mapped_column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -53,6 +54,7 @@ class ValidationResult(Base):
         error_message (str): An error message providing details if the validation failed.
     """
     __tablename__ = "validation_results"
+    __table_args__ = {'extend_existing': True}
     
     # Unique identifier for the validation result
     id: Mapped[uuid.UUID] = mapped_column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

@@ -27,6 +27,7 @@ python-jose = "^3.3.0"
 starlette = "^0.38.2"
 fastapi-users = "13.0.0"
 passlib = "^1.7.4"
+greenlet = "^3.0.3"
 
 [build-system]
 requires = ["poetry-core"]
