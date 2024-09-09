@@ -16,4 +16,5 @@ __pycache__/
 *.log
 *.sql
 *.ini
+.devcontainer/
 # End of Selection
