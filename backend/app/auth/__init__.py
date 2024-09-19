@@ -1,6 +1,5 @@
-import jwt
-from .dependencies import create_access_token, decode_access_token, get_current_user
-from .exceptions import (
+from app.auth.dependencies import create_access_token, decode_access_token, get_current_user
+from app.auth.exceptions import (
     InvalidCredentialsException,
     UserNotFoundException,
     InactiveUserException,
@@ -8,7 +7,8 @@ from .exceptions import (
     TokenExpiredException,
     InvalidTokenException
 )
-from .schemas import UserCreate, RoleCreate, PermissionCreate, GroupCreate, Token
+from app.auth.schemas import UserCreate, RoleCreate, PermissionCreate, GroupCreate, Token
+from app.auth.models import User, Role, Permission, Group
 
 __all__ = [
     "create_access_token",
@@ -24,5 +24,9 @@ __all__ = [
     "RoleCreate",
     "PermissionCreate",
     "GroupCreate",
-    "Token"
+    "Token",
+    "User",
+    "Role",
+    "Permission",
+    "Group"
 ]

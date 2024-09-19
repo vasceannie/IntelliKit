@@ -27,8 +27,18 @@ from dotenv import load_dotenv
 import json
 from uuid import UUID
 from fastapi.encoders import jsonable_encoder
-# Load environment variables from a .env file
+import os
+import sys
+from pydantic import ValidationError
+import logging
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 load_dotenv()
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 class UUIDEncoder(json.JSONEncoder):
     """
@@ -66,7 +76,6 @@ class Settings(BaseSettings):
     configurations. The settings are loaded from environment variables or a .env file.
 
     Attributes:
-        DATABASE_URL (str): The database connection URL.
         SECRET_KEY (str): The secret key for cryptographic operations.
         ALGORITHM (str): The algorithm used for encoding tokens (default is "HS256").
         ACCESS_TOKEN_EXPIRE_MINUTES (int): The expiration time for access tokens in minutes (default is 30).
@@ -95,20 +104,17 @@ class Settings(BaseSettings):
         SEND_EMAILS (bool): Whether to send emails.
         TEST_USER (str): The username for testing purposes.
         TEST_PASSWORD (str): The password for testing purposes.
-        TEST_DATABASE_URL (str): The database URL for testing purposes.
     """
     # Database configuration and application settings
-    DATABASE_URL: str
     SECRET_KEY: str
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     DOMAIN: str
     ENVIRONMENT: str
     PROJECT_NAME: str
+    PROJECT_VERSION: str
     STACK_NAME: str
     BACKEND_CORS_ORIGINS: str
-    FIRST_SUPERUSER: str
-    FIRST_SUPERUSER_PASSWORD: str
     EMAILS_FROM_EMAIL: str
     SMTP_TLS: bool
     SMTP_SSL: bool
@@ -118,8 +124,6 @@ class Settings(BaseSettings):
     POSTGRES_DB: str
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
-    PROJECT_NAME: str
-    PROJECT_VERSION: str
     SENTRY_DSN: str
     DOCKER_IMAGE_BACKEND: str
     DOCKER_IMAGE_FRONTEND: str
@@ -129,22 +133,39 @@ class Settings(BaseSettings):
     SEND_EMAILS: bool
     TEST_USER: str
     TEST_PASSWORD: str
-    TEST_DATABASE_URL: str
-
+    DATABASE_URL: str = ""
+    TEST_DATABASE_URL: str = ""
+    
     # Configuration for loading environment variables
     model_config = SettingsConfigDict(
-        env_file=".env",  # Specify the .env file to load
+        env_file=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env"),  # Specify the .env file to load
         case_sensitive=False  # Set case sensitivity for environment variable names
     )
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.DATABASE_URL = self.get_database_url()
-        self.TEST_DATABASE_URL = self.get_database_url(test=True)
+        self.set_database_urls()
 
-    def get_database_url(self, test=False):
-        db_name = f"{self.POSTGRES_DB}_test" if test else self.POSTGRES_DB
-        return f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{db_name}"
+    def set_database_urls(self):
+        try:
+            self.DATABASE_URL = self.get_database_url() if not self.DATABASE_URL else self.DATABASE_URL
+            logger.info(f"DATABASE_URL set to: {self.DATABASE_URL}")
+        except Exception as e:
+            logger.error(f"Error setting DATABASE_URL: {e}")
+            raise ValueError("Invalid DATABASE_URL configuration") from e
+
+        try:
+            self.TEST_DATABASE_URL = self.get_database_url_test() if not self.TEST_DATABASE_URL else self.TEST_DATABASE_URL
+            logger.info(f"TEST_DATABASE_URL set to: {self.TEST_DATABASE_URL}")
+        except Exception as e:
+            logger.error(f"Error setting TEST_DATABASE_URL: {e}")
+            self.TEST_DATABASE_URL = ""
+
+    def get_database_url(self):
+        return f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
+    
+    def get_database_url_test(self):
+        return f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}_test"
 
 # Create a global instance of settings to be used throughout the application
 settings = Settings()

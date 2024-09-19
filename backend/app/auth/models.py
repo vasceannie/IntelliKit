@@ -6,9 +6,10 @@ import uuid
 # Association table for User-Role relationship
 # This table establishes a many-to-many relationship between users and roles.
 # Each entry in this table links a user to a role.
-user_role = Table('user_role', Base.metadata,
-    Column('user_id', UUID(as_uuid=True), ForeignKey('users.id')),
-    Column('role_id', UUID(as_uuid=True), ForeignKey('roles.id')),
+user_role = Table(
+    'user_role', Base.metadata,
+    Column('user_id', UUID(as_uuid=True), ForeignKey('users.id'), primary_key=True),
+    Column('role_id', UUID(as_uuid=True), ForeignKey('roles.id'), primary_key=True),
     extend_existing=True
 )
 

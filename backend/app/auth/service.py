@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.auth import schemas
-from app.auth.models import User, Role, Permission, Group
+from app.auth.models import Permission, Group
 from passlib.context import CryptContext
 from sqlalchemy.orm import selectinload
 from sqlalchemy import select
@@ -28,6 +28,7 @@ async def create_user(db: AsyncSession, user: schemas.UserCreate):
     Returns:
         User: The created user instance.
     """
+    from backend.app.auth.models import User
     existing_user = await db.execute(select(User).where(User.email == user.email))
     if existing_user.scalar_one_or_none():
         raise ValueError("Email already registered")
@@ -49,6 +50,7 @@ async def update_user(db: AsyncSession, user_id: UUID, user_update: UserUpdate) 
 
     This function retrieves a user by their ID and updates their attributes
     based on the provided UserUpdate schema. Only fields that are set will be updated.
+    If a new password is provided, it will be hashed before storing.
 
     Args:
         db (AsyncSession): The database session to use for the operation.
@@ -58,11 +60,18 @@ async def update_user(db: AsyncSession, user_id: UUID, user_update: UserUpdate) 
     Returns:
         User | None: The updated user instance or None if the user was not found.
     """
+    from backend.app.auth.models import User  # Local import to avoid circular dependency
+    
     user = await db.get(User, user_id)
     if not user:
         return None
     
-    for key, value in user_update.model_dump(exclude_unset=True).items():
+    update_data = user_update.model_dump(exclude_unset=True)
+    
+    if 'password' in update_data:
+        update_data['hashed_password'] = pwd_context.hash(update_data.pop('password'))
+    
+    for key, value in update_data.items():
         setattr(user, key, value)
     
     await db.commit()
@@ -82,6 +91,7 @@ async def delete_user(db: AsyncSession, user_id: UUID) -> bool:
     Returns:
         bool: True if the user was deleted, False otherwise.
     """
+    from backend.app.auth.models import User
     user = await db.get(User, user_id)
     if user:
         await db.delete(user)
@@ -103,6 +113,7 @@ async def create_role(db: AsyncSession, role: schemas.RoleCreate):
     Returns:
         Role: The created role instance.
     """
+    from backend.app.auth.models import Role
     db_role = Role(name=role.name, description=role.description)
     db.add(db_role)
     await db.commit()
@@ -123,6 +134,7 @@ async def create_permission(db: AsyncSession, permission: schemas.PermissionCrea
     Returns:
         Permission: The created permission instance.
     """
+    from backend.app.auth.models import Permission
     db_permission = Permission(name=permission.name, description=permission.description)
     db.add(db_permission)
     await db.commit()
@@ -143,6 +155,7 @@ async def create_group(db: AsyncSession, group: schemas.GroupCreate):
     Returns:
         Group: The created group instance.
     """
+    from backend.app.auth.models import Group
     db_group = Group(name=group.name, description=group.description)
     db.add(db_group)
     await db.commit()
@@ -162,6 +175,7 @@ async def get_user_by_email(db: AsyncSession, email: str):
     Returns:
         User | None: The user instance if found, None otherwise.
     """
+    from backend.app.auth.models import User
     result = await db.execute(select(User).where(User.email == email))
     return result.scalar_one_or_none()
 
@@ -180,6 +194,7 @@ async def authenticate_user(db: AsyncSession, email: str, password: str):
     Returns:
         User | False: The authenticated user instance if successful, False otherwise.
     """
+    from backend.app.auth.models import User
     user = await db.execute(select(User).filter(User.email == email))
     user = user.scalar_one_or_none()
     if not user:
@@ -203,6 +218,7 @@ async def assign_role_to_user(db: AsyncSession, user_id: UUID, role_id: UUID):
     Returns:
         User | None: The updated user instance if successful, None otherwise.
     """
+    from backend.app.auth.models import User, Role
     user_stmt = select(User).where(User.id == user_id)
     role_stmt = select(Role).where(Role.id == role_id)
     
@@ -233,6 +249,7 @@ async def get_user(db: AsyncSession, user_id: UUID):
     Returns:
         UserResponse | None: The user response model if found, None otherwise.
     """
+    from backend.app.auth.models import User, Role, Group
     result = await db.execute(
         select(User).options(selectinload(User.roles), selectinload(User.groups)).filter(User.id == user_id)
     )

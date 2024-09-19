@@ -28,6 +28,7 @@ starlette = "^0.38.2"
 fastapi-users = "13.0.0"
 passlib = "^1.7.4"
 greenlet = "^3.0.3"
+supabase = "^2.7.4"
 
 [build-system]
 requires = ["poetry-core"]
@@ -37,3 +38,6 @@ build-backend = "poetry.core.masonry.api"
 asyncio_mode = "auto"
 filterwarnings = ["ignore::pytest.PytestCollectionWarning"]
 testpaths = ["tests"]
+
+[tool.poetry.scripts]
+run_migrations = "run_migrations:run_migrations"
