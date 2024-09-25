@@ -1,9 +1,10 @@
 # Start of Selection
-/app/alembic/versions/
-/app/alembic/env.py
+/backend/app/alembic/versions/
+/backend/app/alembic/env.py
 .env
 .whl
-.pyc
+*.pyc
+*.pyo
 .idea/
 .vscode/
 .DS_Store
@@ -15,4 +16,5 @@ __pycache__/
 *.log
 *.sql
 *.ini
+.devcontainer/
 # End of Selection

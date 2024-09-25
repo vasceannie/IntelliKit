@@ -1,6 +1,6 @@
 {
     "python.testing.pytestArgs": [
-        "tests"
+        "backend"
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
@@ -22,5 +22,7 @@
     "sonarlint.connectedMode.project": {
         "connectionId": "Personal",
         "projectKey": "vasceannie_intellikit"
-    }
+    },
+    "pieces.cloudCapabilities": "Blended",
+    "pieces.telemetry": true
 }

@@ -1,0 +1,106 @@
+.
+├── Dockerfile
+├── README.md
+├── REQUIREMENTS.md
+├── SECURITY.md
+├── backend
+│   ├── Radiance.session.sql
+│   ├── app
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-312.pyc
+│   │   │   ├── config.cpython-312.pyc
+│   │   │   ├── database.cpython-312.pyc
+│   │   │   ├── main.cpython-312.pyc
+│   │   │   └── models.cpython-312.pyc
+│   │   ├── alembic
+│   │   │   ├── env.py
+│   │   │   └── script.py.mako
+│   │   ├── alembic.ini
+│   │   ├── auth
+│   │   │   ├── __init__.py
+│   │   │   ├── __pycache__
+│   │   │   │   ├── __init__.cpython-312.pyc
+│   │   │   │   ├── dependencies.cpython-312.pyc
+│   │   │   │   ├── exceptions.cpython-312.pyc
+│   │   │   │   ├── models.cpython-312.pyc
+│   │   │   │   ├── router.cpython-312.pyc
+│   │   │   │   ├── schemas.cpython-312.pyc
+│   │   │   │   └── service.cpython-312.pyc
+│   │   │   ├── dependencies.py
+│   │   │   ├── exceptions.py
+│   │   │   ├── models.py
+│   │   │   ├── router.py
+│   │   │   ├── schemas.py
+│   │   │   └── service.py
+│   │   ├── config.py
+│   │   ├── database.py
+│   │   ├── exceptions.py
+│   │   ├── logging.ini
+│   │   ├── main.py
+│   │   ├── models.py
+│   │   ├── normalizer
+│   │   │   ├── constants.py
+│   │   │   ├── dependencies.py
+│   │   │   ├── exceptions.py
+│   │   │   ├── models.py
+│   │   │   ├── router.py
+│   │   │   ├── schemas.py
+│   │   │   ├── service.py
+│   │   │   └── utils.py
+│   │   ├── pagination.py
+│   │   ├── result.log
+│   │   └── validator
+│   │       ├── __init__.py
+│   │       ├── __pycache__
+│   │       │   ├── __init__.cpython-312.pyc
+│   │       │   ├── models.cpython-312.pyc
+│   │       │   ├── router.cpython-312.pyc
+│   │       │   ├── schemas.cpython-312.pyc
+│   │       │   ├── service.cpython-312.pyc
+│   │       │   └── utils.cpython-312.pyc
+│   │       ├── constants.py
+│   │       ├── dependencies.py
+│   │       ├── exceptions.py
+│   │       ├── models.py
+│   │       ├── router.py
+│   │       ├── schemas.py
+│   │       ├── service.py
+│   │       └── utils.py
+│   ├── db_init
+│   ├── diqs.session.sql
+│   ├── poetry.lock
+│   ├── pyproject.toml
+│   ├── pytest.ini
+│   ├── requirements.txt
+│   ├── result.log
+│   ├── test_main.http
+│   └── tests
+│       ├── __init__.py
+│       ├── __pycache__
+│       │   ├── __init__.cpython-311.pyc
+│       │   ├── __init__.cpython-312.pyc
+│       │   ├── conftest.cpython-311-pytest-8.3.2.pyc
+│       │   └── conftest.cpython-312-pytest-8.3.2.pyc
+│       ├── auth
+│       │   ├── __pycache__
+│       │   │   ├── test_main.cpython-311-pytest-8.3.2.pyc
+│       │   │   ├── test_main_auth.cpython-311-pytest-8.3.2.pyc
+│       │   │   └── test_main_auth.cpython-312-pytest-8.3.2.pyc
+│       │   └── test_main_auth.py
+│       ├── conftest.py
+│       └── validator
+│           ├── __pycache__
+│           │   ├── test_models.cpython-311-pytest-8.3.2.pyc
+│           │   ├── test_models_validator.cpython-311-pytest-8.3.2.pyc
+│           │   ├── test_models_validator.cpython-312-pytest-8.3.2.pyc
+│           │   └── test_schemas.cpython-312-pytest-8.3.2.pyc
+│           ├── test_models_validator.py
+│           └── test_schemas.py
+├── docker-compose.yml
+├── frontend
+├── run_gpt_task.py
+├── sonar-project.properties
+└── structure.txt
+
+18 directories, 86 files

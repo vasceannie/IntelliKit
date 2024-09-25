@@ -19,11 +19,14 @@ jobs:
           curl -sSL https://install.python-poetry.org | python3 -
           echo 'export PATH="$HOME/.local/bin:$PATH"' >> $GITHUB_ENV
 
-
       - name: Install dependencies
-        run: poetry install
+        run: |
+          cd backend
+          poetry install
 
       - name: Run GPT Task
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}  # Use the secret
-        run: poetry run python run_gpt_task.py
+        run: |
+          cd backend
+          poetry run python ../run_gpt_task.py
