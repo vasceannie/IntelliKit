@@ -27,8 +27,10 @@ from dotenv import load_dotenv
 import json
 from uuid import UUID
 from fastapi.encoders import jsonable_encoder
+
 # Load environment variables from a .env file
 load_dotenv()
+
 
 class UUIDEncoder(json.JSONEncoder):
     """
@@ -37,10 +39,12 @@ class UUIDEncoder(json.JSONEncoder):
     This class extends the default JSONEncoder to handle UUID objects by converting
     them to their string representation when serializing to JSON.
     """
+
     def default(self, obj):
         if isinstance(obj, UUID):
             return str(obj)  # Convert UUID to string
         return json.JSONEncoder.default(self, obj)  # Call the default method for other types
+
 
 def custom_jsonable_encoder(obj):
     """
@@ -56,6 +60,7 @@ def custom_jsonable_encoder(obj):
         dict: The serialized object as a JSON-compatible dictionary.
     """
     return json.loads(json.dumps(jsonable_encoder(obj), cls=UUIDEncoder))
+
 
 class Settings(BaseSettings):
     """
@@ -98,7 +103,6 @@ class Settings(BaseSettings):
         TEST_DATABASE_URL (str): The database URL for testing purposes.
     """
     # Database configuration and application settings
-    DATABASE_URL: str
     SECRET_KEY: str
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
@@ -129,7 +133,6 @@ class Settings(BaseSettings):
     SEND_EMAILS: bool
     TEST_USER: str
     TEST_PASSWORD: str
-    TEST_DATABASE_URL: str
 
     # Configuration for loading environment variables
     model_config = SettingsConfigDict(
@@ -137,14 +140,16 @@ class Settings(BaseSettings):
         case_sensitive=False  # Set case sensitivity for environment variable names
     )
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.DATABASE_URL = self.get_database_url()
-        self.TEST_DATABASE_URL = self.get_database_url(test=True)
+    # Property to get the database URL
+    @property
+    def DATABASE_URL(self):
+        return f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
 
-    def get_database_url(self, test=False):
-        db_name = f"{self.POSTGRES_DB}_test" if test else self.POSTGRES_DB
-        return f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{db_name}"
+    # Property to get the test database URL
+    @property
+    def TEST_DATABASE_URL(self):
+        return f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}_test"
+
 
 # Create a global instance of settings to be used throughout the application
 settings = Settings()
